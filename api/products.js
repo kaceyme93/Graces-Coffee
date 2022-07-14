@@ -1,6 +1,6 @@
 const productsRouter = require('express').Router();
 
-const {getProductById, getAllProducts, createProduct} = require('../db/products') //functions not defined yet
+const {getProductById, getAllProducts, createProduct} = require('../db/models/index')
 
 //GET /api/products will send back a list of all products in the database
 productsRouter.get('/', async (req, res, next)=>{
