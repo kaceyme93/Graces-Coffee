@@ -1,5 +1,6 @@
 const apiRouter = require('express').Router();
 
+
 apiRouter.get('/', (req, res, next) => {
   res.send({
     message: 'API is under construction!',
@@ -7,12 +8,18 @@ apiRouter.get('/', (req, res, next) => {
 });
 
 apiRouter.get('/health', (req, res, next) => {
-  res.send({
-    healthy: true,
-  });
+  try{
+    res.send({
+      healthy: true,
+    });
+  } catch (error){
+    next(error);
+  }
 });
 
 // place your routers here
-//Austin wuz here... and then he wuz here again
+const productsRouter = require('./products');
+
+apiRouter.use('/products', productsRouter);
 
 module.exports = apiRouter;
