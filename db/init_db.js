@@ -2,7 +2,7 @@ const {
   client,
   // declare your model imports here
   // for example, User
-} = require('./');
+} = require('./client.js');
 
 async function buildTables() {
   try {
@@ -20,39 +20,39 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       description TEXT NOT NULL,
-      price NOT NULL,
-      "imageURL" TEXT DEFAULT https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image.jpg,
+      price INTEGER NOT NULL,
+      "imageURL" TEXT DEFAULT 'https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image.jpg',
       "inStock" BOOLEAN DEFAULT false,
-      category NOT NULL
+      category VARCHAR(255) NOT NULL
       )`)
     console.log('creating users table') 
       // this users table does not currently check email for format, which is stated in the milestones... May need to check this during createUser function.
-    client.query(`CREATE TABLE users (
+    await client.query(`CREATE TABLE users (
       id SERIAL PRIMARY KEY,
-      "firstName" NOT NULL,
-      "lastName"NOT NULL,
+      "firstName" VARCHAR(255) NOT NULL,
+      "lastName" VARCHAR(255) NOT NULL,
       email VARCHAR(255) UNIQUE NOT NULL,
       "imageURL" TEXT DEFAULT 'https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image.jpg',
-      username UNIQUE NOT NULL,
-      password UNIQUE NOT NULL,
+      username VARCHAR(255) UNIQUE NOT NULL,
+      password VARCHAR(255) UNIQUE NOT NULL,
       "isAdmin" BOOLEAN NOT NULL DEFAULT false,
     )`)
 
     console.log('creating orders table')
-    client.query(`CREATE TABLE orders (
+    await client.query(`CREATE TABLE orders (
       id SERIAL PRIMARY KEY,
       status VARCHAR(255) DEFAULT 'created',
       "userId" INTEGER REFERENCES users(id),
-      datePlaced DATE
+      "datePlaced" DATE
     )`)
 
     console.log('creating order_products table')
-    client.query(`CREATE TABLE order_products (
+    await client.query(`CREATE TABLE order_products (
       id SERIAL PRIMARY KEY,
-      "product_id" INTEGER REFERENCES products(id),
-      "orderId" REFERENCES orders(id),
+      "productId" INTEGER REFERENCES products(id),
+      "orderId" INTEGER REFERENCES orders(id),
       price INTEGER NOT NULL,
-      QUANTITY INTEGER NOT NULL DEFAULT 0
+      quantity INTEGER NOT NULL DEFAULT 0
     )`)
   } catch (error) {
     throw error;
