@@ -1,3 +1,9 @@
 .all-products h1 {
   color: black;
 }
+
+.products-list {
+  border: 2px solid black;
+  padding: 5px;
+  margin: 5px;
+}

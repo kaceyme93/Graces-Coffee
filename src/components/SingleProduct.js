@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { getSingleProduct } from '../axios-services';
 import '../style/SingleProduct.css';
 
-function SingleProduct() {
+function SingleProduct({ productId }) {
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
     const fetchSingleProduct = async () => {
-      const result = await getSingleProduct();
+      const result = await getSingleProduct(productId);
       setProduct(result);
     };
     fetchSingleProduct();
@@ -16,12 +16,12 @@ function SingleProduct() {
   return (
     <div className='single-product'>
       <h1>Single Product</h1>
-      <p>{product.name}</p>
-      <p>{product.description}</p>
-      <p>{product.price}</p>
+      <p>Name: {product.name}</p>
+      <p>Description: {product.description}</p>
+      <p>Price: {product.price}</p>
       <p>{product.imageURL}</p>
-      <p>{product.inStock}</p>
-      <p>{product.category}</p>
+      <p>In Stock: {product.inStock}</p>
+      <p>Category: {product.category}</p>
     </div>
   );
 }

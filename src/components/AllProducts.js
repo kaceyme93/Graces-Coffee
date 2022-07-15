@@ -16,11 +16,21 @@ function AllProducts() {
 
   return (
     <div className='all-products'>
-      <h1>AllProducts</h1>
       {products.map((product) => {
         return (
-          <div key={product.id}>
-            <SingleProduct />
+          <div
+            key={product.id}
+            className='products-list'
+            onClick={() => {
+              console.log(product.id);
+            }}
+          >
+            <p>Name: {product.name}</p>
+            <p>Description: {product.description}</p>
+            <p>Price: {product.price}</p>
+            <p>{product.imageURL}</p>
+            <p>In Stock: {product.inStock}</p>
+            <p>Category: {product.category}</p>
           </div>
         );
       })}

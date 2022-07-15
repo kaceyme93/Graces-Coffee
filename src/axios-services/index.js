@@ -28,9 +28,9 @@ export async function getAPIHealth() {
   }
 }
 
-export async function getSingleProduct() {
+export async function getSingleProduct(productId) {
   try {
-    const { data } = await axios.get('/api/products/:productId');
+    const { data } = await axios.get(`/api/products/${productId}`);
     return data;
   } catch (err) {
     console.error(err);
