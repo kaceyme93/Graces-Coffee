@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { getAllProducts } from '../axios-services';
 import { SingleProduct } from './index';
 import '../style/AllProducts.css';
 
 function AllProducts() {
   const [products, setProducts] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -22,15 +24,10 @@ function AllProducts() {
             key={product.id}
             className='products-list'
             onClick={() => {
-              console.log(product.id);
+              history.push(`/products/${product.id}`);
             }}
           >
-            <p>Name: {product.name}</p>
-            <p>Description: {product.description}</p>
-            <p>Price: {product.price}</p>
-            <p>{product.imageURL}</p>
-            <p>In Stock: {product.inStock}</p>
-            <p>Category: {product.category}</p>
+            <SingleProduct id={product.id} />
           </div>
         );
       })}

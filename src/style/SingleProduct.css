@@ -1,3 +1,5 @@
-.single-product h1 {
-  color: black;
+.single-product {
+  border: 2px solid black;
+  padding: 5px;
+  margin: 5px;
 }

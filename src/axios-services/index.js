@@ -30,8 +30,8 @@ export async function getAPIHealth() {
 
 export async function getSingleProduct(productId) {
   try {
-    const { data } = await axios.get(`/api/products/${productId}`);
-    return data;
+    const { data: product } = await axios.get(`/api/products/${productId}`);
+    return product;
   } catch (err) {
     console.error(err);
   }
@@ -39,8 +39,8 @@ export async function getSingleProduct(productId) {
 
 export async function getAllProducts() {
   try {
-    const { data } = await axios.get('/api/products');
-    return data;
+    const { data: products } = await axios.get('/api/products');
+    return products;
   } catch (err) {
     console.error(err);
   }
