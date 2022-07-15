@@ -27,3 +27,21 @@ export async function getAPIHealth() {
     return { healthy: false };
   }
 }
+
+export async function getSingleProduct() {
+  try {
+    const { data } = await axios.get('/api/products/:productId');
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function getAllProducts() {
+  try {
+    const { data } = await axios.get('/api/products');
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}

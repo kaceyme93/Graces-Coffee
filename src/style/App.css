@@ -7,7 +7,11 @@
   height: 100%;
 }
 
-.app-container h1 {
+.API-status {
   color: var(--green);
   padding: 1rem;
+
+  position: fixed;
+  right: 0;
+  bottom: 0;
 }
