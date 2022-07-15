@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getSingleProduct } from '../axios-services';
 import '../style/SingleProduct.css';
@@ -6,6 +7,7 @@ import '../style/SingleProduct.css';
 function SingleProduct({ id }) {
   const [product, setProduct] = useState([]);
   const { productId } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     const fetchSingleProduct = async () => {
@@ -17,10 +19,26 @@ function SingleProduct({ id }) {
 
   return (
     <div className='single-product'>
-      <p>Name: {product.name}</p>
+      {product.imageURL && (
+        <img
+          src={product.imageURL}
+          alt='t-shirt'
+          className='product-image'
+          onClick={() => {
+            history.push(`/products/${product.id}`);
+          }}
+        ></img>
+      )}
+      <p
+        className='product-name'
+        onClick={() => {
+          history.push(`/products/${product.id}`);
+        }}
+      >
+        {product.name}
+      </p>
       <p>Description: {product.description}</p>
-      <p>Price: {product.price}</p>
-      <p>{product.imageURL}</p>
+      <p>Price: ${product.price}</p>
       <p>In Stock: {product.inStock === true ? 'Yes' : 'No'}</p>
       <p>Category: {product.category}</p>
     </div>

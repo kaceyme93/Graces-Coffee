@@ -23,7 +23,7 @@ async function createTables() {
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         description TEXT NOT NULL,
-        price INTEGER NOT NULL,
+        price DECIMAL(12,2) NOT NULL,
         "imageURL" TEXT DEFAULT 'https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image.jpg',
         "inStock" BOOLEAN DEFAULT false,
         category VARCHAR(255) NOT NULL
@@ -34,6 +34,7 @@ async function createTables() {
     throw error;
   }
 }
+
 async function createInitialProducts() {
   console.log('Starting to create users...');
   try {
@@ -41,24 +42,30 @@ async function createInitialProducts() {
       {
         name: 'A Shirt',
         description: "It's a shirt",
-        price: 100,
+        price: 100.0,
         inStock: true,
         category: 'Clothing',
+        imageURL:
+          'https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
       },
       ,
       {
         name: 'Sandwich',
         description: "It's a sandwich",
-        price: 101,
+        price: 101.5,
         inStock: false,
         category: 'Food',
+        imageURL:
+          'https://images.unsplash.com/photo-1553909489-cd47e0907980?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80',
       },
       {
         name: 'Something else',
         description: "It's neither",
-        price: 102,
+        price: 5000,
         inStock: true,
         category: 'Neither clothing nor food',
+        imageURL:
+          'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
       },
     ];
     const products = await Promise.all(productsToCreate.map(createProduct));

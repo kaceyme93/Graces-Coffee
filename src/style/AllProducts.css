@@ -4,7 +4,3 @@
   justify-content: center;
   align-items: center;
 }
-
-.products-list:hover {
-  transform: translateY(-0.5vh);
-}
