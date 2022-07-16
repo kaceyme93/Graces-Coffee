@@ -1,3 +1,6 @@
-.all-products h1 {
-  color: black;
+.all-products {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
 }

@@ -16,11 +16,10 @@ function AllProducts() {
 
   return (
     <div className='all-products'>
-      <h1>AllProducts</h1>
       {products.map((product) => {
         return (
-          <div key={product.id}>
-            <SingleProduct />
+          <div key={product.id} className='products-list'>
+            <SingleProduct id={product.id} />
           </div>
         );
       })}
