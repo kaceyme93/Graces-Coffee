@@ -23,6 +23,92 @@ async function getOrderById(id) {
   }
 }
 
+async function getAllOrders() {
+  try {
+    const { rows: orders } = await client.query(`
+        SELECT *
+        FROM orders
+    `);
+
+    const result = await filterProducts(orders);
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+async function getOrdersByUser({ id }) {
+  try {
+    const { rows: orders } = await client.query(
+      `
+        SELECT *
+        FROM orders
+        JOIN users
+        ON orders."userId" = users.id
+        WHERE users.id = $1;
+      `,
+      [id]
+    );
+
+    const result = await filterProducts(orders);
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+async function getOrdersByProduct({ id }) {
+  try {
+    const { rows: orders } = await client.query(
+      `
+        SELECT *
+        FROM orders
+        JOIN order_products
+        ON order_products."orderId" = orders.id
+        JOIN products
+        ON products.id = order_products."productId"
+        WHERE "productId" = $1;
+      `,
+      [id]
+    );
+
+    const result = await filterProducts(orders);
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+// async function getCartByUser({ id }) {
+//   try {
+//     const { rows: orders } = await client.query(
+//       `
+//         SELECT *
+//         FROM orders
+//         JOIN order_products
+//         ON order_products."orderId" = orders.id
+//         JOIN products
+//         ON products.id = order_products."productId"
+//         WHERE "productId" = $1;
+//         `,
+//       [id]
+//     );
+
+//     const result = await filterProducts(orders);
+
+//     return result;
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// }
+
 async function createOrder({ status, userId }) {
   try {
     const {
@@ -45,9 +131,9 @@ async function createOrder({ status, userId }) {
 
 module.exports = {
   getOrderById,
-  // getAllOrders,
-  // getOrdersByUser,
-  // getOrdersByProduct,
+  getAllOrders,
+  getOrdersByUser,
+  getOrdersByProduct,
   //   getCartByUser,
   createOrder,
 };
