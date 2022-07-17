@@ -1,6 +1,6 @@
 require('dotenv').config();
-const { getAllProducts } = require('../db');
-const client = require('../db/client');
+const { getAllProducts } = require('../../db/models/products');
+const client = require('../../db/client');
 
 let productsFromDatabase, productsFromAdapter;
 describe('Database', () => {
@@ -8,7 +8,8 @@ describe('Database', () => {
     client.connect();
     // "control" test data
     const { rows } = await client.query(`
-      SELECT * FROM products;
+      SELECT * 
+      FROM products;
     `);
     productsFromDatabase = rows;
     productsFromAdapter = await getAllProducts();

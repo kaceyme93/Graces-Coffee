@@ -1,7 +1,7 @@
 require('dotenv').config();
-const { getAllProducts } = require('../db');
-const client = require('../db/client');
-const { SERVER_ADDRESS = 'http://localhost:', PORT = 5000 } = process.env;
+const { getAllProducts } = require('../../db/models/products');
+const client = require('../../db/client');
+const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
 const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
 const axios = require('axios');
 
@@ -11,13 +11,15 @@ describe('Database', () => {
     client.connect();
     // "control" test data
     const { rows } = await client.query(`
-      SELECT * FROM products;
+      SELECT * 
+      FROM products;
     `);
     productsFromDatabase = rows;
   });
   afterAll(async () => {
     client.end();
   });
+
   // 1 - write a test for `getAllProducts` database adapter. selects and returns an array of all products
   describe('getAllProducts', () => {
     it('selects and returns an array of products', async () => {
@@ -33,6 +35,7 @@ describe('Database', () => {
     });
   });
 });
+
 // TODO 3 - write tests for `GET /api/products`. Returns an array of all products in the database
 describe('API', () => {
   describe('Products', () => {
