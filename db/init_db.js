@@ -2,6 +2,8 @@ const {
   client,
   // declare your model imports here
   // for example, User
+  Products,
+  Orders,
 } = require('./');
 
 async function buildTables() {
@@ -51,7 +53,7 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       "productId" INTEGER REFERENCES products(id),
       "orderId" INTEGER REFERENCES orders(id),
-      price INTEGER NOT NULL,
+      price DECIMAL(12,2) NOT NULL,
       quantity INTEGER NOT NULL DEFAULT 0
     )`);
   } catch (error) {
@@ -64,6 +66,37 @@ async function populateInitialData() {
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
+    const product1 = await Products.createProduct({
+      name: 'A Shirt',
+      description: "It's a shirt",
+      price: 9.99,
+      inStock: true,
+      category: 'Clothing',
+      imageURL: 'https://bit.ly/3IGVaml',
+    });
+
+    const product2 = await Products.createProduct({
+      name: 'Sandwich',
+      description: "It's a sandwich",
+      price: 101.5,
+      inStock: false,
+      category: 'Food',
+      imageURL: 'https://bit.ly/3O8OUER',
+    });
+
+    const product3 = await Products.createProduct({
+      name: 'Something else',
+      description: "It's neither",
+      price: 5000,
+      inStock: true,
+      category: 'Neither clothing nor food',
+      imageURL: 'https://bit.ly/3RI61Ak',
+    });
+
+    const order1 = await Orders.createOrder({
+      status: 'created',
+      userId: null,
+    });
   } catch (error) {
     throw error;
   }
