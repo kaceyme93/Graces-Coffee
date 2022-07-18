@@ -85,12 +85,30 @@ async function populateInitialData() {
     });
 
     const product3 = await Products.createProduct({
-      name: 'Something else',
-      description: "It's neither",
-      price: 5000,
+      name: 'Rubber Ducky',
+      description: 'Helps with debugging',
+      price: 2.0,
       inStock: true,
-      category: 'Neither clothing nor food',
-      imageURL: 'https://bit.ly/3RI61Ak',
+      category: 'Toys',
+      imageURL: 'https://bit.ly/3yS21F7',
+    });
+
+    const product4 = await Products.createProduct({
+      name: 'Meal Kit',
+      description: `Spaghetti code drizzled with pomodoro sauce`,
+      price: 19.99,
+      inStock: true,
+      category: 'Coder Fuel',
+      imageURL: 'https://bit.ly/3cmMju2',
+    });
+
+    const product5 = await Products.createProduct({
+      name: 'Rubber Stamp',
+      description: `For pull requests`,
+      price: 5.0,
+      inStock: true,
+      category: 'Productivity',
+      imageURL: 'https://bit.ly/3OgLCzt',
     });
 
     const order1 = await Orders.createOrder({
