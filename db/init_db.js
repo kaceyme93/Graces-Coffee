@@ -1,3 +1,4 @@
+const { faker } = require('@faker-js/faker');
 const {
   client,
   // declare your model imports here
@@ -66,6 +67,19 @@ async function populateInitialData() {
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
+    const products = [];
+
+    function createRandomProduct() {
+      return {
+        name: faker.commerce.product(),
+        description: faker.commerce.productDescription(),
+        price: faker.commerce.price(1, 100, 2),
+        inStock: faker.datatype.boolean(),
+        category: faker.commerce.department(),
+        imageURL: faker.image.food(250, 250, true),
+      };
+    }
+
     const product1 = await Products.createProduct({
       name: 'A Shirt',
       description: "It's a shirt",
@@ -109,6 +123,14 @@ async function populateInitialData() {
       inStock: true,
       category: 'Productivity',
       imageURL: 'https://bit.ly/3OgLCzt',
+    });
+
+    Array.from({ length: 50 }).forEach(() => {
+      products.push(createRandomProduct());
+    });
+
+    products.forEach(async (product) => {
+      await Products.createProduct(product);
     });
 
     const order1 = await Orders.createOrder({
