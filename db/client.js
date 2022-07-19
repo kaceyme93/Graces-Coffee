@@ -21,13 +21,7 @@ if (process.env.CI) {
   });
 } else {
   // local / heroku client config
-  client = new Client({
-    host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    password: '1234',
-    database: 'graceshopper-dev',
-  });
+  client = new Client({DB_URL});
 }
 
 module.exports = client;

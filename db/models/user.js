@@ -2,6 +2,7 @@
 const client = require('../client');
 
 const bcrypt = require('bcrypt'); //for encryption
+const saltRounds = 10;
 
 module.exports = {
   getUser,
@@ -13,6 +14,10 @@ module.exports = {
 
 const createUser = async ({firstName, lastName, email, username, password }) => {
   console.log('creating user')
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hash = bcrypt.hashSync(myPlaintextPassword, salt);
+  const {rows: [user]} = await client.query('INSERT INTO users ("firstName","lastName",email,username,password) VALUES ($1,$2,$3,$4,$5)', [firstName, lastName, email, username, hash])
+  return user
 
 }
 
