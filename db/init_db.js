@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { faker } = require('@faker-js/faker');
 const {
   client,
@@ -7,9 +6,7 @@ const {
   Products,
   Orders,
 } = require('./');
-=======
 const client = require('./client.js');
->>>>>>> 5708e3dc9bfb406f3735c1480a6fce9282988cc2
 
 async function buildTables() {
   try {
