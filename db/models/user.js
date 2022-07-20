@@ -2,7 +2,6 @@
 const client = require('../client');
 
 const bcrypt = require('bcrypt'); //for encryption
-const saltRounds = 10;
 
 module.exports = {
   getUser,
