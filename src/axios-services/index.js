@@ -88,3 +88,14 @@ export async function tokenLogin(inputUsername, inputPassword, setToken){
     })
     .catch(console.error);
 }
+
+const makeHeaders = (token) => {
+  return (token ? 
+  {
+      "Content-Type" : "application/json",
+      "Authorization" : `Bearer ${token}`
+  } :
+  {
+      "Content-Type" : "application/json"
+  } )
+}

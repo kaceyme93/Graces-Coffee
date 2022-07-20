@@ -12,7 +12,6 @@ export default function Register(props){
     return (
         <form style={{width: "23rem"}} onSubmit={(e)=>{
             e.preventDefault();
-            console.log("Registering");
             if(password===confirmPassword){
                 tokenRegister(userName, password, setToken)
                 setPassword("");
