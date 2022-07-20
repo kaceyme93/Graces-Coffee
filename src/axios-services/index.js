@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 // this file holds your frontend network request adapters
 // think about each function as a service that provides data
 // to your React UI through AJAX calls
@@ -44,4 +45,57 @@ export async function getAllProducts() {
   } catch (err) {
     console.error(err);
   }
+}
+
+export async function tokenRegister(inputUsername, inputPassword, setToken){
+  fetch(`api/users/register`, {
+    method: "POST",
+    headers : {
+      "Content-Type" : "application/json"
+    },
+    body: JSON.stringify({
+      user: {
+        username: inputUsername,
+        password: inputPassword
+      }
+    })
+  }).then(response => response.json())
+    .then(result => {
+      setToken(result.data.token);
+      localStorage.setItem("jwt", result.data.token);
+      alert(result.data.message);
+    })
+    .catch(console.error);
+}
+
+export async function tokenLogin(inputUsername, inputPassword, setToken){
+  fetch(`api/users/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": 'application/json'
+    },
+    body: JSON.stringify({
+      user: {
+        username: inputUsername,
+        password: inputPassword
+      }
+    })
+  }).then(response => response.json())
+    .then(result => {
+      setToken(result.data.token);
+      localStorage.setItem("jwt", result.data.token);
+      alert(result.data.message);
+    })
+    .catch(console.error);
+}
+
+const makeHeaders = (token) => {
+  return (token ? 
+  {
+      "Content-Type" : "application/json",
+      "Authorization" : `Bearer ${token}`
+  } :
+  {
+      "Content-Type" : "application/json"
+  } )
 }
