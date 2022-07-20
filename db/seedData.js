@@ -1,5 +1,4 @@
 const client = require('./client');
-const { createProduct } = require('./models/products');
 
 async function dropTables() {
   console.log('Dropping All Tables...');
@@ -28,53 +27,9 @@ async function createTables() {
         "inStock" BOOLEAN DEFAULT false,
         category VARCHAR(255) NOT NULL
         );`);
-    console.log('Finished construction Tables.');
+    console.log('Finished constructing Tables.');
   } catch (error) {
     console.error('ERROR CONSTRUCTING TABLES!');
-    throw error;
-  }
-}
-
-async function createInitialProducts() {
-  console.log('Starting to create users...');
-  try {
-    const productsToCreate = [
-      {
-        name: 'A Shirt',
-        description: "It's a shirt",
-        price: 100.0,
-        inStock: true,
-        category: 'Clothing',
-        imageURL:
-          'https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-      },
-      ,
-      {
-        name: 'Sandwich',
-        description: "It's a sandwich",
-        price: 101.5,
-        inStock: false,
-        category: 'Food',
-        imageURL:
-          'https://images.unsplash.com/photo-1553909489-cd47e0907980?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80',
-      },
-      {
-        name: 'Something else',
-        description: "It's neither",
-        price: 5000,
-        inStock: true,
-        category: 'Neither clothing nor food',
-        imageURL:
-          'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-      },
-    ];
-    const products = await Promise.all(productsToCreate.map(createProduct));
-
-    console.log('products created:');
-    console.log(products);
-    console.log('Finished creating products!');
-  } catch (error) {
-    console.error('Error creating products!');
     throw error;
   }
 }
@@ -84,12 +39,12 @@ async function rebuildDB() {
     await client.connect();
     await dropTables();
     await createTables();
-    await createInitialProducts();
   } catch (error) {
     console.log('Error during rebuildDB');
     throw error;
   }
 }
+
 rebuildDB()
   .catch(console.error)
   .finally(() => client.end());
