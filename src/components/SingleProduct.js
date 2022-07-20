@@ -22,7 +22,7 @@ function SingleProduct({ id }) {
       {product.imageURL && (
         <img
           src={product.imageURL}
-          alt='t-shirt'
+          alt={product.name}
           className='product-image'
           onClick={() => {
             history.push(`/products/${product.id}`);
