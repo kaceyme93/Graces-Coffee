@@ -1,3 +1,30 @@
-.single-product h1 {
-  color: black;
+.single-product {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px solid black;
+  padding: 5px;
+  margin: 10px;
+
+  box-shadow: 2px 2px 5px lightgray;
+}
+
+.single-product img {
+  width: 250px;
+  height: 250px;
+}
+
+.product-name {
+  font-size: 24px;
+  text-decoration: underline;
+}
+
+.product-name:hover {
+  cursor: pointer;
+}
+
+.product-image:hover {
+  cursor: pointer;
 }

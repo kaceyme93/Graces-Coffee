@@ -32,9 +32,11 @@ const App = () => {
       <Router>
         <Navbar />
         <Switch>
-          <Route exact path='/products/:productId'>
-            <SingleProduct />
-          </Route>
+          <Route
+            exact
+            path='/products/:productId'
+            component={SingleProduct}
+          ></Route>
 
           <Route exact path='/products'>
             <AllProducts />
