@@ -5,10 +5,13 @@ import '../style/App.css';
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
 import { getAPIHealth } from '../axios-services';
-import { SingleProduct, AllProducts, Navbar } from './index';
+import { SingleProduct, AllProducts, Navbar, Register, Login } from './index';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
+  const localStorageToken = localStorage.getItem("jwt");
+  const [token, setToken] = useState(localStorageToken);
+  const [userInfo, setUserInfo] = useState({})
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -37,6 +40,14 @@ const App = () => {
 
           <Route exact path='/products'>
             <AllProducts />
+          </Route>
+
+          <Route exact path='/users/register'>
+            <Register setToken={setToken}/>
+          </Route>
+
+          <Route exact path='/users/login'>
+            <Login setToken={setToken}/>
           </Route>
         </Switch>
       </Router>

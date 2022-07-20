@@ -11,6 +11,12 @@ function Navbar() {
       <Link className='navbar-links' to='/products'>
         Products
       </Link>
+      <Link className='navbar-links' to='/users/login'>
+        Login
+      </Link>
+      <Link className='navbar-links' to='/users/register'>
+        Register
+      </Link>
     </nav>
   );
 }
