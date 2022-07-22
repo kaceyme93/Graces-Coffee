@@ -52,10 +52,10 @@ const App = () => {
         </Switch>
       </Router>
 
-      <div className='API-status'>
+      {/* <div className='API-status'>
         <h1>Hello, World!</h1>
         <p>API Status: {APIHealth}</p>
-      </div>
+      </div> */}
     </div>
   );
 };

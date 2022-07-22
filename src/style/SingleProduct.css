@@ -20,3 +20,17 @@
 .product-inStock {
   font-style: italic;
 }
+
+.single-product-quantity-group {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.single-product-quantity-button {
+  margin-top: 2rem;
+  font-size: 18px;
+}
+
+.single-product-add-to-cart {
+  width: 10vw;
+}
