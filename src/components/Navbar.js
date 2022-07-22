@@ -11,6 +11,9 @@ function Navbar() {
       <Link className='navbar-links' to='/products'>
         Products
       </Link>
+      <Link className='navbar-links' to ='/orders/cart'>
+        <img className="navbar-cart" src="https://img.icons8.com/ios-glyphs/30/000000/shopping-cart--v1.png"/>
+      </Link>
       <Link className='navbar-links' to='/users/login'>
         Login
       </Link>

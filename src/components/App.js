@@ -49,6 +49,9 @@ const App = () => {
           <Route exact path='/users/login'>
             <Login setToken={setToken}/>
           </Route>
+          {/* <Route exact path = '/orders/cart'>
+            <Cart />
+          </Route> */}
         </Switch>
       </Router>
 

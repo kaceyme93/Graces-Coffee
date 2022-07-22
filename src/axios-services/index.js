@@ -47,6 +47,24 @@ export async function getAllProducts() {
   }
 }
 
+export async function getSingleOrder(orderId) {
+  try {
+    const { data: order } = await axios.get(`/api/orders/${orderId}`);
+    return order;
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export async function getCart() {
+  try {
+    const { data: cartProducts } = await axios.get(`api/orders/cart`);
+    return cartProducts;
+  } catch(err) {
+    console.error(err)
+  }
+}
+
 export async function tokenRegister(inputUsername, inputPassword, setToken){
   fetch(`api/users/register`, {
     method: "POST",

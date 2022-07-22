@@ -119,35 +119,4 @@ usersRouter.post('/login', async (req, res, next) => {
     }
 })
 
-usersRouter.get('/me', async(req, res, next) => {
-    const prefix = 'Bearer ';
-    const auth = req.header('Authorization');
-
-  if (!auth) {
-    res.status(401).send({
-        error: "AuthorizationError",
-        message: "You must be logged in to perform this action",
-        name: "401 Error"
-    })
-  } else if (auth.startsWith(prefix)) {
-    const token = auth.slice(prefix.length);
-
-    try {
-      const { id } = jwt.verify(token, JWT_SECRET);
-
-      if (id) {
-        const user = await getUserById(id);
-        res.send({
-            id: user.id,
-            username: user.username
-        })
-      }
-    } catch ({ name, message }) {
-      res.send({
-        error: 401
-      });
-    }
-  } 
-})
-
 module.exports = usersRouter
