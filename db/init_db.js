@@ -68,18 +68,6 @@ async function populateInitialData() {
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
-    const products = [];
-
-    function createRandomProduct() {
-      return {
-        name: faker.commerce.product(),
-        description: faker.commerce.productDescription(),
-        price: faker.commerce.price(1, 100, 2),
-        inStock: faker.datatype.boolean(),
-        category: faker.commerce.department(),
-        imageURL: faker.image.food(250, 250, true),
-      };
-    }
 
     const product1 = await Products.createProduct({
       name: 'A Shirt',
@@ -90,54 +78,31 @@ async function populateInitialData() {
       imageURL: 'https://bit.ly/3IGVaml',
     });
 
-    const product2 = await Products.createProduct({
-      name: 'Sandwich',
-      description: "It's a sandwich",
-      price: 101.5,
-      inStock: false,
-      category: 'Food',
-      imageURL: 'https://bit.ly/3O8OUER',
-    });
+    // const products = [];
 
-    const product3 = await Products.createProduct({
-      name: 'Rubber Ducky',
-      description: 'Helps with debugging',
-      price: 2.0,
-      inStock: true,
-      category: 'Toys',
-      imageURL: 'https://bit.ly/3yS21F7',
-    });
+    // function createRandomProduct() {
+    //   return {
+    //     name: faker.commerce.product(),
+    //     description: faker.commerce.productDescription(),
+    //     price: faker.commerce.price(1, 100, 2),
+    //     inStock: faker.datatype.boolean(),
+    //     category: faker.commerce.department(),
+    //     imageURL: faker.image.food(250, 250, true),
+    //   };
+    // }
 
-    const product4 = await Products.createProduct({
-      name: 'Meal Kit',
-      description: `Spaghetti code drizzled with pomodoro sauce`,
-      price: 19.99,
-      inStock: true,
-      category: 'Coder Fuel',
-      imageURL: 'https://bit.ly/3cmMju2',
-    });
+    // Array.from({ length: 50 }).forEach(() => {
+    //   products.push(createRandomProduct());
+    // });
 
-    const product5 = await Products.createProduct({
-      name: 'Rubber Stamp',
-      description: `For pull requests`,
-      price: 5.0,
-      inStock: true,
-      category: 'Productivity',
-      imageURL: 'https://bit.ly/3OgLCzt',
-    });
+    // products.forEach(async (product) => {
+    //   await Products.createProduct(product);
+    // });
 
-    Array.from({ length: 50 }).forEach(() => {
-      products.push(createRandomProduct());
-    });
-
-    products.forEach(async (product) => {
-      await Products.createProduct(product);
-    });
-
-    const order1 = await Orders.createOrder({
-      status: 'created',
-      userId: null,
-    });
+    // const order1 = await Orders.createOrder({
+    //   status: 'created',
+    //   userId: null,
+    // });
   } catch (error) {
     throw error;
   }
