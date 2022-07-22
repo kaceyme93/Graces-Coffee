@@ -38,8 +38,8 @@ async function buildTables() {
       "imageURL" TEXT DEFAULT 'https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image.jpg',
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) UNIQUE NOT NULL,
-      "isAdmin" BOOLEAN NOT NULL DEFAULT false
-    )`);
+      "isAdmin" BOOLEAN NOT NULL DEFAULT FALSE
+      )`);
 
     console.log('creating orders table');
     await client.query(`CREATE TABLE orders (

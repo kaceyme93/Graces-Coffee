@@ -47,29 +47,61 @@ export async function getAllProducts() {
   }
 }
 
-export async function tokenRegister(inputUsername, inputPassword, setToken){
-  fetch(`api/users/register`, {
-    method: "POST",
-    headers : {
-      "Content-Type" : "application/json"
-    },
-    body: JSON.stringify({
-      user: {
-        username: inputUsername,
-        password: inputPassword
-      }
-    })
-  }).then(response => response.json())
-    .then(result => {
-      setToken(result.data.token);
-      localStorage.setItem("jwt", result.data.token);
-      alert(result.data.message);
-    })
-    .catch(console.error);
+export async function tokenRegister(inputUsername, inputPassword, inputEmail, inputFirst, inputLast, setToken){
+  try {
+    const {data: register} = await axios.post('/api/users/register', {
+      username : inputUsername,
+      password : inputPassword,
+      email : inputEmail,
+      firstName : inputFirst,
+      lastName : inputLast
+    }).then(response => response.json())
+        .then(result => {
+          setToken(result.data.token);
+          localStorage.setItem("jwt", result.data.token);
+          alert(result.data.message);
+        })
+    console.log("sending back register info", register)
+    return register
+  } catch (err) {
+    console.error(err);
+  }
 }
 
+axios.post('/user', {
+  firstName: 'Fred',
+  lastName: 'Flintstone'
+})
+.then(function (response) {
+  console.log(response);
+})
+.catch(function (error) {
+  console.log(error);
+});
+
+// export async function tokenRegister(inputUsername, inputPassword, setToken){
+//   fetch(`/api/users/register`, {
+//     method: "POST",
+//     headers : {
+//       "Content-Type" : "application/json"
+//     },
+//     body: JSON.stringify({
+//       user: {
+//         username: inputUsername,
+//         password: inputPassword
+//       }
+//     })
+//   }).then(response => response.json())
+//     .then(result => {
+//       setToken(result.data.token);
+//       localStorage.setItem("jwt", result.data.token);
+//       alert(result.data.message);
+//     })
+//     .catch(console.error);
+// }
+
 export async function tokenLogin(inputUsername, inputPassword, setToken){
-  fetch(`api/users/login`, {
+  fetch(`/api/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": 'application/json'
