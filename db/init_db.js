@@ -28,7 +28,8 @@ async function buildTables() {
       "inStock" BOOLEAN DEFAULT false,
       category VARCHAR(255) NOT NULL,
       origin TEXT NOT NULL,
-      roast TEXT NOT NULL
+      roast TEXT NOT NULL,
+      size VARCHAR(255) NOT NULL
       )`);
     console.log('creating users table');
     // this users table does not currently check email for format, which is stated in the milestones... May need to check this during createUser function.
@@ -75,12 +76,13 @@ async function populateInitialData() {
       description: `This coffee exists for early morning risers.  
          Eye-opening boldness and big body preparing you for whatever lies in front of you.  
          A cup with a full dark chocolate mouthfeel, peanut butter, caramel, and ending with toasted marshmallow
-         12 ounce bag`,
+         `,
       price: 20.0,
       inStock: true,
       category: 'Whole Bean',
       origin: 'South America',
       roast: 'Dark',
+      size: '12 oz',
       imageURL:
         'https://images.squarespace-cdn.com/content/v1/602ab9f496e25d6c4bf3e60a/1626184276816-EIUQPATL1FDJ06338DTD/Guatemala_30387.jpg?format=1000w',
     });
@@ -89,12 +91,13 @@ async function populateInitialData() {
       name: 'Columbia',
       description: `Our “House” drip. Smooth, traditional, rich with snippets of praline and low acidity. 
       This hard-working roast will be at home in your automatic drip machine, your Chemex and your French Press.
-      12 ounce bag`,
+      `,
       price: 18.0,
       inStock: false,
       category: 'Ground',
       origin: 'South America',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://images.squarespace-cdn.com/content/v1/602ab9f496e25d6c4bf3e60a/1632506678729-TLXGMMOLZR9QPI5TGA4O/colombia+w+badge.jpg?format=1000w',
     });
@@ -103,12 +106,13 @@ async function populateInitialData() {
       name: 'Uganda',
       description: `This coffee has caramel notes of dried figs, earthy spices, brown sugar and raisins. 
       The taste evokes Bakers chocolate and Brazil nut richness.
-      12 ounce bag`,
+      `,
       price: 18.0,
       inStock: true,
       category: 'Whole Bean',
       origin: 'Africa',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://images.squarespace-cdn.com/content/v1/602ab9f496e25d6c4bf3e60a/1614618598284-TJHFZGZXOTBC8CXTJMEG/2_Uganda_BSC_30165_1500px_Medium.jpg?format=1000w',
     });
@@ -119,12 +123,13 @@ async function populateInitialData() {
       El Vergel estate made the decision to produce a very high-quality decaffeinated coffee, after seeing that all the coffee used in Colombia to produce "decaf" is a low-quality coffee.
       This decaf coffee forgoes a water, then steam wash. After the bean has expanded it is washed with EA. 
       Additionally; with no heat or pressure being involved in this process - it does not lose its natural sweetness or acidity in the cup.
-      12 ounce bag`,
+      `,
       price: 22.0,
       inStock: true,
       category: 'Whole Bean',
       origin: 'South America',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://images.squarespace-cdn.com/content/v1/602ab9f496e25d6c4bf3e60a/1642528430475-TIMZS6CIKTW5ZE3IRCVO/ColumbiaClarosPerdomoMashup_7217.jpg?format=1000w',
     });
@@ -135,12 +140,13 @@ async function populateInitialData() {
       This washing station has been operating since 1979 and supports the crops of over 2400 smallholders in the area.
       The fully washed coffee is grown by smallholders in Ngozi, Burundi.
       This coffee begins with a floral aroma. It has a mouth full of coffee cherry, herbs, and ends with a nice darker chocolate.
-      12 ounce bag`,
+      `,
       price: 25.0,
       inStock: true,
       category: 'Ground',
       origin: 'Africa',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://images.squarespace-cdn.com/content/v1/602ab9f496e25d6c4bf3e60a/1637590550739-Q2A6DD1LWA5O8IK298DZ/Burundi_30240.jpg?format=1000w',
     });
@@ -150,12 +156,13 @@ async function populateInitialData() {
       description: `
       This cup of coffee carries a sweet basil aroma and is bright with citrus and tropical fruits such as lychee, papaya, mango, melon, lemon and red apple. 
       It'll have a rounded body with brown sugar, brown baking spices & anise.
-      8 ounce bag`,
+      `,
       price: 92.0,
       inStock: true,
       category: 'Whole Beans',
       origin: 'South America',
       roast: 'Medium',
+      size: '8 oz',
       imageURL:
         'https://images.squarespace-cdn.com/content/v1/602ab9f496e25d6c4bf3e60a/1624470665648-7U8LKK2TJ7V2JKYLN59B/PanamaHoneyGesha_7294.jpg?format=1000w',
     });
@@ -165,12 +172,13 @@ async function populateInitialData() {
       description: `
       Medium-Roasted, Certified Fair Trade and Organic blend that's mellow and bright like a nilla wafer with marmalade.
       Toasty, bright and comforting like dried berry granola in milk. The choice for easy drinking.
-      10.5 ounce bag`,
+      `,
       price: 13.5,
       inStock: true,
       category: 'Cold Brew',
       origin: 'North America',
       roast: 'Light',
+      size: '10.5 oz',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0556/1378/4259/t/6/assets/acf.PRODUCT-STORY_Granville.jpg?v=1651025308',
     });
@@ -179,12 +187,13 @@ async function populateInitialData() {
       name: 'Decaf Redline',
       description: `
       Flagship decaf is flavorful like caramel, nuts, and berries with a sweet aftertaste and cheery disposition.
-      10.5 ounce bag`,
+      `,
       price: 11.75,
       inStock: false,
       category: 'Whole Beans',
       origin: 'North America',
       roast: 'Light',
+      size: '10.5 oz',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0556/1378/4259/t/6/assets/acf.PRODUCT-STORY_decafREDLINE.jpg?v=1649100489',
     });
@@ -193,12 +202,13 @@ async function populateInitialData() {
       name: 'La Cordillera',
       description: `
       Classic medium-bodied breakfast brew is easy-drinking and smooth straight up, or pure caramel in milk.
-      10.5 ounce bag`,
+      `,
       price: 11.75,
       inStock: true,
       category: 'Ground',
       origin: 'North America',
       roast: 'Medium',
+      size: '10.5 oz',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0556/1378/4259/t/6/assets/acf.PRODUCT-STORY_laCORDILLERA.jpg?v=1649179323',
     });
@@ -207,12 +217,13 @@ async function populateInitialData() {
       name: 'House Blend',
       description: `
       Sturdy House Blend never disappoints with flavors like vanilla, dark chocolate and pecan.
-      5 lb`,
+      `,
       price: 75.0,
       inStock: true,
       category: 'Whole Beans',
       origin: 'North America',
       roast: 'Dark',
+      size: '5 lb',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0556/1378/4259/t/6/assets/acf.PRODUCT-STORY_HOUSE.jpg?v=1649178594',
     });
@@ -221,12 +232,13 @@ async function populateInitialData() {
       name: 'French Roast Blend',
       description: `
       Sexy and seductive flavors like molasses, pipe tobacco smoke and swiss baker's chocolate.
-      2 lb`,
+      `,
       price: 32.25,
       inStock: true,
       category: 'Whole Beans',
       origin: 'North America',
       roast: 'Dark',
+      size: '2 lb',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0556/1378/4259/t/6/assets/acf.PRODUCT-STORY_FRENCHroast.jpg?v=1649178277',
     });
@@ -235,12 +247,13 @@ async function populateInitialData() {
       name: 'Sumatra Gayonese',
       description: `
       Full Body-Black Pepper-Dark Chocolate
-      12 ounce bag`,
+      `,
       price: 14.0,
       inStock: true,
       category: 'Whole Beans',
       origin: 'Asia',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://www.bridgeportcoffee.net/wp-content/uploads/2021/01/Sumatra-12oz-600x788.jpg',
     });
@@ -249,12 +262,13 @@ async function populateInitialData() {
       name: 'El Progreso',
       description: `
       Medium Body-Honey-Notes of Milk Chocolate
-      12 ounce bag`,
+      `,
       price: 14.0,
       inStock: true,
       category: 'Whole Beans',
       origin: 'South America',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://www.bridgeportcoffee.net/wp-content/uploads/2021/01/ElProgresoIllustration-600x788.jpg',
     });
@@ -263,12 +277,13 @@ async function populateInitialData() {
       name: 'Ethiopia Yirgacheffe',
       description: `
       Heavy body - Creamy - Rich
-      12 ounce bag`,
+      `,
       price: 14.0,
       inStock: true,
       category: 'Whole Beans',
       origin: 'Africa',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://www.bridgeportcoffee.net/wp-content/uploads/2021/06/image0-600x788.jpeg',
     });
@@ -279,12 +294,13 @@ async function populateInitialData() {
       Welcome to the world of cleanliness and purity. Like that of the sea jellies, these coffee seeds were soaked in an ocean of water. 
       During the coffees' short swim, fermentation, acting as wisdom, drives acidity, clarity, and focus throughout each tentacle of possibility.
       Notes: Asian Pear, Nutty, Fig Newton 
-      12 ounce bag`,
+      `,
       price: 22.0,
       inStock: true,
       category: 'Whole Beans',
       origin: 'South America',
       roast: 'Light',
+      size: '12 oz',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0294/6861/products/SPPVBag_Front_720x.png?v=1658424147',
     });
@@ -294,12 +310,13 @@ async function populateInitialData() {
       description: `
       A Love Supreme is a comfort coffee and a pleasure for palates of all generations. 
       Notes: Cocoa, Walnut, Toffee
-      12 ounce bag`,
+      `,
       price: 19.0,
       inStock: false,
       category: 'Whole Beans',
       origin: 'North America',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0294/6861/products/ALoveSupremeBag_Front_720x.png?v=1657733774',
     });
@@ -308,12 +325,13 @@ async function populateInitialData() {
       name: '¡Sin Cafeína! (Decaf)',
       description: `
       This is a water processed coffee from Colombia, with notes of plum, dark chocolate and floral. 
-      12 ounce bag`,
+      `,
       price: 20.0,
       inStock: true,
       category: 'Ground',
       origin: 'South America',
       roast: 'Dark',
+      size: '12 oz',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0294/6861/products/DecafBag_redo__Front_c780d605-b804-4248-b091-7a19aec2d575_720x.png?v=1657819096',
     });
@@ -325,12 +343,13 @@ async function populateInitialData() {
       naturally processed Ethiopian coffees brings us the juice bomb we crave this season. 
       Refreshing hibiscus-like acidity is balanced out by a sweet pastry crust and a long pleasant finish. 
       Put on your 90's hibiscus-print anything, turn on Sheryl Crow's "Soak up the Sun" and you'll be on brand with this brew. 
-      12 ounce bag`,
+      `,
       price: 18.0,
       inStock: true,
       category: 'Whole Beans',
       origin: 'Africa',
       roast: 'Light',
+      size: '12 oz',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0043/6099/4934/products/simplesummer22_1800x1800.jpg?v=1653661278',
     });
@@ -341,12 +360,13 @@ async function populateInitialData() {
       La Gladiola comes from multiple smallholder farms in the north-western part of the Tarrazu valley, Costa Rica. 
       Tarrazu coffee is highly regarded, and is known for growing very clean, high quality coffees.
       Sweet, medium-bodied, and notes of chocolate make La Gladiola an excellent choice for drip coffee.
-      12 ounce bag`,
+      `,
       price: 15.5,
       inStock: true,
       category: 'Whole Beans',
       origin: 'South America',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0043/6099/4934/products/gladiola_1800x1800.jpg?v=1638280835',
     });
@@ -358,12 +378,13 @@ async function populateInitialData() {
       so much in fact that it's the same coffee we brew in 300 gallon batches for our original and nitro cans. 
       That being said, a Space Cadet isn't bound by the rules of any world but their own, so you can brew this blend up however you'd like! 
       Our team tastes notes of clementine, nougat and burnt sugar.
-      5 lb`,
+      `,
       price: 80.0,
       inStock: true,
       category: 'Whole Beans',
       origin: 'North America',
       roast: 'Medium',
+      size: '5 lb',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0043/6099/4934/products/spacecadet_e551c73d-0e67-49ef-9e7a-d56d1cbd5302_1800x1800.jpg?v=1620147848',
     });
@@ -372,12 +393,13 @@ async function populateInitialData() {
       name: 'Cold Brew',
       description: `
       A blend of high quality coffees from Central America and Africa, we taste notes of clementine, nougat, burnt sugar, with a clean, crisp finish.
-      12 cans`,
+      `,
       price: 35.0,
       inStock: true,
       category: 'Cans',
       origin: 'Blend',
       roast: 'Medium',
+      size: '12 cans',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0043/6099/4934/products/CB_1800x1800.jpg?v=1640269804',
     });
@@ -388,12 +410,13 @@ async function populateInitialData() {
       Not all decafs are created equal, and we think our Daydream Decaf Cold Brew is as tasty as our original. 
       While the majority of decaf coffees on the market use chemicals to remove caffeine from the coffee seeds, 
       these Brazilian beans are water-processed, which is chemical free, and preserves the taste and characteristics of the coffee.
-      12 cans`,
+      `,
       price: 35.0,
       inStock: true,
       category: 'Cans',
       origin: 'South America',
       roast: 'Medium',
+      size: '12 cans',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0043/6099/4934/products/daydreamcans_1800x1800.jpg?v=1651502536',
     });
@@ -405,12 +428,13 @@ async function populateInitialData() {
       The mix of the washed and natural process in this blend lends to a slightly less acidic, more balanced cup. 
       If you haven't tried an Ethiopian coffee before, this is the perfect place to start.
       Notes: Lilac, Citrus, Stone Fruit, Praline
-      12 ounce`,
+      `,
       price: 20.0,
       inStock: true,
       category: 'Whole Beans',
       origin: 'Africa',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://www.backlotcoffee.com/uploads/1/3/1/3/131339830/s993623203935796114_p25_i2_w3754.jpeg?width=2560?width=800',
     });
@@ -421,12 +445,13 @@ async function populateInitialData() {
       Flying Squirrel is our most beloved, tried and true, house blend. 
       Consistently blended with fresh crop harvests from Central & South America, this coffee is comforting, well-balanced, and universal. 
       It is roasted medium, and can be used for Espresso, Cold Brew, or anything you throw at it. 
-      12 ounce`,
+      `,
       price: 17.5,
       inStock: true,
       category: 'Whole Beans',
       origin: 'South America',
       roast: 'Medium',
+      size: '12 oz',
       imageURL:
         'https://www.backlotcoffee.com/uploads/1/3/1/3/131339830/s993623203935796114_p7_i5_w3898.jpeg?width=2560?width=800',
     });
@@ -441,6 +466,7 @@ async function populateInitialData() {
       category: 'Gear',
       origin: 'n/a',
       roast: 'n/a',
+      size: 'n/a',
       imageURL:
         'https://www.backlotcoffee.com/uploads/1/3/1/3/131339830/s993623203935796114_p36_i8_w2160.jpeg?width=800',
     });
@@ -455,6 +481,7 @@ async function populateInitialData() {
       category: 'Gear',
       origin: 'n/a',
       roast: 'n/a',
+      size: 'n/a',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0556/1378/4259/products/Kalita_Ceramic-Dripper_2000x.jpg?v=1646843493',
     });
@@ -470,6 +497,7 @@ async function populateInitialData() {
       category: 'Gear',
       origin: 'n/a',
       roast: 'n/a',
+      size: 'n/a',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0294/6861/products/pc-baratza-encore-white-2020-WBG-angle__98705_720x.png?v=1612809291',
     });
@@ -487,6 +515,7 @@ async function populateInitialData() {
       category: 'Gear',
       origin: 'n/a',
       roast: 'n/a',
+      size: 'n/a',
       imageURL:
         'https://cdn.shopify.com/s/files/1/0294/6861/products/bonavita-brewer_460x.png?v=1417727639',
     });
@@ -503,6 +532,7 @@ async function populateInitialData() {
       category: 'Gear',
       origin: 'n/a',
       roast: 'n/a',
+      size: 'n/a',
       imageURL:
         'https://d9pl0lig74xnv.cloudfront.net/catalog/product/cache/91e9c011f0ac998e686df01a906b8401/1/9/1928-16_3__1.jpg',
     });

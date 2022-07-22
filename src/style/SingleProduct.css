@@ -1,7 +1,6 @@
 .single-product {
   display: flex;
   flex-flow: row wrap;
-
   margin-top: 5rem;
 }
 
@@ -9,6 +8,15 @@
   width: 500px;
   height: 500px;
   border-radius: 10px;
-
   margin-right: 5rem;
+}
+
+.product-details {
+  display: flex;
+  flex-flow: column wrap;
+  width: 40vw;
+}
+
+.product-inStock {
+  font-style: italic;
 }

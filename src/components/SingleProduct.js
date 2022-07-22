@@ -18,7 +18,19 @@ function SingleProduct() {
   return (
     <div className='single-product'>
       <img src={product.imageURL}></img>
-      <h2>{product.name}</h2>
+      <div className='product-details'>
+        <h2>{product.name}</h2>
+        <p>
+          ${product.price} - {product.size}
+        </p>
+        <p className='product-inStock'>
+          {product.inStock === true ? 'In Stock' : 'Out of Stock'}
+        </p>
+        <p>{product.description}</p>
+        <p>Origin: {product.origin}</p>
+        <p>Roast: {product.roast}</p>
+        <p>Category: {product.category}</p>
+      </div>
     </div>
   );
 }
