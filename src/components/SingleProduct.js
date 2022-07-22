@@ -1,46 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getSingleProduct } from '../axios-services';
 import '../style/SingleProduct.css';
 
-function SingleProduct({ id }) {
+function SingleProduct() {
   const [product, setProduct] = useState([]);
   const { productId } = useParams();
-  const history = useHistory();
 
   useEffect(() => {
     const fetchSingleProduct = async () => {
-      const result = await getSingleProduct(id || productId);
+      const result = await getSingleProduct(productId);
       setProduct(result);
     };
     fetchSingleProduct();
-  }, [id, productId]);
+  }, [productId]);
 
   return (
     <div className='single-product'>
-      {product.imageURL && (
-        <img
-          src={product.imageURL}
-          alt={product.name}
-          className='product-image'
-          onClick={() => {
-            history.push(`/products/${product.id}`);
-          }}
-        ></img>
-      )}
-      <p
-        className='product-name'
-        onClick={() => {
-          history.push(`/products/${product.id}`);
-        }}
-      >
-        {product.name}
-      </p>
-      <p>Description: {product.description}</p>
-      <p>Price: ${product.price}</p>
-      <p>In Stock: {product.inStock === true ? 'Yes' : 'No'}</p>
-      <p>Category: {product.category}</p>
+      <img src={product.imageURL}></img>
+      <h2>{product.name}</h2>
     </div>
   );
 }
