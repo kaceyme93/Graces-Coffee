@@ -1,46 +1,60 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getSingleProduct } from '../axios-services';
+import Button from 'react-bootstrap/Button';
 import '../style/SingleProduct.css';
 
-function SingleProduct({ id }) {
+function SingleProduct() {
   const [product, setProduct] = useState([]);
   const { productId } = useParams();
-  const history = useHistory();
 
   useEffect(() => {
     const fetchSingleProduct = async () => {
-      const result = await getSingleProduct(id || productId);
+      const result = await getSingleProduct(productId);
       setProduct(result);
     };
     fetchSingleProduct();
-  }, [id, productId]);
+  }, [productId]);
 
   return (
     <div className='single-product'>
-      {product.imageURL && (
-        <img
-          src={product.imageURL}
-          alt={product.name}
-          className='product-image'
-          onClick={() => {
-            history.push(`/products/${product.id}`);
-          }}
-        ></img>
-      )}
-      <p
-        className='product-name'
-        onClick={() => {
-          history.push(`/products/${product.id}`);
-        }}
-      >
-        {product.name}
-      </p>
-      <p>Description: {product.description}</p>
-      <p>Price: ${product.price}</p>
-      <p>In Stock: {product.inStock === true ? 'Yes' : 'No'}</p>
-      <p>Category: {product.category}</p>
+      <img src={product.imageURL}></img>
+      <div className='product-details'>
+        <h2>{product.name}</h2>
+        <p>
+          ${product.price} - {product.size}
+        </p>
+        <p className='product-inStock'>
+          {product.inStock === true ? 'In Stock' : 'Out of Stock'}
+        </p>
+        <p>{product.description}</p>
+        <p>Origin: {product.origin}</p>
+        <p>Roast: {product.roast}</p>
+        <p>Category: {product.category}</p>
+
+        <div className='single-product-quantity-group'>
+          <p className='single-product-quantity-button'>
+            <Button variant='outline-dark' size='sm'>
+              -
+            </Button>
+            {'  '}
+            Quantity {'  '}
+            <Button variant='outline-dark' size='sm'>
+              +
+            </Button>
+          </p>
+          {/* this should be updated to reflect the total during onClick */}
+          <p>Total: 0</p>
+        </div>
+
+        <Button
+          variant='success'
+          type='submit'
+          className='single-product-add-to-cart'
+        >
+          Add to Cart
+        </Button>
+      </div>
     </div>
   );
 }
