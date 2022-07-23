@@ -39,13 +39,13 @@ usersRouter.post('/register', async (req, res, next) => {
             username : user.username
           }, JWT_SECRET)
         
-        res.send(res.send(
+        res.send(
             {
             token: token,
             user : user,
             message: `Thank you for registering ${username}`
             }
-        ))
+        )
     } catch({ name, message}) {
         next({ name, message})
     }
@@ -69,10 +69,9 @@ usersRouter.get('/me', async(req, res, next) => {
 
       if (id) {
         const user = await getUserById(id);
-        res.send({
-            id: user.id,
-            username: user.username
-        })
+        res.send(
+          user
+        )
       }
     } catch ({ name, message }) {
       res.send({

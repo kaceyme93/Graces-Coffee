@@ -11,6 +11,10 @@ export default function Register(props){
     const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+
+    // const profilePage=()=>{
+    //   history.push('/profile');
+    // }
     
     return (
         <form style={{width: "23rem"}} onSubmit={(e)=>{
@@ -31,6 +35,7 @@ export default function Register(props){
             setEmail("");
             setFirstName("");
             setLastName("");
+            // profilePage();
           }}>
 
             <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing : '1px'}}>Register new account</h3>

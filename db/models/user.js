@@ -22,7 +22,6 @@ const createUser = async ({firstName, lastName, email, username, password }) => 
     console.error("ERROR CREATING USER");
     throw error;
   }
-  
 }
 
 const getUser = async ({username, password}) => {
@@ -40,7 +39,7 @@ const getUser = async ({username, password}) => {
   }
 }
 
-const getUserByUsername = async ({username}) => {
+const getUserByUsername = async (username) => {
   console.log('getting user by username')
   try{
     const {rows:[user]} = await client.query(`
@@ -48,7 +47,6 @@ const getUserByUsername = async ({username}) => {
     FROM users
     WHERE username=$1;
     `, [username]);
-    
     if(user){
       return user;
     }
@@ -62,10 +60,11 @@ const getUserById = async (id) => {
   console.log('getting user by id: ', id)
   try{
     const {rows:[user]} = await client.query(`
-    SELECT id, username
+    SELECT *
     FROM users
     WHERE id=$1;
     `, [id]);
+    delete user.password
     
     if(user){
       return user;

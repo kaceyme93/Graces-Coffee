@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { tokenLogin } from '../axios-services/index';
 
 export default function Login(props) {
@@ -8,12 +8,17 @@ export default function Login(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    // const profilePage = ()=>{
+    //   history.push('/profile')
+    // }
+
     return (
           <form style={{width: "23rem"}} onSubmit={(e)=>{
             e.preventDefault();
             tokenLogin(username, password, setToken);
             setPassword("");
             setUsername("");
+            // profilePage();
           }}>
 
             <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing : '1px'}}>Log in</h3>
