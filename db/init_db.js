@@ -4,10 +4,10 @@ const {
   // for example, User
   Products,
   Orders,
+  Users,
 } = require('./');
 
 const client = require('./client.js');
-
 
 async function buildTables() {
   try {
@@ -537,6 +537,15 @@ async function populateInitialData() {
       size: 'n/a',
       imageURL:
         'https://d9pl0lig74xnv.cloudfront.net/catalog/product/cache/91e9c011f0ac998e686df01a906b8401/1/9/1928-16_3__1.jpg',
+    });
+
+    const user1 = await Users.createUser({
+      firstName: 'Minsung',
+      lastName: 'Kim',
+      email: '123@gmail.com',
+      username: 'minsung',
+      password: '123456789',
+      isAdmin: true,
     });
 
     // const products = [];
