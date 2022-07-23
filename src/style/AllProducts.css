@@ -4,3 +4,35 @@
   justify-content: center;
   align-items: center;
 }
+
+.products-list {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px solid black;
+  padding: 5px;
+  margin: 10px;
+  width: 264px;
+
+  box-shadow: 2px 2px 5px lightgray;
+}
+
+.product-image {
+  width: 250px;
+  height: 250px;
+}
+
+.product-name {
+  font-size: 24px;
+  text-decoration: underline;
+}
+
+.product-name:hover {
+  cursor: pointer;
+}
+
+.product-image:hover {
+  cursor: pointer;
+}

@@ -9,9 +9,9 @@ import { SingleProduct, AllProducts, Navbar, Register, Login } from './index';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
-  const localStorageToken = localStorage.getItem("jwt");
+  const localStorageToken = localStorage.getItem('jwt');
   const [token, setToken] = useState(localStorageToken);
-  const [userInfo, setUserInfo] = useState({})
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -43,11 +43,11 @@ const App = () => {
           </Route>
 
           <Route exact path='/users/register'>
-            <Register setToken={setToken}/>
+            <Register setToken={setToken} />
           </Route>
 
           <Route exact path='/users/login'>
-            <Login setToken={setToken}/>
+            <Login setToken={setToken} />
           </Route>
           {/* <Route exact path = '/orders/cart'>
             <Cart />
@@ -55,10 +55,10 @@ const App = () => {
         </Switch>
       </Router>
 
-      <div className='API-status'>
+      {/* <div className='API-status'>
         <h1>Hello, World!</h1>
         <p>API Status: {APIHealth}</p>
-      </div>
+      </div> */}
     </div>
   );
 };
