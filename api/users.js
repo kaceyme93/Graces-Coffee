@@ -1,66 +1,76 @@
 const usersRouter = require('express').Router();
-const { getUserByUsername, getUserById, createUser } = require('../db/models/index')
-const jwt = require('jsonwebtoken')
-const { JWT_SECRET } = process.env
-const bcrypt = require('bcrypt')
+const {
+  getUserByUsername,
+  getUserById,
+  createUser,
+} = require('../db/models/index');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = process.env;
+const bcrypt = require('bcrypt');
 
-//Creates new user, requires a username AND password. 
+//Creates new user, requires a username AND password.
 usersRouter.post('/register', async (req, res, next) => {
-  console.log("registering account")
-    const { firstName, lastName, email, username, password } = req.body
-    try {
-        const _user = await getUserByUsername(username)
-        if (_user) {
-            res.send({
-                error: "Username error",
-                name: "UserExistsError",
-                message: `User ${_user.username} is already taken.`
-            })
-        }
-        if (!username || !password) {
-            res.send({
-                name: "MissingCredentialsError",
-                message: "Please supply username and password"
-            })
-        }
-
-        if (password.length < 8) {
-            res.send({
-                error: "Password Error",
-                message: "Password Too Short!",
-                name: "PasswordLengthError",
-            })
-        }
-
-        const user = await createUser({firstName, lastName, email, username, password})
-
-        const token = jwt.sign({
-            id: user.id,
-            username : user.username
-          }, JWT_SECRET)
-        
-        res.send(
-            {
-            token: token,
-            user : user,
-            message: `Thank you for registering ${username}`
-            }
-        )
-    } catch({ name, message}) {
-        next({ name, message})
+  const { firstName, lastName, email, username, password } = req.body;
+  try {
+    const _user = await getUserByUsername(username);
+    if (_user) {
+      res.send({
+        error: 'Username error',
+        name: 'UserExistsError',
+        message: `User ${_user.username} is already taken.`,
+      });
     }
-})
+    if (!username || !password) {
+      res.send({
+        name: 'MissingCredentialsError',
+        message: 'Please supply username and password',
+      });
+    }
+
+    if (password.length < 8) {
+      res.send({
+        error: 'Password Error',
+        message: 'Password Too Short!',
+        name: 'PasswordLengthError',
+      });
+    }
+
+    const user = await createUser({
+      firstName,
+      lastName,
+      email,
+      username,
+      password,
+    });
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username: user.username,
+      },
+      JWT_SECRET
+    );
+
+    res.send({
+      token: token,
+      user: user,
+      message: `Thank you for registering ${username}`,
+    });
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 // Supplies the user's data if valid token provided in header
-usersRouter.get('/me', async(req, res, next) => {
-    const prefix = 'Bearer ';
-    const auth = req.header('Authorization');
+usersRouter.get('/me', async (req, res, next) => {
+  const prefix = 'Bearer ';
+  const auth = req.header('Authorization');
 
   if (!auth) {
     res.status(401).send({
-        error: "AuthorizationError",
-        message: "You must be logged in to perform this action",
-        name: "401 Error"
-    })
+      error: 'AuthorizationError',
+      message: 'You must be logged in to perform this action',
+      name: '401 Error',
+    });
   } else if (auth.startsWith(prefix)) {
     const token = auth.slice(prefix.length);
 
@@ -69,54 +79,55 @@ usersRouter.get('/me', async(req, res, next) => {
 
       if (id) {
         const user = await getUserById(id);
-        res.send(
-          user
-        )
+        res.send(user);
       }
     } catch ({ name, message }) {
       res.send({
-        error: 401
+        error: 401,
       });
     }
-  } 
-})
+  }
+});
 
 //Login User. Requires username AND password. Verifies encrypted password in DB
 usersRouter.post('/login', async (req, res, next) => {
-    const { username, password } = req.body
+  const { username, password } = req.body;
 
-    if (!username || !password) {
+  if (!username || !password) {
+    res.send({
+      name: 'MissingCredentialsError',
+      message: 'Username and password required.',
+    });
+  }
+  try {
+    const user = await getUserByUsername(username);
+    //If there's a user and the password = password, call jwt.sign
+    if (user) {
+      const validPassword = await bcrypt.compare(password, user.password);
+      if (validPassword) {
+        const token = jwt.sign(
+          {
+            id: user.id,
+            username: username,
+          },
+          JWT_SECRET
+        );
+
         res.send({
-            name: "MissingCredentialsError",
-            message: "Username and password required."
-        })
+          user: user,
+          message: 'Login Successful!',
+          token: token,
+        });
+      }
+    } else {
+      res.send({
+        message: 'Incorrect username and/or password.',
+        name: 'CredentialsError',
+      });
     }
-    try {
-        const user = await getUserByUsername(username)
-        //If there's a user and the password = password, call jwt.sign
-        if (user) {
-            const validPassword = await bcrypt.compare(password, user.password)
-            if (validPassword) {
-                const token = jwt.sign({
-                    id: user.id,
-                    username: username
-                }, JWT_SECRET)
-            
-                res.send({
-                    user: user,
-                    message: "Login Successful!",
-                    token: token
-                })
-            }
-        } else {
-            res.send({
-                message: "Incorrect username and/or password.",
-                name: "CredentialsError"
-            })
-        }
-    } catch({ name, message}) {
-        next({ name, message})
-    }
-})
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
-module.exports = usersRouter
+module.exports = usersRouter;
