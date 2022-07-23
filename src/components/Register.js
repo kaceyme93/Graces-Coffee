@@ -8,20 +8,34 @@ export default function Register(props){
     const [userName, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+
+    // const profilePage=()=>{
+    //   history.push('/profile');
+    // }
     
     return (
         <form style={{width: "23rem"}} onSubmit={(e)=>{
             e.preventDefault();
             if(password===confirmPassword){
-                tokenRegister(userName, password, setToken)
+                tokenRegister(userName, password, email, firstName, lastName, setToken)
                 setPassword("");
                 setUsername("");
                 setConfirmPassword("");
+                setEmail("");
+                setFirstName("");
+                setLastName("");
                 return
             } alert("Passwords must match one another")
             setPassword("");
             setUsername("");
             setConfirmPassword("");
+            setEmail("");
+            setFirstName("");
+            setLastName("");
+            // profilePage();
           }}>
 
             <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing : '1px'}}>Register new account</h3>
@@ -29,6 +43,21 @@ export default function Register(props){
             <div className="form-outline mb-4">
               <input type="text" id="username" className="form-control form-control-lg" value={userName} onChange={(e)=>{setUsername(e.target.value)}} required/>
               <label className="form-label" htmlFor="username">Username</label>
+            </div>
+
+            <div className="form-outline mb-4">
+              <input type="text" id="firstName" className="form-control form-control-lg" value={firstName} onChange={(e)=>{setFirstName(e.target.value)}} required/>
+              <label className="form-label" htmlFor="firstName">First Name</label>
+            </div>
+
+            <div className="form-outline mb-4">
+              <input type="text" id="lastName" className="form-control form-control-lg" value={lastName} onChange={(e)=>{setLastName(e.target.value)}} required/>
+              <label className="form-label" htmlFor="lastName">Last Name</label>
+            </div>
+
+            <div className="form-outline mb-4">
+              <input type="email" id="email" className="form-control form-control-lg" value={email} onChange={(e)=>{setEmail(e.target.value)}} required/>
+              <label className="form-label" htmlFor="email">Email Address</label>
             </div>
 
             <div className="form-outline mb-4">

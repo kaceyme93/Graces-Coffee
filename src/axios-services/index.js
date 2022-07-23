@@ -47,47 +47,51 @@ export async function getAllProducts() {
   }
 }
 
-export async function tokenRegister(inputUsername, inputPassword, setToken){
-  fetch(`api/users/register`, {
-    method: "POST",
-    headers : {
-      "Content-Type" : "application/json"
-    },
-    body: JSON.stringify({
-      user: {
-        username: inputUsername,
-        password: inputPassword
-      }
-    })
-  }).then(response => response.json())
-    .then(result => {
-      setToken(result.data.token);
-      localStorage.setItem("jwt", result.data.token);
-      alert(result.data.message);
-    })
-    .catch(console.error);
+export async function tokenRegister(inputUsername, inputPassword, inputEmail, inputFirst, inputLast, setToken){
+  try {
+    const {data: register} = await axios.post('/api/users/register', {
+      username : inputUsername,
+      password : inputPassword,
+      email : inputEmail,
+      firstName : inputFirst,
+      lastName : inputLast
+    });
+      setToken(register.token);
+      localStorage.setItem("jwt", register.token);
+      alert(register.message);
+
+  } catch (err) {
+    console.error(err);
+  }
 }
 
+
 export async function tokenLogin(inputUsername, inputPassword, setToken){
-  fetch(`api/users/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": 'application/json'
-    },
-    body: JSON.stringify({
-      user: {
-        username: inputUsername,
-        password: inputPassword
-      }
-    })
-  }).then(response => response.json())
-    .then(result => {
-      setToken(result.data.token);
-      localStorage.setItem("jwt", result.data.token);
-      alert(result.data.message);
-    })
-    .catch(console.error);
+  try {
+    const {data: login} = await axios.post('/api/users/login', {
+      username : inputUsername,
+      password : inputPassword
+    });
+      setToken(login.token);
+      localStorage.setItem("jwt", login.token);
+      alert(login.message);
+
+  } catch (err) {
+    console.error(err);
+  }
 }
+
+export async function currentUserInfo(setUserInfo, token){
+  try {
+    const {data: user} = await axios.get('/api/users/me', {
+      headers: makeHeaders(token)
+    })
+    setUserInfo(user);
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 
 const makeHeaders = (token) => {
   return (token ? 
