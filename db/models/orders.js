@@ -85,29 +85,28 @@ async function getOrdersByProduct({ id }) {
   }
 }
 
-// async function getCartByUser({ id }) {
-//   try {
-//     const { rows: orders } = await client.query(
-//       `
-//         SELECT *
-//         FROM orders
-//         JOIN order_products
-//         ON order_products."orderId" = orders.id
-//         JOIN products
-//         ON products.id = order_products."productId"
-//         WHERE "productId" = $1;
-//         `,
-//       [id]
-//     );
+async function getCartByUser({ id }) {
+  try {
+    const {
+      rows: [order],
+    } = await client.query(
+      `
+       SELECT *
+       FROM orders
+       WHERE orders."userId" = $1
+       AND orders.status = "created";
+      `,
+      [id]
+    );
 
-//     const result = await filterProducts(orders);
+    const result = await filterProducts(order);
 
-//     return result;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// }
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 async function createOrder({ status, userId }) {
   try {
@@ -134,6 +133,6 @@ module.exports = {
   getAllOrders,
   getOrdersByUser,
   getOrdersByProduct,
-  //   getCartByUser,
+  getCartByUser,
   createOrder,
 };

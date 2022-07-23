@@ -9,9 +9,9 @@ import { SingleProduct, AllProducts, Navbar, Register, Login, Profile } from './
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
-  const localStorageToken = localStorage.getItem("jwt");
+  const localStorageToken = localStorage.getItem('jwt');
   const [token, setToken] = useState(localStorageToken);
-  const [userInfo, setUserInfo] = useState({})
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
