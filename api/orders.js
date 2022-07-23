@@ -14,8 +14,10 @@ ordersRouter.get('/', requireAdmin, async (req, res, next) => {
 });
 
 ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
+  //Destructure userId from req.params?
+  const userId = req.params.userId
   try {
-    const order = await Orders.getCartByUser();
+    const order = await Orders.getCartByUser(userId);
 
     if (order) res.send(order);
   } catch (error) {

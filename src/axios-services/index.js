@@ -58,8 +58,8 @@ export async function getSingleOrder(orderId) {
 
 export async function getCart() {
   try {
-    const { data: cartProducts } = await axios.get(`api/orders/cart`);
-    return cartProducts;
+    const { data: cart } = await axios.get(`api/orders/cart`);
+    return cart;
   } catch(err) {
     console.error(err)
   }
