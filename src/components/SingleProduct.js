@@ -18,7 +18,7 @@ function SingleProduct() {
 
   return (
     <div className='single-product'>
-      <img src={product.imageURL}></img>
+      <img src={product.imageURL} alt={product.name}></img>
       <div className='product-details'>
         <h2>{product.name}</h2>
         <p>

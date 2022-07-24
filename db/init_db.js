@@ -548,6 +548,12 @@ async function populateInitialData() {
       isAdmin: true,
     });
 
+    const order1 = await Orders.createOrder({
+      status: 'created',
+      userId: 1,
+      dataPlaced: 2022 - 07 - 23,
+    });
+
     // const products = [];
 
     // function createRandomProduct() {
@@ -567,11 +573,6 @@ async function populateInitialData() {
 
     // products.forEach(async (product) => {
     //   await Products.createProduct(product);
-    // });
-
-    // const order1 = await Orders.createOrder({
-    //   status: 'created',
-    //   userId: null,
     // });
   } catch (error) {
     throw error;

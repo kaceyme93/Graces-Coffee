@@ -5,7 +5,15 @@ import '../style/App.css';
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
 import { currentUserInfo, getAPIHealth } from '../axios-services';
-import { SingleProduct, AllProducts, Navbar, Register, Login, Profile } from './index';
+import {
+  SingleProduct,
+  AllProducts,
+  Navbar,
+  Register,
+  Login,
+  Profile,
+  SingleOrder,
+} from './index';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
@@ -28,10 +36,17 @@ const App = () => {
     getAPIStatus();
   }, [token]);
 
+  console.log(APIHealth);
+
   return (
     <div className='app-container'>
       <Router>
-        <Navbar token={token} setToken={setToken} setUserInfo={setUserInfo} userInfo={userInfo}/>
+        <Navbar
+          token={token}
+          setToken={setToken}
+          setUserInfo={setUserInfo}
+          userInfo={userInfo}
+        />
         <Switch>
           <Route
             exact
@@ -44,15 +59,23 @@ const App = () => {
           </Route>
 
           <Route exact path='/register'>
-            <Register setToken={setToken}/>
+            <Register setToken={setToken} />
           </Route>
 
           <Route exact path='/login'>
-            <Login setToken={setToken}/>
+            <Login setToken={setToken} />
           </Route>
 
-          <Route exact path="/profile">
+          <Route exact path='/profile'>
             <Profile />
+          </Route>
+
+          <Route exact path='/orders/:orderId'>
+            <SingleOrder />
+          </Route>
+
+          <Route exact path='/cart'>
+            <SingleOrder />
           </Route>
         </Switch>
       </Router>

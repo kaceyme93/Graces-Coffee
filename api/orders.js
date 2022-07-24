@@ -13,6 +13,17 @@ ordersRouter.get('/', requireAdmin, async (req, res, next) => {
   }
 });
 
+ordersRouter.get('/:orderId', requireLogin, async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Orders.getOrderById(orderId);
+
+    if (order) res.send(order);
+  } catch (error) {
+    next(error);
+  }
+});
+
 ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
   try {
     const order = await Orders.getCartByUser();
@@ -23,7 +34,7 @@ ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
   }
 });
 
-ordersRouter.post('/orders', requireLogin, async (req, res, next) => {
+ordersRouter.post('/', requireLogin, async (req, res, next) => {
   try {
     const { id } = req.user;
     const status = 'created';
