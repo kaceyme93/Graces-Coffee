@@ -15,7 +15,7 @@ ordersRouter.get('/', requireAdmin, async (req, res, next) => {
 
 ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
   //Destructure userId from req.params?
-  const userId = req.params.userId
+  const userId = req.user.id
   try {
     const order = await Orders.getCartByUser(userId);
 

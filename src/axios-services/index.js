@@ -56,10 +56,10 @@ export async function getSingleOrder(orderId) {
   }
 }
 
-export async function getCart() {
+export async function getUserCart() {
   try {
-    const { data: cart } = await axios.get(`api/orders/cart`);
-    return cart;
+    const { data: cart } = await axios.get(`/api/cart`);
+    return cart
   } catch(err) {
     console.error(err)
   }
