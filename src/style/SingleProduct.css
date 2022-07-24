@@ -12,6 +12,10 @@
   margin-right: 5rem;
 }
 
+.single-product-header {
+  text-align: left;
+}
+
 .product-details {
   display: flex;
   flex-flow: column wrap;
@@ -20,11 +24,6 @@
 
 .product-inStock {
   font-style: italic;
-}
-
-.single-product-quantity-group {
-  display: flex;
-  flex-flow: column wrap;
 }
 
 .single-product-quantity-button {

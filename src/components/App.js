@@ -17,9 +17,12 @@ import {
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
-  const localStorageToken = localStorage.getItem('jwt');
-  const [token, setToken] = useState(localStorageToken);
+  const [token, setToken] = useState('');
   const [userInfo, setUserInfo] = useState({});
+  const [cart, setCart] = useState([]);
+
+  const localStorageToken = localStorage.getItem('jwt');
+  const localStorageCart = localStorage.getItem('localStorageCart');
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -31,10 +34,15 @@ const App = () => {
     };
 
     currentUserInfo(setUserInfo, token);
+    localStorageToken && setToken(localStorageToken);
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
-  }, [token]);
+  }, [token, localStorageToken]);
+
+  useEffect(() => {
+    localStorageCart && setCart(localStorageCart);
+  }, [localStorageCart]);
 
   console.log(APIHealth);
 
@@ -48,11 +56,9 @@ const App = () => {
           userInfo={userInfo}
         />
         <Switch>
-          <Route
-            exact
-            path='/products/:productId'
-            component={SingleProduct}
-          ></Route>
+          <Route exact path='/products/:productId'>
+            <SingleProduct cart={cart} setCart={setCart} />
+          </Route>
 
           <Route exact path='/products'>
             <AllProducts />
