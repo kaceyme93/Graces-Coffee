@@ -1,11 +1,13 @@
 const { faker } = require('@faker-js/faker');
 const {
-  client,
   // declare your model imports here
   // for example, User
   Products,
   Orders,
 } = require('./');
+
+const client = require('./client.js');
+
 
 async function buildTables() {
   try {
@@ -41,8 +43,8 @@ async function buildTables() {
       "imageURL" TEXT DEFAULT 'https://images.pexels.com/photos/851555/pexels-photo-851555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) UNIQUE NOT NULL,
-      "isAdmin" BOOLEAN NOT NULL DEFAULT false
-    )`);
+      "isAdmin" BOOLEAN NOT NULL DEFAULT FALSE
+      )`);
 
     console.log('creating orders table');
     await client.query(`CREATE TABLE orders (
