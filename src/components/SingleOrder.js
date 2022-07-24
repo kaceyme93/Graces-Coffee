@@ -7,6 +7,8 @@ function SingleOrder({ id }) {
     const [order, setOrder] = useState([]);
     const { orderId } = useParams()
     const orderProductIds = order.productId
+    const products = await Promise.all(
+        orderProductIds.map((orderProductId) => getSingleProduct(orderProductId)))
 
     useEffect(() => {
         const fetchSingleOrder = async () => {
@@ -14,15 +16,13 @@ function SingleOrder({ id }) {
             setOrder(result)
         };
         fetchSingleOrder()
-    }, [orderId])
+    }, [orderId, id])
 
     // Should the order info also include pictures of the products in order?
     return (
         <div className='order-details'>
             <h2> Order Summary</h2>
-            {orderProductIds.map(async(orderProductId) => {
-                const product = await getSingleProduct(orderProductId)
-
+            {products.map((product) => {
                 return (
                     <div className="order-products">
                         {/* Map through array of cart products */}
