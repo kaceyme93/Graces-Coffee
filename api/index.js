@@ -23,6 +23,6 @@ const ordersRouter = require('./orders');
 
 apiRouter.use('/products', productsRouter);
 apiRouter.use('/users', usersRouter);
-apiRouter.use('./orders', ordersRouter);
+apiRouter.use('/orders', ordersRouter);
 
 module.exports = apiRouter;

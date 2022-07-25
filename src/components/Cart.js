@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getUserCart } from '../axios-services';
-import {SingleOrder} from "./SingleOrder"
+import {SingleOrder} from "./index"
 
 function GetAndDisplayCart() {
     const [cart, setCart] = useState({})
