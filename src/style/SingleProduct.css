@@ -33,4 +33,10 @@
 
 .single-product-add-to-cart {
   width: 10vw;
+  margin-top: 1rem;
+}
+
+.product-quantiity {
+  margin-left: 10px;
+  margin-right: 10px;
 }
