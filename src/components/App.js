@@ -52,7 +52,7 @@ const App = () => {
           </Route>
 
           <Route exact path="/profile">
-            <Profile />
+            <Profile userInfo={userInfo}/>
           </Route>
         </Switch>
       </Router>
