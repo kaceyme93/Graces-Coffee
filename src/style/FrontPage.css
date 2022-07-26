@@ -1,0 +1,17 @@
+.hero {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url('../images/front-page.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 92vh;
+}
+
+.front-page-button {
+  width: 180px;
+  margin-bottom: 8rem;
+}
