@@ -5,7 +5,7 @@ import '../style/App.css';
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
 import { currentUserInfo, getAPIHealth } from '../axios-services';
-import { SingleProduct, AllProducts, Navbar, Register, Login, Profile, SingleOrder } from './index';
+import { SingleProduct, AllProducts, Navbar, Register, Login, Profile,Cart } from './index';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
@@ -55,7 +55,7 @@ const App = () => {
             <Profile />
           </Route>
           <Route exact path = '/cart'>
-            <SingleOrder />
+            <Cart />
           </Route>
         </Switch>
       </Router>
