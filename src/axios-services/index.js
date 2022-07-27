@@ -47,22 +47,43 @@ export async function getAllProducts() {
   }
 }
 
-export async function tokenRegister(inputUsername, inputPassword, inputEmail, inputFirst, inputLast, setToken){
+export async function getSingleOrder(orderId) {
   try {
-    const {data: register} = await axios.post('/api/users/register', {
-      username : inputUsername,
-      password : inputPassword,
-      email : inputEmail,
-      firstName : inputFirst,
-      lastName : inputLast
-    });
-      setToken(register.token);
-      localStorage.setItem("jwt", register.token);
-      alert(register.message);
-
+    const { data: order } = await axios.get(`/api/orders/${orderId}`);
+    return order;
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
+}
+
+export async function getUserCart() {
+  try {
+    const { data: cart } = await axios.get(`/api/cart`);
+    return cart
+  } catch(err) {
+    console.error(err)
+  }
+}
+
+export async function tokenRegister(inputUsername, inputPassword, setToken){
+  fetch(`api/users/register`, {
+    method: "POST",
+    headers : {
+      "Content-Type" : "application/json"
+    },
+    body: JSON.stringify({
+      user: {
+        username: inputUsername,
+        password: inputPassword
+      }
+    })
+  }).then(response => response.json())
+    .then(result => {
+      setToken(result.data.token);
+      localStorage.setItem("jwt", result.data.token);
+      alert(result.data.message);
+    })
+    .catch(console.error);
 }
 
 

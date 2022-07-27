@@ -42,7 +42,6 @@ usersRouter.post('/register', async (req, res, next) => {
       username,
       password,
     });
-
     const token = jwt.sign(
       {
         id: user.id,
@@ -50,7 +49,6 @@ usersRouter.post('/register', async (req, res, next) => {
       },
       JWT_SECRET
     );
-
     res.send({
       token: token,
       user: user,
