@@ -10,9 +10,7 @@ function FrontPage() {
     <>
       <div className='hero'>
         <h1>Coffee for everyone!</h1>
-        <p>
-          Try some of the best coffee beans from the Chicago area and beyond
-        </p>
+        <p>Try some of the best coffee from the Chicago area and beyond</p>
         <Button
           variant='primary'
           type='submit'
