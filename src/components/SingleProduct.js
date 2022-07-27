@@ -98,29 +98,28 @@ function SingleProduct({ cart, setCart }) {
         >
           Add to Cart
         </Button>
-        </div>
-
-        {product.inStock === true ? (
-          <Button
-            variant='success'
-            type='submit'
-            className='single-product-add-to-cart'
-            onClick={() => {
-              handleAddToCart();
-            }}
-          >
-            Add to Cart
-          </Button>
-        ) : (
-          <Button
-            variant='secondary'
-            type='submit'
-            className='single-product-out-of-stock'
-          >
-            Out of Stock
-          </Button>
-        )}
       </div>
+
+      {product.inStock === true ? (
+        <Button
+          variant='success'
+          type='submit'
+          className='single-product-add-to-cart'
+          onClick={() => {
+            handleAddToCart();
+          }}
+        >
+          Add to Cart
+        </Button>
+      ) : (
+        <Button
+          variant='secondary'
+          type='submit'
+          className='single-product-out-of-stock'
+        >
+          Out of Stock
+        </Button>
+      )}
     </div>
   );
 }
