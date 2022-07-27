@@ -4,10 +4,10 @@ const {
   // for example, User
   Products,
   Orders,
+  Users,
 } = require('./');
 
 const client = require('./client.js');
-
 
 async function buildTables() {
   try {
@@ -539,6 +539,21 @@ async function populateInitialData() {
         'https://d9pl0lig74xnv.cloudfront.net/catalog/product/cache/91e9c011f0ac998e686df01a906b8401/1/9/1928-16_3__1.jpg',
     });
 
+    const user1 = await Users.createUser({
+      firstName: 'Minsung',
+      lastName: 'Kim',
+      email: '123@gmail.com',
+      username: 'minsung',
+      password: '123456789',
+      isAdmin: true,
+    });
+
+    const order1 = await Orders.createOrder({
+      status: 'created',
+      userId: 1,
+      dataPlaced: 2022 - 07 - 23,
+    });
+
     // const products = [];
 
     // function createRandomProduct() {
@@ -558,11 +573,6 @@ async function populateInitialData() {
 
     // products.forEach(async (product) => {
     //   await Products.createProduct(product);
-    // });
-
-    // const order1 = await Orders.createOrder({
-    //   status: 'created',
-    //   userId: null,
     // });
   } catch (error) {
     throw error;

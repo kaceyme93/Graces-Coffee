@@ -5,13 +5,25 @@ import '../style/App.css';
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
 import { currentUserInfo, getAPIHealth } from '../axios-services';
-import { SingleProduct, AllProducts, Navbar, Register, Login, Profile,Cart } from './index';
+import {
+  SingleProduct,
+  AllProducts,
+  Navbar,
+  Register,
+  Login,
+  Profile,
+  SingleOrder,
+  Cart,
+} from './index';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
-  const localStorageToken = localStorage.getItem('jwt');
-  const [token, setToken] = useState(localStorageToken);
+  const [token, setToken] = useState('');
   const [userInfo, setUserInfo] = useState({});
+  const [cart, setCart] = useState([]);
+
+  const localStorageToken = localStorage.getItem('jwt');
+  const localStorageCart = localStorage.getItem('localStorageCart');
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -23,40 +35,58 @@ const App = () => {
     };
 
     currentUserInfo(setUserInfo, token);
+    localStorageToken && setToken(localStorageToken);
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
-  }, [token]);
+  }, [token, localStorageToken]);
+
+  useEffect(() => {
+    localStorageCart && setCart(localStorageCart);
+  }, [localStorageCart]);
+
+  console.log(APIHealth);
 
   return (
     <div className='app-container'>
       <Router>
-        <Navbar token={token} setToken={setToken} setUserInfo={setUserInfo} userInfo={userInfo}/>
+        <Navbar
+          token={token}
+          setToken={setToken}
+          setUserInfo={setUserInfo}
+          userInfo={userInfo}
+        />
         <Switch>
-          <Route
-            exact
-            path='/products/:productId'
-            component={SingleProduct}
-          ></Route>
+          <Route exact path='/products/:productId'>
+            <SingleProduct cart={cart} setCart={setCart} />
+          </Route>
 
           <Route exact path='/products'>
             <AllProducts />
           </Route>
 
           <Route exact path='/register'>
-            <Register setToken={setToken}/>
+            <Register setToken={setToken} />
           </Route>
 
           <Route exact path='/login'>
-            <Login setToken={setToken}/>
+            <Login setToken={setToken} />
           </Route>
 
-          <Route exact path="/profile">
-            <Profile userInfo={userInfo}/>
-
+          <Route exact path='/profile'>
+            <Profile userInfo={userInfo} />
           </Route>
-          <Route exact path = '/cart'>
+
+          <Route exact path='/cart'>
             <Cart />
+          </Route>
+
+          <Route exact path='/orders/:orderId'>
+            <SingleOrder />
+          </Route>
+
+          <Route exact path='/cart'>
+            <SingleOrder />
           </Route>
         </Switch>
       </Router>
