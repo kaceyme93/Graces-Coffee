@@ -49,6 +49,15 @@ export async function getAllProducts() {
   }
 }
 
+export async function getUserCart() {
+  try {
+    const { data: cart } = await axios.get(`/api/cart`);
+    return cart;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function tokenRegister(
   inputUsername,
   inputPassword,

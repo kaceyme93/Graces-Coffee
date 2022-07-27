@@ -47,6 +47,84 @@ function Navbar(props) {
               Welcome {userInfo?.firstName}
             </span>
           )}
+          <ul className='nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0'>
+            {/* <li><Link className='nav-link px-2 text-black' to='/'>Home</Link></li> */}
+            <li>
+              <Link className='nav-link px-2 text-black' to='/products'>
+                Coffee
+              </Link>
+            </li>
+            <li>
+              <Link className='nav-link px-2 text-black' to='/cart'>
+                Cart
+              </Link>
+            </li>
+
+            {token && (
+              <li>
+                <Link className='nav-link px-2 text-black' to='/profile'>
+                  My Account
+                </Link>
+              </li>
+            )}
+          </ul>
+
+          {token && (
+            <span
+              className='navbar-text text-black'
+              style={{ marginRight: '32px' }}
+            >
+              Welcome {userInfo?.firstName}
+            </span>
+          )}
+
+          {token ? (
+            <div className='text-end'>
+              <button
+                type='button'
+                className='btn btn-dark btn-md btn-block'
+                onClick={(e) => {
+                  localStorage.removeItem('jwt');
+                  setToken(null);
+                  setUserInfo(null);
+                }}
+              >
+                <Link
+                  to='/login'
+                  style={{ textDecoration: 'none', color: 'white' }}
+                >
+                  Logout
+                </Link>
+              </button>
+            </div>
+          ) : (
+            <div className='text-end'>
+              <button
+                type='button'
+                className='btn btn-dark btn-md btn-block'
+                style={{ marginRight: '8px' }}
+              >
+                <Link
+                  to='/login'
+                  style={{ textDecoration: 'none', color: 'white' }}
+                >
+                  Login
+                </Link>
+              </button>
+              <button
+                type='button'
+                className='btn btn-dark btn-md btn-block'
+                style={{ marginLeft: '8px' }}
+              >
+                <Link
+                  to='/register'
+                  style={{ textDecoration: 'none', color: 'white' }}
+                >
+                  Register
+                </Link>
+              </button>
+            </div>
+          )}
 
           {token ? (
             <div className='text-end'>

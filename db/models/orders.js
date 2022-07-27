@@ -15,7 +15,6 @@ async function getOrderById(id) {
     );
 
     const result = await filterProducts(order);
-
     return result;
   } catch (error) {
     console.error('ERROR GETTING ORDER BY ID');
@@ -67,10 +66,10 @@ async function getOrdersByProduct({ id }) {
       `
         SELECT *
         FROM orders
-        JOIN order_products
-        ON order_products."orderId" = orders.id
+        JOIN "order_products" op
+        ON op."orderId" = orders.id
         JOIN products
-        ON products.id = order_products."productId"
+        ON products.id = op."productId"
         WHERE "productId" = $1;
       `,
       [id]
