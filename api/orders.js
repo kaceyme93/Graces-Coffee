@@ -13,23 +13,13 @@ ordersRouter.get('/', requireAdmin, async (req, res, next) => {
   }
 });
 
-ordersRouter.get('/:orderId', requireLogin, async (req, res, next) => {
-  try {
-    const { orderId } = req.params;
-    const order = await Orders.getOrderById(orderId);
-
-    if (order) res.send(order);
-  } catch (error) {
-    next(error);
-  }
-});
-
 ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
   console.log('REQ.USER', req.user);
   console.log('HIT');
   const userId = req.user.id;
   try {
-    const order = await Orders.getCartByUser(userId);
+    const { orderId } = req.params;
+    const order = await Orders.getOrderById(orderId);
 
     if (order) res.send(order);
   } catch (error) {
@@ -42,7 +32,6 @@ ordersRouter.get('/:orderId', async (req, res, next) => {
     const { orderId } = req.params;
     console.log('ORDERID', orderId);
     const order = await Orders.getOrderById(orderId);
-
     if (order) res.send(order);
   } catch (error) {
     next(error);

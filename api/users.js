@@ -58,6 +58,7 @@ usersRouter.post('/register', async (req, res, next) => {
     next({ name, message });
   }
 });
+
 // Supplies the user's data if valid token provided in header
 usersRouter.get('/me', async (req, res, next) => {
   const prefix = 'Bearer ';

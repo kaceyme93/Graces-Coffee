@@ -19,3 +19,22 @@
 .navbar-links:hover {
   text-decoration: underline;
 }
+
+.navbar-links {
+  color: white;
+  text-decoration: none;
+  margin-right: 2rem;
+  font-size: 24px;
+}
+
+.logout-button {
+  margin-left: 32px;
+  color: white;
+}
+
+.site-icon {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}

@@ -10,7 +10,6 @@ async function getOrderProductById(id) {
 }
 
 //  update the order_products price still needs to be handled
-
 async function addProductToOrder({ orderId, productId, price, quantity }) {
   try {
     const { rows: productExists } = await client.query(
