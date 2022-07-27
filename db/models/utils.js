@@ -1,10 +1,12 @@
+const client = require('../client');
+
 async function attachProductsToOrders() {
   try {
     const { rows: products } = await client.query(`
       SELECT *
-      FROM order_products
+      FROM "order_products" op
       JOIN products
-      ON products.id = order_products."productId"
+      ON products.id = op."productId"
       `);
 
     return products;
@@ -16,7 +18,6 @@ async function attachProductsToOrders() {
 
 async function filterProducts(orders) {
   const products = await attachProductsToOrders(orders);
-
   for (const order of orders) {
     const filteredProducts = products.filter((product) => {
       return product.orderId === order.id;
