@@ -51,8 +51,9 @@ const App = () => {
             <Login setToken={setToken}/>
           </Route>
 
-          <Route exact path='/profile'>
-            <Profile />
+          <Route exact path="/profile">
+            <Profile userInfo={userInfo}/>
+
           </Route>
           <Route exact path = '/cart'>
             <Cart />
