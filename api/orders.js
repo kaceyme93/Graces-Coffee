@@ -26,10 +26,9 @@ ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
   }
 });
 
-ordersRouter.get('/:orderId', async(req, res, next) => {
+ordersRouter.get('/:orderId', requireAdmin, async(req, res, next) => {
   try {
     const {orderId} = req.params
-    console.log("ORDERID", orderId)
     const order = await Orders.getOrderById(orderId);
 
     if (order) res.send(order)
