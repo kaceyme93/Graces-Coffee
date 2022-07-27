@@ -72,8 +72,6 @@ function SingleProduct({ cart, setCart }) {
             >
               -
             </Button>
-            {'  '}
-            Quantity {'  '}
             <span className='product-quantiity'>Total: {quantity}</span>
             <Button
               variant='outline-dark'
@@ -85,41 +83,29 @@ function SingleProduct({ cart, setCart }) {
               +
             </Button>
           </p>
-          <p>Total: {quantity}</p>
         </div>
 
-        <Button
-          variant='success'
-          type='submit'
-          className='single-product-add-to-cart'
-          onClick={() => {
-            handleAddToCart();
-          }}
-        >
-          Add to Cart
-        </Button>
+        {product.inStock === true ? (
+          <Button
+            variant='success'
+            type='submit'
+            className='single-product-add-to-cart'
+            onClick={() => {
+              handleAddToCart();
+            }}
+          >
+            Add to Cart
+          </Button>
+        ) : (
+          <Button
+            variant='secondary'
+            type='submit'
+            className='single-product-out-of-stock'
+          >
+            Out of Stock
+          </Button>
+        )}
       </div>
-
-      {product.inStock === true ? (
-        <Button
-          variant='success'
-          type='submit'
-          className='single-product-add-to-cart'
-          onClick={() => {
-            handleAddToCart();
-          }}
-        >
-          Add to Cart
-        </Button>
-      ) : (
-        <Button
-          variant='secondary'
-          type='submit'
-          className='single-product-out-of-stock'
-        >
-          Out of Stock
-        </Button>
-      )}
     </div>
   );
 }
