@@ -7,8 +7,7 @@ const createUser = async ({
   lastName,
   email,
   username,
-  password,
-  isAdmin,
+  password
 }) => {
   try {
     const SALT = 10;
@@ -18,12 +17,12 @@ const createUser = async ({
     } = await client.query(
       `
     INSERT INTO users 
-    ("firstName", "lastName", email, username, password, "isAdmin") 
-    VALUES ($1, $2, $3, $4, $5, $6)
+    ("firstName", "lastName", email, username, password) 
+    VALUES ($1, $2, $3, $4, $5)
     ON CONFLICT DO NOTHING
     RETURNING id, username, email;
     `,
-      [firstName, lastName, email, username, hash, isAdmin]
+      [firstName, lastName, email, username, hash]
     );
     if (user) {
       return user;

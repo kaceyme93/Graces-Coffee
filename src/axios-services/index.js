@@ -66,9 +66,7 @@ export async function tokenRegister(
   inputLast,
   setToken
 ) {
-  try {
-    const { data: cart } = await axios.get(`/api/cart`);
-    return cart;
+  try{
     const { data: register } = await axios.post('/api/users/register', {
       username: inputUsername,
       password: inputPassword,
