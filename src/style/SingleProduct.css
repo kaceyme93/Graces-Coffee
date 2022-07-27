@@ -26,6 +26,12 @@
   font-style: italic;
 }
 
+
+.product-quantiity {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .single-product-quantity-button {
   margin-top: 2rem;
   font-size: 18px;
@@ -33,4 +39,14 @@
 
 .single-product-add-to-cart {
   width: 10vw;
+  margin-top: 1rem;
+}
+
+.single-product-out-of-stock {
+  width: 10vw;
+  margin-top: 1rem;
+}
+
+.single-product-out-of-stock:hover {
+  pointer-events: none;
 }

@@ -49,6 +49,15 @@ export async function getAllProducts() {
   }
 }
 
+export async function getUserCart() {
+  try {
+    const { data: cart } = await axios.get(`/api/cart`);
+    return cart;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function tokenRegister(
   inputUsername,
   inputPassword,
@@ -58,6 +67,8 @@ export async function tokenRegister(
   setToken
 ) {
   try {
+    const { data: cart } = await axios.get(`/api/cart`);
+    return cart;
     const { data: register } = await axios.post('/api/users/register', {
       username: inputUsername,
       password: inputPassword,
@@ -68,24 +79,6 @@ export async function tokenRegister(
     setToken(register.token);
     localStorage.setItem('jwt', register.token);
     alert(register.message);
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-export async function getSingleOrder(orderId) {
-  try {
-    const { data: order } = await axios.get(`/api/orders/${orderId}`);
-    return order;
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-export async function getUserCart() {
-  try {
-    const { data: cart } = await axios.get(`/api/cart`);
-    return cart;
   } catch (err) {
     console.error(err);
   }
@@ -126,3 +119,13 @@ const makeHeaders = (token) => {
         'Content-Type': 'application/json',
       };
 };
+
+export async function getSingleOrder(orderId) {
+  try {
+    const { data: order } = await axios.get(`/api/orders/${orderId}`);
+
+    return order;
+  } catch (err) {
+    console.error(err);
+  }
+}

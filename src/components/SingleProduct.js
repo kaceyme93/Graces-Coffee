@@ -51,14 +51,14 @@ function SingleProduct({ cart, setCart }) {
       <div className='product-details'>
         <h2 className='single-product-header'>{product.name}</h2>
         <p>
-          ${product.price} - {product.size}
+          ${product.price} {product.size !== `n/a` && ' - ' + product.size}
         </p>
         <p className='product-inStock'>
           {product.inStock === true ? 'In Stock' : 'Out of Stock'}
         </p>
         <p>{product.description}</p>
-        <p>Origin: {product.origin}</p>
-        <p>Roast: {product.roast}</p>
+        {product.origin !== `n/a` && <p>Origin: {product.origin}</p>}
+        {product.roast !== `n/a` && <p>Roast: {product.roast}</p>}
         <p>Category: {product.category}</p>
 
         <div className='single-product-quantity-group'>
@@ -74,6 +74,7 @@ function SingleProduct({ cart, setCart }) {
             </Button>
             {'  '}
             Quantity {'  '}
+            <span className='product-quantiity'>Total: {quantity}</span>
             <Button
               variant='outline-dark'
               size='sm'
@@ -97,6 +98,28 @@ function SingleProduct({ cart, setCart }) {
         >
           Add to Cart
         </Button>
+        </div>
+
+        {product.inStock === true ? (
+          <Button
+            variant='success'
+            type='submit'
+            className='single-product-add-to-cart'
+            onClick={() => {
+              handleAddToCart();
+            }}
+          >
+            Add to Cart
+          </Button>
+        ) : (
+          <Button
+            variant='secondary'
+            type='submit'
+            className='single-product-out-of-stock'
+          >
+            Out of Stock
+          </Button>
+        )}
       </div>
     </div>
   );

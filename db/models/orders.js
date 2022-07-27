@@ -13,7 +13,7 @@ async function getOrderById(id) {
     `,
       [id]
     );
-    
+
     const result = await filterProducts(order);
     return result;
   } catch (error) {
