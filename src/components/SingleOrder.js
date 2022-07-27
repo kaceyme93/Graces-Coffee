@@ -6,11 +6,11 @@ import { getSingleOrder, getSingleProduct } from '../axios-services';
 function SingleOrder({ id }) {
     const [order, setOrder] = useState([]);
     const { orderId } = useParams()
-    // const orderProductIds = order.productId
+    const orderProductIds = order.productId
     
-        // const products = async () => {
-        //     return Promise.all(orderProductIds.map(orderProductId => getSingleProduct(orderProductId)))
-        // }
+        const products = async () => {
+            return Promise.all(orderProductIds.map(orderProductId => getSingleProduct(orderProductId)))
+        }
 
     useEffect(() => {
         const fetchSingleOrder = async () => {
