@@ -14,6 +14,7 @@ import {
   Profile,
   SingleOrder,
   FrontPage,
+  Cart,
 } from './index';
 
 const App = () => {
@@ -74,7 +75,11 @@ const App = () => {
           </Route>
 
           <Route exact path='/profile'>
-            <Profile />
+            <Profile userInfo={userInfo} />
+          </Route>
+
+          <Route exact path='/cart'>
+            <Cart />
           </Route>
 
           <Route exact path='/orders/:orderId'>

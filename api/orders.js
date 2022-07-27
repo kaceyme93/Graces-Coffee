@@ -25,8 +25,9 @@ ordersRouter.get('/:orderId', requireLogin, async (req, res, next) => {
 });
 
 ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
+  const userId = req.user.id;
   try {
-    const order = await Orders.getCartByUser();
+    const order = await Orders.getCartByUser(userId);
 
     if (order) res.send(order);
   } catch (error) {

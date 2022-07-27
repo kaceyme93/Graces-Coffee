@@ -73,6 +73,24 @@ export async function tokenRegister(
   }
 }
 
+export async function getSingleOrder(orderId) {
+  try {
+    const { data: order } = await axios.get(`/api/orders/${orderId}`);
+    return order;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function getUserCart() {
+  try {
+    const { data: cart } = await axios.get(`/api/cart`);
+    return cart;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function tokenLogin(inputUsername, inputPassword, setToken) {
   try {
     const { data: login } = await axios.post('/api/users/login', {
@@ -108,13 +126,3 @@ const makeHeaders = (token) => {
         'Content-Type': 'application/json',
       };
 };
-
-export async function getSingleOrder(orderId) {
-  try {
-    const { data: order } = await axios.get(`/api/orders/${orderId}`);
-
-    return order;
-  } catch (err) {
-    console.error(err);
-  }
-}

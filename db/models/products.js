@@ -1,5 +1,6 @@
 const client = require('../client');
 
+
 //Gets All Products And Returns Array With All Products
 async function getAllProducts() {
   try {

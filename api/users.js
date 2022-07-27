@@ -42,7 +42,6 @@ usersRouter.post('/register', async (req, res, next) => {
       username,
       password,
     });
-
     const token = jwt.sign(
       {
         id: user.id,
@@ -50,7 +49,6 @@ usersRouter.post('/register', async (req, res, next) => {
       },
       JWT_SECRET
     );
-
     res.send({
       token: token,
       user: user,
@@ -60,6 +58,7 @@ usersRouter.post('/register', async (req, res, next) => {
     next({ name, message });
   }
 });
+
 // Supplies the user's data if valid token provided in header
 usersRouter.get('/me', async (req, res, next) => {
   const prefix = 'Bearer ';
