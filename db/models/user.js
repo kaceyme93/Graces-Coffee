@@ -1,17 +1,16 @@
 // grab our db client connection to use with our adapters
 const client = require('../client');
-
 const bcrypt = require('bcrypt'); //for encryption
-const SALT = 10;
 
 async function createUser({
   firstName,
   lastName,
   email,
   username,
-  password,
+  password
 }) {
   try {
+    const SALT = 10;
     const hash = await bcrypt.hash(password, SALT);
     const {
       rows: [user],

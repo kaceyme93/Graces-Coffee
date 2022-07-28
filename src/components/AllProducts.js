@@ -39,7 +39,7 @@ function AllProducts() {
               {product.name}
             </p>
             <p>Price: ${product.price}</p>
-            <p>In Stock: {product.inStock === true ? 'Yes' : 'No'}</p>{' '}
+            <p>{product.inStock === true ? 'In Stock' : 'Out of Stock'}</p>{' '}
           </div>
         );
       })}

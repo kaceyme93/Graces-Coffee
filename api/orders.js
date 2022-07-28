@@ -14,12 +14,12 @@ ordersRouter.get('/', requireAdmin, async (req, res, next) => {
 });
 
 ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
-  console.log("REQ.USER", req.user)
-  console.log("HIT")
-  //If user is not logged in, how should we get the userId? Session info?
-  const userId = req.user.id
+  console.log('REQ.USER', req.user);
+  console.log('HIT');
+  const userId = req.user.id;
   try {
-    const order = await Orders.getCartByUser(userId);
+    const { orderId } = req.params;
+    const order = await Orders.getOrderById(orderId);
 
     if (order) res.send(order);
   } catch (error) {
@@ -27,16 +27,16 @@ ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
   }
 });
 
-ordersRouter.get('/:orderId', requireAdmin, async(req, res, next) => {
+ordersRouter.get('/:orderId', async (req, res, next) => {
   try {
-    const {orderId} = req.params
+    const { orderId } = req.params;
+    console.log('ORDERID', orderId);
     const order = await Orders.getOrderById(orderId);
-
-    if (order) res.send(order)
+    if (order) res.send(order);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 ordersRouter.post('/', requireLogin, async (req, res, next) => {
   try {

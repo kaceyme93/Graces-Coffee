@@ -92,8 +92,8 @@ async function getCartByUser({ id }) {
       `
        SELECT *
        FROM orders
-       WHERE orders."userId" = $1
-       AND orders.status = "created";
+       WHERE "userId" = $1
+       AND status = 'created';
       `,
       [id]
     );
