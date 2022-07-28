@@ -54,4 +54,4 @@ function GetAndDisplayCart() {
     )
 }   
 
-export default Cart;
+export default GetAndDisplayCart;
