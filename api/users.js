@@ -3,10 +3,14 @@ const {
   getUserByUsername,
   getUserById,
   createUser,
+  getAllUsers,
+  updateUser
 } = require('../db/models/index');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 const bcrypt = require('bcrypt');
+const { requireAdmin } = require('./utils');
+const e = require('express');
 
 //Creates new user, requires a username AND password.
 usersRouter.post('/register', async (req, res, next) => {
@@ -128,4 +132,27 @@ usersRouter.post('/login', async (req, res, next) => {
   }
 });
 
+usersRouter.get('/', requireAdmin, async (req, res, next) => {
+  try {
+    const allUsers = await getAllUsers()
+
+    if (allUsers) res.send(allUsers)
+  } catch(err) {
+    console.error("ERROR GETTING ALL USERS")
+    next(err)
+  }
+})
+
+usersRouter.patch('/:userId', requireAdmin, async (req, res, next) => {
+  try {
+    const userToUpdate = req.body
+    userToUpdate.id = req.params.userId
+
+    const updatedUser = await updateUser(userToUpdate)
+    if (updatedUser) res.send(updatedUser)
+  }catch(err) {
+    console.error("ERROR UPDATING USER")
+    next(err)
+  }
+})
 module.exports = usersRouter;

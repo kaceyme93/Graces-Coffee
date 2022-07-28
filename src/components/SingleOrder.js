@@ -8,9 +8,9 @@ function SingleOrder({ id }) {
     const { orderId } = useParams()
     const orderProductIds = order.productId
     
-        const products = async () => {
-            return Promise.all(orderProductIds.map(orderProductId => getSingleProduct(orderProductId)))
-        }
+    const products = async () => {
+        return Promise.all(orderProductIds.map(orderProductId => getSingleProduct(orderProductId)))
+    }
 
     useEffect(() => {
         const fetchSingleOrder = async () => {

@@ -16,6 +16,7 @@ ordersRouter.get('/', requireAdmin, async (req, res, next) => {
 ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
   console.log("REQ.USER", req.user)
   console.log("HIT")
+  //If user is not logged in, how should we get the userId? Session info?
   const userId = req.user.id
   try {
     const order = await Orders.getCartByUser(userId);

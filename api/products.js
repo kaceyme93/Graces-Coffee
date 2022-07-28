@@ -1,5 +1,6 @@
 const productsRouter = require('express').Router();
-const { Products } = require('../db/models');
+const { Products, createProduct, destroyProduct, updateProduct, getOrdersByProduct } = require('../db/models');
+const { requireAdmin } = require('./utils');
 
 //GET /api/products will send back a list of all products in the database
 productsRouter.get('/', async (req, res, next) => {
@@ -24,4 +25,53 @@ productsRouter.get('/:productId', async (req, res, next) => {
   }
 });
 
+productsRouter.post('/', requireAdmin, async (req, res, next) => {
+  try {
+    const { name, description, price, imageURL, inStock, category, origin, roast, size } = req.body
+
+    const newProduct = await createProduct({name, description, price, imageURL, inStock, category, origin, roast, size})
+
+    if(newProduct) res.send(newProduct)
+  } catch(err) {
+    console.error("ERROR CREATING PRODUCT")
+    next(err)
+  }
+})
+
+productsRouter.delete('/:productId', requireAdmin, async (req, res, next) => {
+ try {
+  const productId = req.params.productId
+  const deletedProduct = await destroyProduct(productId)
+
+  if(deletedProduct) res.send(deletedProduct)
+ } catch(err) {
+  console.error("ERROR DELETING PRODUCT")
+  next(err)
+ }
+})
+
+productsRouter.patch('/:productsId', requireAdmin, async (req, res, next) => {
+  try {
+    const productToUpdate = req.body
+    productToUpdate.id = req.params.productsId
+    const updatedProduct = await updateProduct(productToUpdate)
+
+    if(updatedProduct) res.send(updatedProduct)
+  } catch(err) {
+    console.error("ERROR UPDATING PRODUCT")
+    next(err)
+  }
+})
+
+productsRouter.get('/:productId/orders', requireAdmin, async (req, res, next) => {
+  try {
+    const productId = req.params.productId
+    const ordersWithProduct = await getOrdersByProduct(productId)
+
+    if(ordersWithProduct) res.send(ordersWithProduct)
+  } catch(err) {
+    console.error("ERROR GETTING ORDERS BY PRODUCT")
+    next(err)
+  }
+})
 module.exports = productsRouter;

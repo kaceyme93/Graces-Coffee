@@ -4,13 +4,13 @@ const client = require('../client');
 const bcrypt = require('bcrypt'); //for encryption
 const SALT = 10;
 
-const createUser = async ({
+async function createUser({
   firstName,
   lastName,
   email,
   username,
   password,
-}) => {
+}) {
   try {
     const hash = await bcrypt.hash(password, SALT);
     const {
@@ -34,7 +34,7 @@ const createUser = async ({
   }
 };
 
-const getUser = async ({ username, password }) => {
+async function getUser({ username, password }) {
   try {
     const user = await getUserByUsername(username);
     if (!user) return;
@@ -48,7 +48,7 @@ const getUser = async ({ username, password }) => {
   }
 };
 
-const getUserByUsername = async (username) => {
+async function getUserByUsername(username){
   try {
     const {
       rows: [user],
@@ -68,7 +68,7 @@ const getUserByUsername = async (username) => {
   }
 };
 
-const getUserById = async (id) => {
+async function getUserById(id) {
   try {
     const {
       rows: [user],
@@ -90,7 +90,7 @@ const getUserById = async (id) => {
   }
 };
 
-const getAllUsers = async () => {
+async function getAllUsers() {
   try {
     const { rows } = await client.query(`
     SELECT username, id 
@@ -101,10 +101,33 @@ const getAllUsers = async () => {
   }
 };
 
+async function updateUser({id, ...fields}) {
+  const setString = Object.keys(fields).map(
+    (key, index) => `"${ key }"=$${ index+1 }`
+  ).join(', ')
+
+  if (setString.length === 0) {
+    return;
+  }
+  try {
+    const { rows: [updatedUser] } = await client.query(`
+    UPDATE users
+    SET ${setString}
+    WHERE id = ${id}
+    RETURNING *
+    ;`, Object.values(fields))
+    return updatedUser
+  } catch(err) {
+    console.error("ERROR UPDATING USER")
+    throw err
+  }
+}
+
 module.exports = {
   getUser,
   createUser,
   getAllUsers,
   getUserByUsername,
   getUserById,
+  updateUser
 };
