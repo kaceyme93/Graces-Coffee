@@ -8,3 +8,4 @@ export { default as Login } from './Login';
 export { default as Profile } from './Profile';
 export { default as Cart } from './Cart';
 export { default as FrontPage } from './FrontPage';
+export { default as Checkout } from './Checkout';

@@ -1,0 +1,17 @@
+.checkout-page {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-button-group {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-cancel-button {
+  margin-right: 1rem;
+}

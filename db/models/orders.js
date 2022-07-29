@@ -127,6 +127,30 @@ async function createOrder({ status, userId }) {
   }
 }
 
+async function updateOrder({ id, status, userId }) {
+  try {
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+async function completeOrder({ id }) {
+  try {
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+async function cancelOrder(id) {
+  try {
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 module.exports = {
   getOrderById,
   getAllOrders,
@@ -134,4 +158,7 @@ module.exports = {
   getOrdersByProduct,
   getCartByUser,
   createOrder,
+  updateOrder,
+  completeOrder,
+  cancelOrder,
 };

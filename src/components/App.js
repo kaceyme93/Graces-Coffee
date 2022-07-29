@@ -15,6 +15,7 @@ import {
   SingleOrder,
   FrontPage,
   Cart,
+  Checkout,
 } from './index';
 
 const App = () => {
@@ -88,6 +89,10 @@ const App = () => {
 
           <Route exact path='/cart'>
             <SingleOrder />
+          </Route>
+
+          <Route exact path='/cart/checkout'>
+            <Checkout userInfo={userInfo} />
           </Route>
 
           <Route path='/'>
