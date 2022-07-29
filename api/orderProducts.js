@@ -31,9 +31,10 @@ orderProductsRouter.patch(
     // Update the quantity or price on the order product
     try {
       const { orderProductId } = req.params;
+      //where are we getting price and quantity from?
       const { price, quantity } = req.body;
       const updatedProduct = await updateOrderProduct({
-        orderProductId,
+        id : orderProductId,
         price,
         quantity,
       });
