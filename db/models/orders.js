@@ -3,9 +3,7 @@ const { filterProducts } = require('./utils');
 
 async function getOrderById(id) {
   try {
-    const {
-      rows: [order],
-    } = await client.query(
+    const { rows: order } = await client.query(
       `
         SELECT *
         FROM orders
