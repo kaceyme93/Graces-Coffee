@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import { Profile } from './index';
 import '../style/Checkout.css';
 
 function Checkout({ userInfo }) {

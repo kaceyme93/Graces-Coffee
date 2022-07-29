@@ -24,7 +24,7 @@ function Navbar({ token, setToken, userInfo, setUserInfo }) {
                 xmlns='http://www.w3.org/2000/svg'
                 width='32'
                 height='32'
-                fill='currentColor'
+                fill-rule='currentColor'
                 className='bi bi-cup-hot'
                 style={{ marginRight: '5px' }}
                 viewBox='0 0 16 16'
@@ -87,7 +87,7 @@ function Navbar({ token, setToken, userInfo, setUserInfo }) {
               xmlns='http://www.w3.org/2000/svg'
               width='28'
               height='28'
-              fill='currentColor'
+              fill-rule='currentColor'
               className='bi bi-cart'
               viewBox='0 0 16 16'
             >
