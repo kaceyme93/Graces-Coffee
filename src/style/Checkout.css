@@ -15,3 +15,25 @@
 .checkout-cancel-button {
   margin-right: 1rem;
 }
+
+.checkout-user-info {
+  border: 2px solid black;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+}
+
+.checkout-shipping-address {
+  border: 2px solid black;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  width: 35vw;
+}
+
+#shipping-dropdown {
+  border: 2px solid black;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+}

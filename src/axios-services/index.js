@@ -66,7 +66,7 @@ export async function tokenRegister(
   inputLast,
   setToken
 ) {
-  try{
+  try {
     const { data: register } = await axios.post('/api/users/register', {
       username: inputUsername,
       password: inputPassword,
@@ -121,6 +121,30 @@ const makeHeaders = (token) => {
 export async function getSingleOrder(orderId) {
   try {
     const { data: order } = await axios.get(`/api/orders/${orderId}`);
+
+    return order;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function cancelOrder(orderId) {
+  try {
+    const { data: order } = await axios.patch(`/api/orders/${orderId}`, {
+      status: 'cancelled',
+    });
+
+    return order;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function completeOrder(orderId) {
+  try {
+    const { data: order } = await axios.patch(`/api/orders/${orderId}`, {
+      status: 'completed',
+    });
 
     return order;
   } catch (err) {
