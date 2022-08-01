@@ -1,13 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import { useHistory } from 'react-router-dom';
 import { cancelOrder, completeOrder } from '../axios-services';
 import Button from 'react-bootstrap/Button';
+import Stripe from './Stripe';
 import '../style/Checkout.css';
 
-function Checkout({ userInfo }) {
+// Make sure to call loadStripe outside of a component’s render to avoid
+// recreating the Stripe object on every render.
+// This is your test publishable API key.
+const stripePromise = loadStripe(
+  'pk_test_51LS1IvEfEmNzXkA2T1NhGj87u2NS6AP3TV7QHuzMiueml7qXXiyx6PLLMtbLpBobgLLQ5Yk1cph2TocODsr1Plg200YiJhE7lY'
+);
+
+export default function Checkout({ userInfo }) {
+  const [clientSecret, setClientSecret] = useState('');
   const [shipping, setShipping] = useState('');
   const shippingOptions = ['USPS', 'UPS', 'Fedex'];
   const history = useHistory();
+
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+    fetch('/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: [{ id: 'xl-tshirt' }] }),
+    })
+      .then((res) => res.json())
+      .then((data) => setClientSecret(data.clientSecret));
+  }, []);
+
+  const appearance = {
+    theme: 'stripe',
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
 
   // need to add orderId to cancel order
   const handleCancelOrder = async () => {
@@ -142,8 +172,11 @@ function Checkout({ userInfo }) {
           Complete Order
         </Button>
       </div>
+      {clientSecret && (
+        <Elements options={options} stripe={stripePromise}>
+          <Stripe />
+        </Elements>
+      )}
     </div>
   );
 }
-
-export default Checkout;
