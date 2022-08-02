@@ -30,10 +30,12 @@ async function addProductToOrder({ orderId, productId, price, quantity }) {
       return addProductToOrder
 
     } else{
+      let newPrice = price + Number(productOnOrderAlready[0].price)
+      let newQuantity = quantity + productOnOrderAlready[0].quantity
       const updateParams = {
         id : productOnOrderAlready[0].id,
-        price,
-        quantity,
+        price : newPrice,
+        quantity: newQuantity,
       }
 
       const updatedOrder = await updateOrderProduct(updateParams)

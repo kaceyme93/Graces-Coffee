@@ -4,7 +4,7 @@ const { filterProducts } = require('./utils');
 async function getOrderById(id) {
   try {
     const {
-      rows: [order],
+      rows: order,
     } = await client.query(
       `
         SELECT *
@@ -88,7 +88,7 @@ async function getOrdersByProduct({ id }) {
 async function getCartByUser({ id }) {
   try {
     const {
-      rows: [order],
+      rows: order,
     } = await client.query(
       `
        SELECT *
