@@ -1,6 +1,7 @@
 // grab our db client connection to use with our adapters
 const client = require('../client');
 const bcrypt = require('bcrypt'); //for encryption
+require('dotenv').config();
 
 const createUser = async ({
   firstName,

@@ -79,7 +79,7 @@ const App = () => {
           </Route>
 
           <Route exact path='/cart'>
-            <Cart />
+            <Cart token={token}/>
           </Route>
 
           <Route exact path='/orders/:orderId'>
