@@ -120,7 +120,7 @@ const makeHeaders = (token) => {
 
 export async function getSingleOrder(orderId) {
   try {
-    const { data: order } = await axios.get(`/api/orders/${orderId}`);
+    const { data: [order] } = await axios.get(`/api/orders/${orderId}`);
 
     return order;
   } catch (err) {

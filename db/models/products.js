@@ -76,18 +76,33 @@ async function createProduct(product) {
   }
 }
 
-
 async function destroyProduct({ id }) {
   try {
     const { rows: [product] } = await client.query(`
     DELETE
     FROM products
     WHERE id = $1
-    
-    WITH product_to_delete AS (
-      SELECT *
-      FROM 
-    )
+    ;`, [id])
+
+    const { rows: [notCompletedOrders] } = await client.query(`
+    SELECT *
+    FROM orders
+    WHERE status != 'completed'
+    `)
+
+    const { rows: [orderProducts] } = await client.query(`
+    SELECT *
+    FROM order_products
+    WHERE id = $1
+    `, [id])
+
+    const { rows: [deletedOrderProduct] } = await client.query(`
+    DELETE
+    FROM order_products op
+    JOIN orders o
+    ON op.id = o.id
+    WHERE id = $1
+    AND status != 'completed'
     `, [id])
 
   }catch(err) {
@@ -105,7 +120,7 @@ async function updateProduct({ id, ...fields}) {
     return
   }
   try {
-    const { rows: [updatedProduct] } = await client.query(`
+    const { rows: updatedProduct } = await client.query(`
     UPDATE products
     SET ${setString}
     WHERE id = ${id}

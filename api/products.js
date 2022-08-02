@@ -2,6 +2,7 @@ const productsRouter = require('express').Router();
 const { Products, createProduct, destroyProduct, updateProduct, getOrdersByProduct } = require('../db/models');
 const { requireAdmin } = require('./utils');
 
+
 //GET /api/products will send back a list of all products in the database
 productsRouter.get('/', async (req, res, next) => {
   try {

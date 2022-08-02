@@ -5,8 +5,8 @@ import Button from 'react-bootstrap/Button'
 function GetAndDisplayCart() {
     const [cart, setCart] = useState({})
     const [cartProds, setCartProds] = useState([])
-    const cartProductIds = cart.productId
-
+    const cartProductIds = cart.orderProductId
+    console.log("CART IS", cart)
     // const products = async () => {
     //     return Promise.all(cartProductIds.map(cartProductId => getSingleProduct(cartProductId)))
     // }
@@ -14,14 +14,14 @@ function GetAndDisplayCart() {
         const result = await getUserCart()
         setCart(result)
     }
-    const products = async () => {
-        const result = Promise.all(cartProductIds.map(cartProductId => getSingleProduct(cartProductId)))
-        setCartProds(result)
-    }
+    // const products = async () => {
+    //     const result = Promise.all(cartProductIds.map(cartProductId => getSingleProduct(cartProductId)))
+    //     setCartProds(result)
+    // }
 
     useEffect(() => {
         fetchCart();
-        products()
+        // products()
     }, [])
 
     return (
@@ -43,7 +43,7 @@ function GetAndDisplayCart() {
                                 <Button variant='outline-dark' size='sm'>
                                  +
                                 </Button>
-                                <div>Total: {product.quantity}</div>
+                                <div>Total Quantity: {product.quantity}</div>
                             </p>
                             <div> {product.price}</div>
                             <div>Image of trashcan that can be clicked? Delete button?</div>
