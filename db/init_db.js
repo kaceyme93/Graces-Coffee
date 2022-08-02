@@ -5,6 +5,7 @@ const {
   Products,
   Orders,
   Users,
+  OrderProducts,
 } = require('./');
 
 const client = require('./client.js');
@@ -548,11 +549,59 @@ async function populateInitialData() {
       isAdmin: true,
     });
 
+    const user2 = await Users.createUser({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'JohnDoe@gmail.com',
+      username: 'JohnnyBoy',
+      password: 'passwordSecured',
+      isAdmin: false,
+    });
+
+    const user3 = await Users.createUser({
+      firstName: 'Samsung',
+      lastName: 'Fridge',
+      email: 'Chilly@gmail.com',
+      username: 'ColdOnes',
+      password: 'IceIceBaby',
+      isAdmin: false,
+    });
+
+    let today = new Date().toLocaleDateString()
+
     const order1 = await Orders.createOrder({
       status: 'created',
       userId: 1,
-      dataPlaced: 2022 - 07 - 23,
+      // datePlaced: 2022 - 07 - 23,
     });
+
+    const order2 = await Orders.createOrder({
+      status: 'created',
+      userId: 3,
+      // datePlaced: today,
+    });
+    
+    const allOrders = await Orders.getAllOrders();
+    // console.log("Grabbing all orders", allOrders);
+    
+    const addingProductToOrder = await OrderProducts.addProductToOrder({ 
+      orderId: 1, 
+      productId: 1, 
+      price: 10, 
+      quantity: 1 });
+      // console.log("first order product", addingProductToOrder);
+      
+      const addingSecondOfSameProductToOrder = await OrderProducts.addProductToOrder({
+        orderId: 1, 
+        productId: 1, 
+        price: 30, 
+        quantity: 3 });
+      // console.log("adding another to product to order", addingSecondOfSameProductToOrder);
+
+      // await OrderProducts.destroyOrderProduct(1)
+        
+    // const firstOrder = await Orders.getOrderById(1);
+    // console.log("Grabbing first order", firstOrder);
 
     const updatedProduct1 = await Products.updateProduct({
       id: 1,

@@ -6,6 +6,10 @@ const {
   getAllUsers,
   updateUser
 } = require('../db/models/index');
+const{ Orders } = require('../db/models');
+require('dotenv').config();
+const { requireAdmin, requireLogin } = require('./utils');
+
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 const bcrypt = require('bcrypt');
@@ -82,6 +86,7 @@ usersRouter.get('/me', async (req, res, next) => {
 
       if (id) {
         const user = await getUserById(id);
+        console.log("req.user", req)
         res.send(user);
       }
     } catch ({ name, message }) {
@@ -156,4 +161,23 @@ usersRouter.patch('/:userId', requireAdmin, async (req, res, next) => {
     next(err)
   }
 })
+usersRouter.get(
+  '/:userId/orders',
+  requireLogin,
+  async (req, res, next) => {
+    try {
+      const id = req.user.id;
+      const userId = Number(req.params.userId);
+      const user = { id: req.user.id };
+
+      if (id === userId) {
+        const orders = await Orders.getOrdersByUser(user);
+        res.send(orders);
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 module.exports = usersRouter;
