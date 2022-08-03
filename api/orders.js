@@ -1,7 +1,8 @@
 const ordersRouter = require('express').Router();
 const { Orders } = require('../db/models');
+const{ OrderProducts } = require('../db/models')
 const { requireAdmin, requireLogin } = require('./utils');
-
+// requireAdmin
 //GET /api/orders will send back a list of all orders in the database
 ordersRouter.get('/', requireAdmin, async (req, res, next) => {
   try {
@@ -14,12 +15,9 @@ ordersRouter.get('/', requireAdmin, async (req, res, next) => {
 });
 
 ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
-  console.log('REQ.USER', req.user);
-  console.log('HIT');
   const userId = req.user.id;
   try {
-    const { orderId } = req.params;
-    const order = await Orders.getOrderById(orderId);
+    const order = await Orders.getCartByUser(userId);
 
     if (order) res.send(order);
   } catch (error) {
@@ -30,7 +28,6 @@ ordersRouter.get('/cart', requireLogin, async (req, res, next) => {
 ordersRouter.get('/:orderId', async (req, res, next) => {
   try {
     const { orderId } = req.params;
-    console.log('ORDERID', orderId);
     const order = await Orders.getOrderById(orderId);
     if (order) res.send(order);
   } catch (error) {
@@ -40,9 +37,9 @@ ordersRouter.get('/:orderId', async (req, res, next) => {
 
 ordersRouter.post('/', requireLogin, async (req, res, next) => {
   try {
-    const { id } = req.user;
+    const userId  = req.user.id;
     const status = 'created';
-    const order = { status, id };
+    const order = { status, userId };
     const newOrder = await Orders.createOrder(order);
 
     res.send(newOrder);
@@ -51,23 +48,26 @@ ordersRouter.post('/', requireLogin, async (req, res, next) => {
   }
 });
 
-ordersRouter.post(
-  '/users/:userId/orders',
-  requireLogin,
-  async (req, res, next) => {
-    try {
-      const id = req.user.id;
-      const userId = req.params.userId;
-      const user = { id: req.user.id };
 
-      if (id === userId) {
-        const orders = await Orders.getOrdersByUser(user);
-        res.send(orders);
-      }
-    } catch (error) {
-      next(error);
-    }
+ordersRouter.post(
+'/:orderId/products',
+async (req, res, next) => {
+  /*Add a single product to an order (using order_products). 
+  Prevent duplication on ("orderId", "productId") pair. If product already exists on order, add additional quantity and price.*/
+  try {
+    const { orderId } = req.params;
+    const { productId, price, quantity } = req.body;
+    const addedProduct = await OrderProducts.addProductToOrder({
+      orderId,
+      productId,
+      price,
+      quantity,
+    });
+    if (addedProduct) res.send(addedProduct);
+  } catch (error) {
+    next(error);
   }
+}
 );
 
 ordersRouter.patch('/:orderId', async (req, res, next) => {

@@ -49,9 +49,11 @@ export async function getAllProducts() {
   }
 }
 
-export async function getUserCart() {
+export async function getUserCart(token) {
   try {
-    const { data: cart } = await axios.get(`/api/cart`);
+    const { data: cart } = await axios.get(`/api/cart`, {
+      headers: makeHeaders(token),
+    });
     return cart;
   } catch (err) {
     console.error(err);

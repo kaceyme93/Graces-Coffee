@@ -2,50 +2,32 @@ const orderProductsRouter = require('express').Router();
 const {
   addProductToOrder,
   destroyOrderProduct,
+  updateOrderProduct
 } = require('../db/models/orderProducts');
 
-orderProductsRouter.post(
-  '/orders/:orderId/products',
-  async (req, res, next) => {
-    /*Add a single product to an order (using order_products). 
-    Prevent duplication on ("orderId", "productId") pair. If product already exists on order, increment quantity and update price.*/
-    try {
-      const { orderId } = req.params;
-      const { productId, price, quantity } = req.body;
-      const addedProduct = await addProductToOrder({
-        orderId,
-        productId,
-        price,
-        quantity,
-      });
-      if (addedProduct) res.send(addedProduct);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 orderProductsRouter.patch(
-  '/order_products/:orderProductId',
+  '/:orderProductId',
   async (req, res, next) => {
+    console.log("hit")
     // Update the quantity or price on the order product
     try {
       const { orderProductId } = req.params;
+      //where are we getting price and quantity from?
       const { price, quantity } = req.body;
       const updatedProduct = await updateOrderProduct({
-        orderProductId,
+        id : orderProductId,
         price,
         quantity,
       });
       //check if the item exists in the cart, if it is then insert this stuff, if not update the value to get one.
-      if (updatedProduct) res.send(addedProduct);
+      if (updatedProduct) res.send(updatedProduct);
     } catch (error) {
       next(error);
     }
   }
 );
 orderProductsRouter.delete(
-  '/order_products/:orderProductId',
+  '/:orderProductId',
   async (req, res, next) => {
     //Remove a product from a order, use hard delete
     try {

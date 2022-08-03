@@ -11,6 +11,9 @@ server.use(cors());
 const morgan = require('morgan');
 server.use(morgan('dev'));
 
+const bodyParser = require('body-parser');
+server.use(bodyParser.json())
+
 // handle application/json requests
 server.use(express.json());
 
