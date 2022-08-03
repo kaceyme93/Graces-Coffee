@@ -82,7 +82,7 @@ function Navbar({ token, setToken, userInfo, setUserInfo }) {
             </div>
           )}
 
-          <Link to='/cart' className='navbar-links'>
+          <Link to='/orders/cart' className='navbar-links'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='28'

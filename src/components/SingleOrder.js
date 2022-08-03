@@ -12,7 +12,6 @@ function SingleOrder({ id }) {
     const [order, setOrder] = useState({});
     const [productOnOrder, setProductsOnOrder] = useState([])
     const { orderId } = useParams()
-    console.log(order)
 
     const fetchSingleOrder = async () => {
       const result = await getSingleOrder(orderId || id);
@@ -23,8 +22,6 @@ function SingleOrder({ id }) {
   useEffect(() => {
     fetchSingleOrder();
   }, [orderId, id]);
-  console.log(productOnOrder)
-
 
   return (
     <Container>

@@ -51,7 +51,7 @@ export async function getAllProducts() {
 
 export async function getUserCart(token) {
   try {
-    const { data: cart } = await axios.get(`/api/cart`, {
+    const { data: [cart] } = await axios.get(`/api/orders/cart`, {
       headers: makeHeaders(token),
     });
     return cart;

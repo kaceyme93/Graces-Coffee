@@ -9,11 +9,9 @@ const {
 const{ Orders } = require('../db/models');
 require('dotenv').config();
 const { requireAdmin, requireLogin } = require('./utils');
-
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
-const bcrypt = require('bcrypt');
-const { requireAdmin } = require('./utils');
+const bcrypt = require('bcrypt');;
 const e = require('express');
 
 //Creates new user, requires a username AND password.
@@ -86,11 +84,10 @@ usersRouter.get('/me', async (req, res, next) => {
 
       if (id) {
         const user = await getUserById(id);
-        console.log("req.user", req)
         res.send(user);
       }
     } catch ({ name, message }) {
-      res.send({
+      next({
         error: 401,
       });
     }

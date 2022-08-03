@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { getUserCart, getSingleProduct } from '../axios-services';
 import Button from 'react-bootstrap/Button'
 
-function GetAndDisplayCart() {
+function GetAndDisplayCart(props) {
     const [cart, setCart] = useState({})
     const [cartProds, setCartProds] = useState([])
-    const cartProductIds = cart.orderProductId
-    console.log("CART IS", cart)
+    const {token} = props
+    
+    // console.log("CART IS", cart)
     // const products = async () => {
     //     return Promise.all(cartProductIds.map(cartProductId => getSingleProduct(cartProductId)))
     // }
     const fetchCart = async () => {
-        const result = await getUserCart()
+        const result = await getUserCart(token)
+        console.log("RESULT IS", result)
         setCart(result)
     }
     // const products = async () => {
@@ -22,7 +24,7 @@ function GetAndDisplayCart() {
     useEffect(() => {
         fetchCart();
         // products()
-    }, [])
+    }, [token])
 
     return (
         <div className='order-details'>
