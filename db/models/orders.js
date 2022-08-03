@@ -3,13 +3,7 @@ const { filterProducts } = require('./utils');
 
 async function getOrderById(id) {
   try {
-<<<<<<< HEAD
     const { rows: order } = await client.query(
-=======
-    const {
-      rows: order,
-    } = await client.query(
->>>>>>> dev
       `
         SELECT *
         FROM orders
@@ -17,9 +11,9 @@ async function getOrderById(id) {
     `,
       [id]
     );
-      console.log("order from db function",order)
+    console.log('order from db function', order);
     const result = await filterProducts(order);
-    console.log("result is", result)
+    console.log('result is', result);
     return result;
   } catch (error) {
     console.error('ERROR GETTING ORDER BY ID');
@@ -91,9 +85,7 @@ async function getOrdersByProduct({ id }) {
 
 async function getCartByUser({ id }) {
   try {
-    const {
-      rows: order,
-    } = await client.query(
+    const { rows: order } = await client.query(
       `
        SELECT *
        FROM orders
