@@ -43,3 +43,7 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.checkout-info {
+  margin-top: 1rem;
+}

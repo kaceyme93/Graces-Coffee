@@ -81,7 +81,11 @@ export default function Stripe() {
       <PaymentElement id='payment-element' />
       <button disabled={isLoading || !stripe || !elements} id='submit'>
         <span id='button-text'>
-          {isLoading ? <div className='spinner' id='spinner'></div> : 'Pay now'}
+          {isLoading ? (
+            <div className='spinner' id='spinner'></div>
+          ) : (
+            'Complete Order'
+          )}
         </span>
       </button>
       {/* Show any error or success messages */}

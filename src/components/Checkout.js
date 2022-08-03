@@ -117,8 +117,12 @@ export default function Checkout({ userInfo }) {
   return (
     <div className='checkout-page'>
       <div className='col-md-4 container bg-default'>
-        <h4 className='my-4'>Billing Address</h4>
+        <div className='checkout-info'>
+          <h4 className='card-title'>Your Info</h4>
+          <p className='card-text'>{userInfo.email}</p>
+        </div>
 
+        <h4 className='my-4'>Billing Address</h4>
         <form>
           <div className='form-row'>
             <div className='col-md-6 form-group'>
