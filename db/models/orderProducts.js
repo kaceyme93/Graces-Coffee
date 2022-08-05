@@ -48,20 +48,19 @@ async function addProductToOrder({ orderId, productId, price, quantity }) {
   }
 }
 
-async function updateOrderProduct({ id, price, quantity }) {
+async function updateOrderProduct({ id, quantity }) {
   try {
-    const { rows: product } = await client.query(
-      `UPDATE order_products 
-      SET price=$1,
-      quantity=$2 
-      WHERE id=$3 
+    const { rows: [product] } = await client.query(`
+      UPDATE "order_products" 
+      SET quantity= $1
+      WHERE id = $2
       RETURNING *`,
-      [price, quantity, id]
+      [quantity, id]
     );
     return product;
   } catch (error) {
     return (
-      `Error while updating order pruduct with params id:${id}, price:${price}, quantity:${quantity}`,
+      `Error while updating order pruduct with params id:${id}, quantity:${quantity}`,
       error
     );
   }

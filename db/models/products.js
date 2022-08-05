@@ -84,25 +84,17 @@ async function destroyProduct({ id }) {
     WHERE id = $1
     ;`, [id])
 
-    const { rows: [notCompletedOrders] } = await client.query(`
-    SELECT *
-    FROM orders
-    WHERE status != 'completed'
-    `)
-
-    const { rows: [orderProducts] } = await client.query(`
-    SELECT *
-    FROM order_products
-    WHERE id = $1
-    `, [id])
-
+    //  DELETE
+    // FROM order_products op
+    // INNER JOIN orders o
+    // ON op."orderId" = o.id
+    // WHERE productId = 1
+    // AND o.status != 'completed'
     const { rows: [deletedOrderProduct] } = await client.query(`
-    DELETE
-    FROM order_products op
-    JOIN orders o
-    ON op.id = o.id
-    WHERE id = $1
-    AND status != 'completed'
+    SELECT 
+    o.id, o.status, op.id, op."productId", op."orderId"
+    FROM orders o
+    JOIN "order_products" op on op."orderId" = o.id 
     `, [id])
 
   }catch(err) {

@@ -129,3 +129,17 @@ export async function getSingleOrder(orderId) {
     console.error(err);
   }
 }
+
+export async function updateCartProduct(product) {
+  console.log("PRODUCT FROM AXIOS", product)
+  const orderProductId = product.id
+  try {
+    const { data: updatedCartProduct } = await axios.patch(`/api/orderProducts/${orderProductId}`, {
+      quantity: product.quantity
+    });
+
+    return updatedCartProduct;
+  } catch(err) {
+    console.error(err)
+  }
+}
