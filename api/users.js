@@ -3,14 +3,16 @@ const {
   getUserByUsername,
   getUserById,
   createUser,
+  getAllUsers,
+  updateUser
 } = require('../db/models/index');
 const{ Orders } = require('../db/models');
 require('dotenv').config();
 const { requireAdmin, requireLogin } = require('./utils');
-
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');;
+const e = require('express');
 
 //Creates new user, requires a username AND password.
 usersRouter.post('/register', async (req, res, next) => {
@@ -82,11 +84,10 @@ usersRouter.get('/me', async (req, res, next) => {
 
       if (id) {
         const user = await getUserById(id);
-        console.log("req.user", req)
         res.send(user);
       }
     } catch ({ name, message }) {
-      res.send({
+      next({
         error: 401,
       });
     }
@@ -116,7 +117,7 @@ usersRouter.post('/login', async (req, res, next) => {
           },
           JWT_SECRET
         );
-
+      
         res.send({
           user: user,
           message: 'Login Successful!',
@@ -134,6 +135,29 @@ usersRouter.post('/login', async (req, res, next) => {
   }
 });
 
+usersRouter.get('/', requireAdmin, async (req, res, next) => {
+  try {
+    const allUsers = await getAllUsers()
+
+    if (allUsers) res.send(allUsers)
+  } catch(err) {
+    console.error("ERROR GETTING ALL USERS")
+    next(err)
+  }
+})
+
+usersRouter.patch('/:userId', requireAdmin, async (req, res, next) => {
+  try {
+    const userToUpdate = req.body
+    userToUpdate.id = req.params.userId
+
+    const updatedUser = await updateUser(userToUpdate)
+    if (updatedUser) res.send(updatedUser)
+  }catch(err) {
+    console.error("ERROR UPDATING USER")
+    next(err)
+  }
+})
 usersRouter.get(
   '/:userId/orders',
   requireLogin,

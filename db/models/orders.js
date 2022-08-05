@@ -11,9 +11,7 @@ async function getOrderById(id) {
     `,
       [id]
     );
-    console.log('order from db function', order);
     const result = await filterProducts(order);
-    console.log('result is', result);
     return result;
   } catch (error) {
     console.error('ERROR GETTING ORDER BY ID');
@@ -103,7 +101,7 @@ async function getCartByUser({ id }) {
     throw error;
   }
 }
-
+ 
 async function createOrder({ status, userId }) {
   try {
     const {

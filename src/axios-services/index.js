@@ -51,7 +51,7 @@ export async function getAllProducts() {
 
 export async function getUserCart(token) {
   try {
-    const { data: cart } = await axios.get(`/api/cart`, {
+    const { data: [cart] } = await axios.get(`/api/orders/cart`, {
       headers: makeHeaders(token),
     });
     return cart;
@@ -122,7 +122,7 @@ const makeHeaders = (token) => {
 
 export async function getSingleOrder(orderId) {
   try {
-    const { data: order } = await axios.get(`/api/orders/${orderId}`);
+    const { data: [order] } = await axios.get(`/api/orders/${orderId}`);
 
     return order;
   } catch (err) {
@@ -130,6 +130,18 @@ export async function getSingleOrder(orderId) {
   }
 }
 
+export async function updateCartProduct(product) {
+  const orderProductId = product.id
+  try {
+    const { data: updatedCartProduct } = await axios.patch(`/api/orderProducts/${orderProductId}`, {
+      quantity: product.quantity
+    });
+
+    return updatedCartProduct;
+  } catch(err) {
+    console.error(err)
+  }
+}
 export async function cancelOrder(orderId) {
   try {
     const { data: order } = await axios.patch(`/api/orders/${orderId}`, {

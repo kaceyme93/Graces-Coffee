@@ -603,6 +603,31 @@ async function populateInitialData() {
     // const firstOrder = await Orders.getOrderById(1);
     // console.log("Grabbing first order", firstOrder);
 
+    const updatedProduct1 = await Products.updateProduct({
+      id: 1,
+      name: 'Porter',
+      description: `This coffee exists for early morning risers.  
+         Eye-opening boldness and big body preparing you for whatever lies in front of you.  
+         A cup with a full dark chocolate mouthfeel, peanut butter, caramel, and ending with toasted marshmallow
+         `,
+      price: 25.0,
+      inStock: true,
+      category: 'Whole Bean',
+      origin: 'South America',
+      roast: 'Dark',
+      size: '12 oz',
+      imageURL:
+        'https://images.squarespace-cdn.com/content/v1/602ab9f496e25d6c4bf3e60a/1626184276816-EIUQPATL1FDJ06338DTD/Guatemala_30387.jpg?format=1000w',
+    });
+
+    const updatedUser1 = await Users.updateUser({
+      id: 1,
+      firstName: "Minsung",
+      lastName: "Kimm",
+      email: "123@gmail.com",
+      
+    })
+
     // const products = [];
 
     // function createRandomProduct() {

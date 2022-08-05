@@ -27,7 +27,6 @@ const App = () => {
 
   const localStorageToken = localStorage.getItem('jwt');
   const localStorageCart = localStorage.getItem('localStorageCart');
-
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
     // first, create an async function that will wrap your axios service adapter
@@ -80,7 +79,7 @@ const App = () => {
             <Profile userInfo={userInfo} />
           </Route>
 
-          <Route exact path='/cart'>
+          <Route exact path='/orders/cart'>
             <Cart token={token}/>
           </Route>
 

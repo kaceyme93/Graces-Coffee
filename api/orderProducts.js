@@ -8,15 +8,13 @@ const {
 orderProductsRouter.patch(
   '/:orderProductId',
   async (req, res, next) => {
-    console.log("hit")
     // Update the quantity or price on the order product
     try {
       const { orderProductId } = req.params;
       //where are we getting price and quantity from?
-      const { price, quantity } = req.body;
+      const { quantity } = req.body;
       const updatedProduct = await updateOrderProduct({
         id : orderProductId,
-        price,
         quantity,
       });
       //check if the item exists in the cart, if it is then insert this stuff, if not update the value to get one.

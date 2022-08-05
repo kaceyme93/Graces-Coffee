@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const {getUserById} = require('../db/models/user');
 
 
+
 apiRouter.get('/', (req, res, next) => {
   res.send({
     message: 'API is under construction!',
@@ -24,7 +25,8 @@ apiRouter.use(async (req, res, next) => {
       const { id } = jwt.verify(token, JWT_SECRET);
 
       if (id) {
-        req.user = await getUserById(id);
+        const user = await getUserById(id);
+        req.user = user
         next();
       }
     } catch ({ name, message }) {
@@ -49,6 +51,7 @@ apiRouter.get('/health', (req, res, next) => {
   }
 });
 
+
 // place your routers here
 const productsRouter = require('./products');
 const usersRouter = require('./users');
@@ -58,7 +61,7 @@ const orderProductsRouter = require('./orderProducts');
 apiRouter.use('/products', productsRouter);
 apiRouter.use('/users', usersRouter);
 apiRouter.use('/orders', ordersRouter);
-apiRouter.use('/order_products', orderProductsRouter);
+apiRouter.use('/orderProducts', orderProductsRouter);
 
 
 

@@ -29,4 +29,20 @@ async function filterProducts(orders) {
   return orders;
 }
 
+async function orderStatusCheck(id) {
+  try {
+    const { rows: [joinedTable] } = await client.query(`
+    SELECT op.*, o.id AS "ogOrderId", o.status
+    FROM "order_products" op
+    JOIN orders o
+    ON op."orderId" = o.id
+    `)
+
+    return joinedTable
+  } catch(err) {
+    console.error("ERROR CHECKING ORDER STATUS")
+    throw err
+  }
+}
+
 module.exports = { filterProducts };
