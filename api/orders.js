@@ -71,4 +71,52 @@ async (req, res, next) => {
 }
 );
 
+ordersRouter.patch('/:orderId', async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    const { id, username } = req.user;
+    const { status, userId } = req.body;
+
+    const newOrder = { id: orderId, status: status, userId: userId };
+    const originalOrder = await Orders.getOrderById(orderId);
+
+    if (originalOrder.userId === id) {
+      const order = await Orders.updateRoutine(newOrder);
+
+      res.send(order);
+    } else {
+      res.status(403).send({
+        message: `User ${username} is not allowed to update this order`,
+        name: 'UnauthorizedUpdateError',
+        error: 'User not allowed to update order',
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+ordersRouter.delete('/:orderId', requireLogin, async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    const { id, username } = req.user;
+
+    const order = await Orders.getOrderById(orderId);
+
+    if (order.userId === id) {
+      const deletedOrder = await Orders.cancelOrder(orderId);
+
+      res.send(deletedOrder);
+    } else {
+      res.status(403).send({
+        message: `User ${username} is not allowed to delete this order`,
+        name: 'UnauthorizedDeleteError',
+        error: 'User not allowed to delete order',
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = ordersRouter;

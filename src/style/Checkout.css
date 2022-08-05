@@ -1,0 +1,49 @@
+.checkout-page {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-cancel-button {
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.checkout-user-info {
+  border: 2px solid black;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+}
+
+.checkout-shipping-address {
+  border: 2px solid black;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  width: 35vw;
+}
+
+#shipping-dropdown {
+  border: 2px solid black;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.checkout-info {
+  margin-top: 1rem;
+}
