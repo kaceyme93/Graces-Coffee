@@ -8,14 +8,11 @@ const {
 orderProductsRouter.patch(
   '/:orderProductId',
   async (req, res, next) => {
-    console.log("API hit")
     // Update the quantity or price on the order product
     try {
       const { orderProductId } = req.params;
       //where are we getting price and quantity from?
       const { quantity } = req.body;
-      console.log("QUANTITY", quantity)
-      console.log("ORDERID", orderProductId)
       const updatedProduct = await updateOrderProduct({
         id : orderProductId,
         quantity,
