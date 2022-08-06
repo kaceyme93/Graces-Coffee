@@ -6,7 +6,7 @@ import '../style/SingleProduct.css';
 
 function SingleProduct({ cart, setCart }) {
   const [product, setProduct] = useState([]);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function SingleProduct({ cart, setCart }) {
   };
 
   const handleMinusQuantity = () => {
-    if (quantity > 0) setQuantity(quantity - 1);
+    if (quantity > 1) setQuantity(quantity - 1);
   };
 
   const handleAddToCart = () => {
@@ -33,9 +33,11 @@ function SingleProduct({ cart, setCart }) {
     );
 
     if (duplicateProduct) {
-      duplicateProduct.quantity += product.quantity;
+      duplicateProduct.quantity += quantity;
     } else {
-      cartCopy.push(product);
+      console.log("ELSE WAS HIT")
+      cartCopy.push(product)
+      product.quantity = quantity;
     }
 
     setCart(cartCopy);

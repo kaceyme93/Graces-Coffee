@@ -9,9 +9,19 @@
   background-position: center;
   background-size: cover;
   height: 90vh;
+  animation: fadeIn 1s;
+  opacity: 1;
 }
 
 .front-page-button {
   width: 180px;
   margin-bottom: 8rem;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

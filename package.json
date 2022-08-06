@@ -39,8 +39,8 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
+    "stripe": "^8.222.0",
     "typescript": "^3.9.10",
-    "stripe": "^8.202.0",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
