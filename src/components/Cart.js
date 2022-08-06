@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getUserCart, updateCartProduct } from '../axios-services';
+import { useHistory } from "react-router-dom"
+import { getUserCart, updateCartProduct, deleteOrderProduct } from '../axios-services';
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-
+import emptyCartScreen from '../images/emptyCartScreenImage.jpg'
 
 function GetAndDisplayCart(props) {
     const [cart, setCart] = useState({})
@@ -14,44 +15,114 @@ function GetAndDisplayCart(props) {
     const [trigger, setTrigger] = useState(false)
     const {token} = props
     const salesTax = parseFloat((subTotal*.0625).toFixed(2))
-    
+    console.log(typeof(salesTax))
+    const history = useHistory()
+
     const setQuantity = (product, amount) => {
-        setCartProds(cartProd => cartProd.map(prod => prod.id===product.id ?({
-            ...prod,
-            quantity: prod.quantity + amount,
-        }) : prod))
+        if ((product.quantity ==1) && (amount == -1)){
+            deleteProductFromCart(product)
+        } else {
+            setCartProds(cartProd => cartProd.map(prod => prod.id===product.id ?({
+                 ...prod,
+                quantity: prod.quantity + amount,
+            }): prod))
+        }
         setTrigger(!trigger)
     }
 
+    const updateLocalStorage = (product, amount) => {
+        const cartFromLocal = JSON.parse(localStorage.getItem('cart'))
+        if(cartFromLocal) {
+            cartFromLocal.forEach((localProduct) => {
+            if(localProduct.id===product.id){
+                localProduct.quantity += amount
+            }
+            const newCart = JSON.stringify([...cartFromLocal])
+                localStorage.setItem('cart', newCart)
+        })
+        }
+    }
+
+    const checkOutHandler = () => {
+        history.push("/cart/checkout")
+    }
+
+    const continueShoppingHandler = () => {
+        history.push("/products")
+    }
+    const deleteProductFromCart = (product) => {
+        // if (token) {
+        //     deleteOrderProduct(product)
+        // } else {
+            const productsInCart = JSON.parse(localStorage.getItem('cart'))
+            const notDeletedProducts = productsInCart.filter(productInCart => productInCart.id!==product.id)
+            const newCart = JSON.stringify([...notDeletedProducts])
+            localStorage.setItem('cart', newCart)
+        // }
+    }
+    
     useEffect(() => {
         let isMounted = true
 
         const fetchCart = async () => {
             const result = await getUserCart(token)
-            if(isMounted) {
-                setCart(result)
-                setCartProds(result.products)
-                var sum = 0
-                result.products.forEach((product) => {
-                    let price = parseFloat(product.price)
-                    sum += price * product.quantity
-                })
-                setSubTotal(sum)
-            }
+            const cartFromLocal =JSON.parse(localStorage.getItem('cart'))
+
+            if (result) {
+                if(isMounted) {
+                    setCart(result)
+                    setCartProds(result.products)
+                    var sum = 0
+                    result.products.forEach((product) => {
+                        let price = parseFloat(product.price).toFixed(2)
+                        sum += price * product.quantity
+                    })
+                    setSubTotal(sum)
+                }
+            } else if (cartFromLocal){
+                if(isMounted) {
+                    setCartProds(cartFromLocal)
+                    var sum = 0
+                    cartFromLocal.forEach((product) => {
+                        let price = parseFloat(product.price)
+                        sum += price * product.quantity
+                    })
+                    setSubTotal(sum)
+                }
+            } 
         };
         fetchCart()
         return() => {
             isMounted= false
         }
-    }, [token])
+    }, [token, trigger])
 
     useEffect(() => {
         cartProds.map(cartprod => updateCartProduct(cartprod))
     }, [trigger])
     
+    if (cartProds.length===0) {
+        return (
+            <Container>
+                <Row style={{fontSize: "25px", justifyContent: "center"}}>
+                    Your cart is currently empty
+                </Row>
+                <Row style={{justifyContent: "center"}}>
+                    <img src={emptyCartScreen} style={{width: "700px"}}></img>
+                </Row>
+                <Row style={{justifyContent: "center"}}>
+                    <Button onClick={() => continueShoppingHandler()} style={{width: '200px'}}>Continue Shopping</Button>
+                </Row>
+                <Row>
+                <a href="https://www.vecteezy.com/free-vector/coffee-icon" style={{fontSize:"10px", position: "fixed", bottom: "0"}}>Coffee Icon Vectors by Vecteezy</a>
+
+                </Row>
+            </Container>
+        )
+    } else {
     return (
         <Container>
-            <h2> Cart</h2>
+            <h2> My Cart</h2>
             
             <Row>
                 <Col>
@@ -73,11 +144,9 @@ function GetAndDisplayCart(props) {
                                         <Card.Text>Price: ${(product.price)} |</Card.Text>
                                     </Col>
                                     <Col>
-                                        {product.quantity >0? 
-                                        <Button size='sm' onClick={(e) => {e.preventDefault(); setQuantity(product, -1)}} variant='outline-dark'>-</Button>
-                                        : null}
+                                        <Button size='sm' onClick={(e) => {e.preventDefault(); setQuantity(product, -1); updateLocalStorage(product, -1)}} variant='outline-dark'>-</Button>
                                         <Card.Text style={{display: "inline", marginLeft:"10px", marginRight:"10px"}}>Quantity: {product.quantity}</Card.Text>
-                                        <Button size='sm' onClick={(e) => {e.preventDefault(); setQuantity(product, 1)}} variant='outline-dark'>+</Button>
+                                        <Button size='sm' onClick={(e) => {e.preventDefault(); setQuantity(product, 1); updateLocalStorage(product, 1)}} variant='outline-dark'>+</Button>
                                     </Col>
                                 </Row>
                                 </Card.Body>
@@ -126,11 +195,20 @@ function GetAndDisplayCart(props) {
                                 <Card.Text style={{marginLeft: '150px'}}>${(subTotal + salesTax)}</Card.Text>
                             </Col>
                         </Row>
+                        <Row style={{justifyContent: 'center'}}>
+                            <Button 
+                                variant="dark" 
+                                style={{width: "200px", 
+                                marginBottom: '10px'}}
+                                onClick={() => checkOutHandler()}
+                                >CHECKOUT</Button>
+                        </Row>
                     </Card>
                 </Col>
             </Row>
         </Container>
-      )
+    )
+    } 
 }   
 
 export default GetAndDisplayCart;

@@ -35,7 +35,9 @@ function SingleOrder({ id }) {
                 </Row>
                 <Row>
                   <Col>
+                    {order.datePLaced?
                     <Card.Text> Ordered on: {order.datePLaced}</Card.Text>
+                    : <Card.Text> Order Date Not Available</Card.Text>}
                   </Col>
                   <Col>
                     <Card.Text> Order number: {order.id}</Card.Text>

@@ -10,7 +10,7 @@ function Navbar({ token, setToken, userInfo, setUserInfo }) {
 
   return (
     <nav
-      className='nav-bar nav0-bar light p-3 text-white sticky-top'
+      className='nav-bar nav0-bar light text-white sticky-top'
       style={{ backgroundColor: '#4f2b1f' }}
     >
       <div className='container'>

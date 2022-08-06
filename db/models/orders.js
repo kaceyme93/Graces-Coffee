@@ -30,7 +30,7 @@ async function getAllOrders() {
 
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -52,7 +52,7 @@ async function getOrdersByUser({ id }) {
 
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -76,7 +76,7 @@ async function getOrdersByProduct({ id }) {
 
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -97,7 +97,7 @@ async function getCartByUser({ id }) {
 
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -117,7 +117,7 @@ async function createOrder({ status, userId }) {
 
     return order;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -172,7 +172,7 @@ async function updateOrder({ id, status, userId }) {
       return order;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -193,7 +193,7 @@ async function completeOrder({ id }) {
 
     return order;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -214,7 +214,7 @@ async function cancelOrder(id) {
 
     return order;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }

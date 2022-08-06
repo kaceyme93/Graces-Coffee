@@ -165,3 +165,14 @@ export async function completeOrder(orderId) {
     console.error(err);
   }
 }
+
+export async function deleteOrderProduct(product) {
+  const orderProductId = product.id
+  try {
+    const {data: [deletedOrderProduct] } = await axios.delete(`api/orderProducts/${orderProductId}`)
+
+    return deletedOrderProduct
+  } catch(err) {
+    console.error(err)
+  }
+}
