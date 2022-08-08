@@ -5,6 +5,10 @@ import { useHistory } from 'react-router-dom';
 import { cancelOrder, completeOrder } from '../axios-services';
 import Button from 'react-bootstrap/Button';
 import Stripe from './Stripe';
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import Container from 'react-bootstrap/Container'
 import '../style/Checkout.css';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
@@ -14,8 +18,11 @@ const stripePromise = loadStripe(
   'pk_test_51LS1IvEfEmNzXkA2T1NhGj87u2NS6AP3TV7QHuzMiueml7qXXiyx6PLLMtbLpBobgLLQ5Yk1cph2TocODsr1Plg200YiJhE7lY'
 );
 
-export default function Checkout({ userInfo }) {
+export default function Checkout(props) {
   const [clientSecret, setClientSecret] = useState('');
+  const {userInfo, subTotal} = props
+  const salesTax = parseFloat((subTotal*.0625).toFixed(2))
+  const total = (subTotal + salesTax).toFixed(2)
   const history = useHistory();
   const states = [
     'AL',
@@ -224,11 +231,49 @@ export default function Checkout({ userInfo }) {
           </div>
         </form>
       </div>
-      {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
-          <Stripe />
-        </Elements>
-      )}
+        <Col md="auto" style={{justifyContent: 'space-around'}}>
+          <Card style={{width: '30vw', midWidth: '500px', marginBottom: '10px'}}>
+            <Card.Title style={{textAlign: 'center'}}> Summary of Charges</Card.Title>
+            <Row className="justify-content-md-center">
+                <Col>
+                    <Card.Text style= {{marginLeft: '50px'}}> Subtotal</Card.Text>
+                </Col>
+                <Col>
+                    <Card.Text style={{marginLeft: '150px', paddingRight: '20px'}}> ${(subTotal).toFixed(2)}</Card.Text>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Card.Text style={{marginLeft: '50px'}}>Shipping</Card.Text>
+                </Col>
+                <Col>
+                    <Card.Text style={{marginLeft: '150px', paddingRight: '20px'}}>FREE</Card.Text>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Card.Text style={{marginLeft: '50px'}}>Est. Tax</Card.Text>
+                </Col>
+                <Col>
+                    {/* Sales Tax of Il */}
+                    <Card.Text style={{marginLeft: '150px', paddingRight: '20px'}}>${salesTax}</Card.Text>
+                </Col>
+            </Row>
+            <Row style={{marginBottom: '10px'}}>
+                <Col>
+                    <Card.Text style={{marginLeft: '50px'}}> TOTAL</Card.Text>
+                </Col>
+                <Col>
+                    <Card.Text style={{marginLeft: '150px', paddingRight: '20px'}}>${total}</Card.Text>
+                </Col>
+            </Row>
+          </Card>
+          {clientSecret && (
+            <Elements options={options} stripe={stripePromise}>
+              <Stripe />
+            </Elements>
+          )}
+        </Col>
     </div>
   );
 }
