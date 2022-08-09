@@ -1,8 +1,8 @@
-h2 {
+.order-header {
   text-align: center;
 }
 
-.product-details{
+.product-details-single-order {
   display: flex;
   flex-direction: row;
 }
