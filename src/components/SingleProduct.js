@@ -86,14 +86,16 @@ function SingleProduct({ cart, setCart }) {
             </Button>
           </p>
         </div>
-
+        <div className=".success text-success" id="add-to-cart-confirmation" ></div>
         {product.inStock === true ? (
           <Button
             variant='success'
             type='submit'
             className='single-product-add-to-cart'
             onClick={() => {
+              const confirmation = document.getElementById("add-to-cart-confirmation")
               handleAddToCart();
+              confirmation.innerText = "Item added succesfully!"
             }}
           >
             Add to Cart

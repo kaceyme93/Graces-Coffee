@@ -6,13 +6,15 @@ import {
 } from '@stripe/react-stripe-js';
 import '../style/Stripe.css';
 
-export default function Stripe() {
+export default function Stripe({subTotal, salesTax}) {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    localStorage.setItem('subTotal', subTotal)
+    localStorage.setItem('salesTax', salesTax)
     if (!stripe) {
       return;
     }
@@ -72,6 +74,7 @@ export default function Stripe() {
     } else {
       setMessage('An unexpected error occurred.');
     }
+
 
     setIsLoading(false);
   };

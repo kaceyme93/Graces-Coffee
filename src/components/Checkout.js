@@ -5,10 +5,10 @@ import { useHistory } from 'react-router-dom';
 import { cancelOrder, completeOrder } from '../axios-services';
 import Button from 'react-bootstrap/Button';
 import Stripe from './Stripe';
-import Card from 'react-bootstrap/Card'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
-import Container from 'react-bootstrap/Container'
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import '../style/Checkout.css';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
@@ -24,6 +24,14 @@ export default function Checkout(props) {
   const salesTax = parseFloat((subTotal*.0625).toFixed(2))
   const total = (subTotal + salesTax).toFixed(2)
   const history = useHistory();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [address, setAddress] = useState('');
+  const [address2, setAddress2] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zipCode, setZipCode] = useState('');
+  const [shippingInfo, setShippingInfo] = useState({})
   const states = [
     'AL',
     'AK',
@@ -86,12 +94,25 @@ export default function Checkout(props) {
     'WY',
   ];
 
+  useEffect(()=>{
+    setShippingInfo({
+      firstName : firstName,
+      lastName : lastName,
+      address : address,
+      address2 : address2,
+      city : city,
+      state : state,
+      zipCode : zipCode
+    })
+    localStorage.setItem('shipping', JSON.stringify(shippingInfo))
+  }, [firstName, lastName, address, address2, city, state, zipCode]);
+
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     fetch('/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: [{ id: 'xl-tshirt' }] }),
+      body: JSON.stringify({ price : total, currency : "USD" }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -139,6 +160,7 @@ export default function Checkout(props) {
                 className='form-control'
                 id='firstname'
                 placeholder='First Name'
+                onChange={(e)=>{setFirstName(e.target.value)}}
               />
               <div className='invalid-feedback'>
                 Valid first name is required.
@@ -151,6 +173,7 @@ export default function Checkout(props) {
                 className='form-control'
                 id='lastname'
                 placeholder='Last Name'
+                onChange={(e)=>{setLastName(e.target.value)}}
               />
               <div className='invalid-feedback'>
                 Valid last name is required.
@@ -165,6 +188,7 @@ export default function Checkout(props) {
               className='form-control'
               id='adress'
               placeholder='1234 Main Street'
+              onChange={(e)=>{setAddress(e.target.value)}}
               required
             />
             <div className='invalid-feedback'>
@@ -181,6 +205,7 @@ export default function Checkout(props) {
               className='form-control'
               id='adress2'
               placeholder='Apt #'
+              onChange={(e)=>{setAddress2(e.target.value)}}
             />
           </div>
 
@@ -193,16 +218,18 @@ export default function Checkout(props) {
               className='form-control'
               id='city'
               placeholder='City'
+              onChange={(e)=>{setCity(e.target.value)}}
             />
           </div>
 
           <div className='col-md-4 form-group'>
             <label for='state'>State</label>
-            <select type='text' className='form-control' id='state'>
-              <option value>Choose...</option>
+            <select type='text' className='form-control' id='state' onChange={(e)=>{setState(e.target.value)}}>
+              <option value >Choose...</option>
               {states.map((state) => {
                 return <option>{state}</option>;
               })}
+              
             </select>
             <div className='invalid-feedback'>
               Please provide a valid state.
@@ -218,6 +245,7 @@ export default function Checkout(props) {
               className='form-control'
               id='zipcode'
               placeholder='012345'
+              onChange={(e)=>{setZipCode(e.target.value)}}
             />
             <Button
               variant='danger'
@@ -269,8 +297,8 @@ export default function Checkout(props) {
             </Row>
           </Card>
           {clientSecret && (
-            <Elements options={options} stripe={stripePromise}>
-              <Stripe />
+            <Elements options={options} stripe={stripePromise} >
+              <Stripe subTotal={subTotal} salesTax={salesTax} />
             </Elements>
           )}
         </Col>
