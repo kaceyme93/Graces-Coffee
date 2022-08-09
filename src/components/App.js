@@ -24,6 +24,7 @@ const App = () => {
   const [token, setToken] = useState('');
   const [userInfo, setUserInfo] = useState({});
   const [cart, setCart] = useState([]);
+  const [subTotal, setSubTotal] = useState(0);
 
   const localStorageToken = localStorage.getItem('jwt');
   const localStorageCart = localStorage.getItem('localStorageCart');
@@ -80,7 +81,7 @@ const App = () => {
           </Route>
 
           <Route exact path='/orders/cart'>
-            <Cart token={token}/>
+            <Cart token={token} subTotal={subTotal} setSubTotal={setSubTotal}/>
           </Route>
 
           <Route exact path='/orders/:orderId'>
@@ -92,7 +93,7 @@ const App = () => {
           </Route>
 
           <Route exact path='/cart/checkout'>
-            <Checkout userInfo={userInfo} />
+            <Checkout userInfo={userInfo} subTotal={subTotal} />
           </Route>
 
           <Route exact path='/confirmation'>
