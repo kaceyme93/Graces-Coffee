@@ -627,26 +627,6 @@ async function populateInitialData() {
       
     })
 
-    // const products = [];
-
-    // function createRandomProduct() {
-    //   return {
-    //     name: faker.commerce.product(),
-    //     description: faker.commerce.productDescription(),
-    //     price: faker.commerce.price(1, 100, 2),
-    //     inStock: faker.datatype.boolean(),
-    //     category: faker.commerce.department(),
-    //     imageURL: faker.image.food(250, 250, true),
-    //   };
-    // }
-
-    // Array.from({ length: 50 }).forEach(() => {
-    //   products.push(createRandomProduct());
-    // });
-
-    // products.forEach(async (product) => {
-    //   await Products.createProduct(product);
-    // });
   } catch (error) {
     throw error;
   }
