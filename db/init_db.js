@@ -1,4 +1,3 @@
-const { faker } = require('@faker-js/faker');
 const {
   // declare your model imports here
   // for example, User
