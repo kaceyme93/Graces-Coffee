@@ -20,7 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@faker-js/faker": "github:faker-js/faker",
+    "@faker-js/faker": "^7.3.0",
     "@stripe/react-stripe-js": "^1.0.0",
     "@stripe/stripe-js": "^1.0.0",
     "axios": "^0.19.2",
