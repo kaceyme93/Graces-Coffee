@@ -44,7 +44,6 @@
     "yarn": "^1.22.19"
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.3.0",
     "nodemon": "^2.0.4",
     "supertest": "^6.2.1"
   },
