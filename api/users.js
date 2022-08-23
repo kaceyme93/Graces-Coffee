@@ -97,7 +97,6 @@ usersRouter.get('/me', async (req, res, next) => {
 //Login User. Requires username AND password. Verifies encrypted password in DB
 usersRouter.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
-
   if (!username || !password) {
     res.send({
       name: 'MissingCredentialsError',
@@ -110,13 +109,15 @@ usersRouter.post('/login', async (req, res, next) => {
     if (user) {
       const validPassword = await bcrypt.compare(password, user.password);
       if (validPassword) {
+        console.log("JWT SEC", JWT_SECRET)
         const token = jwt.sign(
           {
             id: user.id,
-            username: username,
+            username: username
           },
           JWT_SECRET
         );
+        console.log("TOKEN", token)
       
         res.send({
           user: user,

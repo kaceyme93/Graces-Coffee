@@ -11,7 +11,6 @@ import emptyCartScreen from '../images/emptyCartScreenImage.jpg'
 function GetAndDisplayCart(props) {
     const [cart, setCart] = useState({})
     const [cartProds, setCartProds] = useState([])
-    // const [subTotal, setSubTotal] = useState(0)
     const [trigger, setTrigger] = useState(false)
     const {token, subTotal, setSubTotal} = props
     const salesTax = parseFloat((subTotal*.0625).toFixed(2))
