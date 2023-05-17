@@ -1,0 +1,28 @@
+/* EMPTY CART SCREEN */
+.main-cart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.empty-cart-logo {
+    width: 50%;
+}
+
+.continue-button-container {
+    justify-content: center;
+}
+
+.continue-button {
+    max-width: 200px !important;
+}
+
+.image-credit {
+    font-size: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+
+/* CART WITH ITEMS */

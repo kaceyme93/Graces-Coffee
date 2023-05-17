@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom"
-import { getUserCart, updateCartProduct, deleteOrderProduct } from '../axios-services';
+import { getUserCart, updateCartProduct } from '../axios-services';
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import emptyCartScreen from '../images/emptyCartScreenImage.jpg'
+import '../style/Cart.css'
 
 function GetAndDisplayCart(props) {
-    const [cart, setCart] = useState({})
     const [cartProds, setCartProds] = useState([])
     const [trigger, setTrigger] = useState(false)
-    const {token, subTotal, setSubTotal} = props
+    const {token, subTotal, setSubTotal, cart, setCart} = props
     const salesTax = parseFloat((subTotal*.0625).toFixed(2))
-    console.log(typeof(salesTax))
     const history = useHistory()
 
     const setQuantity = (product, amount) => {
-        if ((product.quantity ==1) && (amount == -1)){
+        if ((product.quantity ===1) && (amount === -1)){
             deleteProductFromCart(product)
         } else {
+            console.log("CART FROM CART: ", cart)
             setCartProds(cartProd => cartProd.map(prod => prod.id===product.id ?({
                  ...prod,
                 quantity: prod.quantity + amount,
@@ -36,6 +36,7 @@ function GetAndDisplayCart(props) {
             if(localProduct.id===product.id){
                 localProduct.quantity += amount
             }
+            setCart(cartFromLocal)
             const newCart = JSON.stringify([...cartFromLocal])
                 localStorage.setItem('cart', newCart)
         })
@@ -50,20 +51,17 @@ function GetAndDisplayCart(props) {
         history.push("/products")
     }
     const deleteProductFromCart = (product) => {
-        // if (token) {
-        //     deleteOrderProduct(product)
-        // } else {
             const productsInCart = JSON.parse(localStorage.getItem('cart'))
             const notDeletedProducts = productsInCart.filter(productInCart => productInCart.id!==product.id)
             const newCart = JSON.stringify([...notDeletedProducts])
             localStorage.setItem('cart', newCart)
-        // }
     }
     
     useEffect(() => {
         let isMounted = true
 
         const fetchCart = async () => {
+            console.log("CART FROM CART", cart)
             const result = await getUserCart(token)
             const cartFromLocal =JSON.parse(localStorage.getItem('cart'))
 
@@ -102,21 +100,19 @@ function GetAndDisplayCart(props) {
     
     if (cartProds.length===0) {
         return (
-            <Container>
-                <Row style={{fontSize: "25px", justifyContent: "center"}}>
+            <div className='main-cart-container'>
+                <h1 className= 'empty-cart-message' >
                     Your cart is currently empty
-                </Row>
-                <Row style={{justifyContent: "center"}}>
-                    <img src={emptyCartScreen} style={{width: "700px"}}></img>
-                </Row>
-                <Row style={{justifyContent: "center"}}>
-                    <Button onClick={() => continueShoppingHandler()} style={{width: '200px'}}>Continue Shopping</Button>
-                </Row>
-                <Row>
-                <a href="https://www.vecteezy.com/free-vector/coffee-icon" style={{fontSize:"10px", position: "fixed", bottom: "0"}}>Coffee Icon Vectors by Vecteezy</a>
+                </h1>  
+                <img className='empty-cart-logo' src={emptyCartScreen}></img>
+                <div className='continue-button-container'>
+                    <Button className='continue-button' onClick={() => continueShoppingHandler()} >Continue Shopping</Button>
+                </div>
+                <div>
+                <a className='image-credit' href="https://www.vecteezy.com/free-vector/coffee-icon">Coffee Icon Vectors by Vecteezy</a>
 
-                </Row>
-            </Container>
+                </div>
+            </div>
         )
     } else {
     return (

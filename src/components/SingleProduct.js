@@ -4,18 +4,19 @@ import { getSingleProduct } from '../axios-services';
 import Button from 'react-bootstrap/Button';
 import '../style/SingleProduct.css';
 
-function SingleProduct({ cart, setCart }) {
+function SingleProduct(props) {
   const [product, setProduct] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
-
+  const {cart, setCart} = props
   useEffect(() => {
     const fetchSingleProduct = async () => {
       const result = await getSingleProduct(productId);
       setProduct(result);
     };
+    console.log("CART FROM EFFECT", cart)
     fetchSingleProduct();
-  }, [productId]);
+  }, [productId, setCart]);
 
   const handleAddQuantity = () => {
     setQuantity(quantity + 1);
@@ -29,22 +30,23 @@ function SingleProduct({ cart, setCart }) {
     const cartCopy = [...cart];
 
     const duplicateProduct = cartCopy.find(
-      (product) => product.id === productId
+      (product) => product.id == productId
     );
 
     if (duplicateProduct) {
       duplicateProduct.quantity += quantity;
     } else {
-      console.log("ELSE WAS HIT")
       cartCopy.push(product)
       product.quantity = quantity;
     }
 
     setCart(cartCopy);
-    const newCart = JSON.stringify([...cart, product]);
+    console.log("CART COPY IS", cartCopy)
+    console.log("CART", ...cart)
+    const newCart = JSON.stringify([...cartCopy]);
+    console.log("NEW CART", newCart)
     localStorage.setItem('cart', newCart);
     let cartTest = JSON.parse(localStorage.getItem('cart'));
-    console.log(cartTest);
   };
 
   return (
