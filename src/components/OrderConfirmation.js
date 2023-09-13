@@ -10,7 +10,6 @@ function OrderConfirmation({ userInfo }) {
   const total = Number(localStorageSalesTax)+ Number(localStorageSubTotal)
   const history = useHistory();
   let today = new Date().toLocaleDateString()
-  console.log("shipping info", localStorageShippingInfo)
   return (
     <div class='container mt-5 mb-5'>
       <div class='row d-flex justify-content-center'>

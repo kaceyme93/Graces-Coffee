@@ -109,7 +109,6 @@ usersRouter.post('/login', async (req, res, next) => {
     if (user) {
       const validPassword = await bcrypt.compare(password, user.password);
       if (validPassword) {
-        console.log("JWT SEC", JWT_SECRET)
         const token = jwt.sign(
           {
             id: user.id,
@@ -117,7 +116,6 @@ usersRouter.post('/login', async (req, res, next) => {
           },
           JWT_SECRET
         );
-        console.log("TOKEN", token)
       
         res.send({
           user: user,

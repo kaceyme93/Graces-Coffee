@@ -27,7 +27,6 @@ orderProductsRouter.patch(
 orderProductsRouter.delete(
   '/:orderProductId',
   async (req, res, next) => {
-    console.log("API HIT")
     //Remove a product from a order, use hard delete
     try {
       const { orderProductId } = req.params;

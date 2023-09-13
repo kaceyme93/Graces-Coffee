@@ -9,12 +9,12 @@ function SingleProduct(props) {
   const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
   const {cart, setCart} = props
+
   useEffect(() => {
     const fetchSingleProduct = async () => {
       const result = await getSingleProduct(productId);
       setProduct(result);
     };
-    console.log("CART FROM EFFECT", cart)
     fetchSingleProduct();
   }, [productId, setCart]);
 
@@ -41,10 +41,7 @@ function SingleProduct(props) {
     }
 
     setCart(cartCopy);
-    console.log("CART COPY IS", cartCopy)
-    console.log("CART", ...cart)
     const newCart = JSON.stringify([...cartCopy]);
-    console.log("NEW CART", newCart)
     localStorage.setItem('cart', newCart);
     let cartTest = JSON.parse(localStorage.getItem('cart'));
   };
@@ -97,7 +94,10 @@ function SingleProduct(props) {
             onClick={() => {
               const confirmation = document.getElementById("add-to-cart-confirmation")
               handleAddToCart();
-              confirmation.innerText = "Item added succesfully!"
+              confirmation.innerText = "Item added to cart!"
+              setTimeout(() => {
+                confirmation.innerText=""
+              }, 1500)
             }}
           >
             Add to Cart

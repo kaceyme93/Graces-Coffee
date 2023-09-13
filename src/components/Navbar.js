@@ -6,8 +6,9 @@ import '../style/Navbar.css';
 import '../style/BootstrapButtons.css';
 import logo from '../images/logo2.png'
 
-function Navbar({ token, setToken, userInfo, setUserInfo }) {
+function Navbar({ token, setToken, userInfo, setUserInfo, cart }) {
   const history = useHistory();
+
 
   return (
     <nav
@@ -32,7 +33,7 @@ function Navbar({ token, setToken, userInfo, setUserInfo }) {
             style={{ fontSize: '24px' }}
           >
             <li>
-              <Link className='nav-link px-2 text-white' to='/products'>
+              <Link className='nav-link px-2 text-white nav-links' to='/products'>
                 Shop
               </Link>
             </li>
@@ -49,7 +50,7 @@ function Navbar({ token, setToken, userInfo, setUserInfo }) {
           <div className='navbar-menu'>
             {token && (
               <Link
-                className='nav-link px-2 text-white'
+                className='nav-link px-2 text-white nav-links'
                 to='/profile'
                 style={{ marginRight: '32px', fontSize: '24px' }}
               >
@@ -68,11 +69,28 @@ function Navbar({ token, setToken, userInfo, setUserInfo }) {
               </div>
             )}
 
-            <Link to='/orders/cart' className='navbar-links'>
+            {cart.length > 0 && (
+              <Link to='/orders/cart' className='navbar-links cart-icon-with-quantity'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
-                width='28'
-                height='28'
+                width='35'
+                height='35'
+                fill='currentColor'
+                className='bi bi-cart'
+                viewBox='0 0 16 16'
+              >
+                <path d='M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z' />
+              </svg>
+              <span className='cart-quantity'>{cart.length}</span>
+            </Link>
+            )}
+
+            {cart.length===0 && (
+              <Link to='/orders/cart' className='navbar-links'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='35'
+                height='35'
                 fill='currentColor'
                 className='bi bi-cart'
                 viewBox='0 0 16 16'
@@ -80,6 +98,7 @@ function Navbar({ token, setToken, userInfo, setUserInfo }) {
                 <path d='M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z' />
               </svg>
             </Link>
+            )}
 
             {token && (
               <div className='text-end'>

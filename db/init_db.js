@@ -246,68 +246,6 @@ const {
           'https://cdn.shopify.com/s/files/1/0556/1378/4259/t/6/assets/acf.PRODUCT-STORY_FRENCHroast.jpg?v=1649178277',
       });
   
-      const product12 = await Products.createProduct({
-        name: 'Sumatra Gayonese',
-        description: `
-        Full Body-Black Pepper-Dark Chocolate
-        `,
-        price: 14.0,
-        inStock: true,
-        category: 'Whole Beans',
-        origin: 'Asia',
-        roast: 'Medium',
-        size: '12 oz',
-        imageURL:
-          'https://www.bridgeportcoffee.net/wp-content/uploads/2021/01/Sumatra-12oz-600x788.jpg',
-      });
-  
-      const product13 = await Products.createProduct({
-        name: 'El Progreso',
-        description: `
-        Medium Body-Honey-Notes of Milk Chocolate
-        `,
-        price: 14.0,
-        inStock: true,
-        category: 'Whole Beans',
-        origin: 'South America',
-        roast: 'Medium',
-        size: '12 oz',
-        imageURL:
-          'https://www.bridgeportcoffee.net/wp-content/uploads/2021/01/ElProgresoIllustration-600x788.jpg',
-      });
-  
-      const product14 = await Products.createProduct({
-        name: 'Ethiopia Yirgacheffe',
-        description: `
-        Heavy body - Creamy - Rich
-        `,
-        price: 14.0,
-        inStock: true,
-        category: 'Whole Beans',
-        origin: 'Africa',
-        roast: 'Medium',
-        size: '12 oz',
-        imageURL:
-          'https://www.bridgeportcoffee.net/wp-content/uploads/2021/06/image0-600x788.jpeg',
-      });
-  
-      const product15 = await Products.createProduct({
-        name: 'Agua',
-        description: `
-        Welcome to the world of cleanliness and purity. Like that of the sea jellies, these coffee seeds were soaked in an ocean of water. 
-        During the coffees' short swim, fermentation, acting as wisdom, drives acidity, clarity, and focus throughout each tentacle of possibility.
-        Notes: Asian Pear, Nutty, Fig Newton 
-        `,
-        price: 22.0,
-        inStock: true,
-        category: 'Whole Beans',
-        origin: 'South America',
-        roast: 'Light',
-        size: '12 oz',
-        imageURL:
-          'https://cdn.shopify.com/s/files/1/0294/6861/products/SPPVBag_Front_720x.png?v=1658424147',
-      });
-  
       const product16 = await Products.createProduct({
         name: 'A Love Supreme',
         description: `
@@ -372,24 +310,6 @@ const {
         size: '12 oz',
         imageURL:
           'https://cdn.shopify.com/s/files/1/0043/6099/4934/products/gladiola_1800x1800.jpg?v=1638280835',
-      });
-  
-      const product20 = await Products.createProduct({
-        name: 'Space Cadet',
-        description: `
-        A long time ago in a galaxy far, far away… the perfect blend of coffees for cold brew was born. We love this blend for cold brew, 
-        so much in fact that it's the same coffee we brew in 300 gallon batches for our original and nitro cans. 
-        That being said, a Space Cadet isn't bound by the rules of any world but their own, so you can brew this blend up however you'd like! 
-        Our team tastes notes of clementine, nougat and burnt sugar.
-        `,
-        price: 80.0,
-        inStock: true,
-        category: 'Whole Beans',
-        origin: 'North America',
-        roast: 'Medium',
-        size: '5 lb',
-        imageURL:
-          'https://cdn.shopify.com/s/files/1/0043/6099/4934/products/spacecadet_e551c73d-0e67-49ef-9e7a-d56d1cbd5302_1800x1800.jpg?v=1620147848',
       });
   
       const product21 = await Products.createProduct({

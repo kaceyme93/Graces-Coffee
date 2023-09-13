@@ -14,7 +14,7 @@
 }
 
 .main-logo{
-  height: 5rem;
+  height: 4rem;
 }
 
 .navbar-menu {
@@ -22,11 +22,12 @@
   justify-content: space-between;
 }
 
-.navbar-links {
-  text-decoration: none;
+.navbar-links:hover {
+  text-decoration: underline;
+  color: white;
 }
 
-.navbar-links:hover {
+.nav-links:hover {
   text-decoration: underline;
 }
 
@@ -52,6 +53,15 @@
 #logo-script{
   font-family: 'Raleway', sans-serif;
   font-family: 'Roboto Flex', sans-serif;
+}
+
+
+.cart-quantity{
+  /* margin-left: .3em; */
+  font-size: .5em;
+  position: relative;
+  right: 1.6em;
+  bottom: .25em;
 }
 
 @media (max-width: 1024px) {

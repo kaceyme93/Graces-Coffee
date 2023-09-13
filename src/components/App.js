@@ -48,7 +48,6 @@ const App = () => {
     localStorageCart && setCart(localStorageCart);
   }, [localStorageCart]);
 
-  console.log(APIHealth);
 
   return (
     <div className='app-container'>
@@ -58,6 +57,7 @@ const App = () => {
           setToken={setToken}
           setUserInfo={setUserInfo}
           userInfo={userInfo}
+          cart={cart}
         />
         <Switch>
           <Route exact path='/products/:productId'>

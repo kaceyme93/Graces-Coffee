@@ -10,7 +10,7 @@ import emptyCartScreen from '../images/emptyCartScreenImage.jpg'
 import '../style/Cart.css'
 
 function GetAndDisplayCart(props) {
-    const [cartProds, setCartProds] = useState([])
+    // const [cartProds, setCartProds] = useState([])
     const [trigger, setTrigger] = useState(false)
     const {token, subTotal, setSubTotal, cart, setCart} = props
     const salesTax = parseFloat((subTotal*.0625).toFixed(2))
@@ -19,9 +19,12 @@ function GetAndDisplayCart(props) {
     const setQuantity = (product, amount) => {
         if ((product.quantity ===1) && (amount === -1)){
             deleteProductFromCart(product)
+            setCart(cartProd => cartProd.map(prod => prod.id===product.id ?({
+                ...prod,
+               quantity: prod.quantity + amount,
+           }): prod))
         } else {
-            console.log("CART FROM CART: ", cart)
-            setCartProds(cartProd => cartProd.map(prod => prod.id===product.id ?({
+            setCart(cartProd => cartProd.map(prod => prod.id===product.id ?({
                  ...prod,
                 quantity: prod.quantity + amount,
             }): prod))
@@ -59,26 +62,26 @@ function GetAndDisplayCart(props) {
     
     useEffect(() => {
         let isMounted = true
-
         const fetchCart = async () => {
-            console.log("CART FROM CART", cart)
-            const result = await getUserCart(token)
+            // const result = await getUserCart(token)
             const cartFromLocal =JSON.parse(localStorage.getItem('cart'))
 
-            if (result) {
+            // if (result) {
+            //     if(isMounted) {
+            //         setCart(result)
+            //         // setCartProds(result.products)
+            //         var sum = 0
+            //         result.products.forEach((product) => {
+            //             let price = parseFloat(product.price).toFixed(2)
+            //             sum += price * product.quantity
+            //         })
+            //         setSubTotal(sum)
+            //     }
+            // } else if (cartFromLocal){
+            if (cartFromLocal) {
                 if(isMounted) {
-                    setCart(result)
-                    setCartProds(result.products)
-                    var sum = 0
-                    result.products.forEach((product) => {
-                        let price = parseFloat(product.price).toFixed(2)
-                        sum += price * product.quantity
-                    })
-                    setSubTotal(sum)
-                }
-            } else if (cartFromLocal){
-                if(isMounted) {
-                    setCartProds(cartFromLocal)
+                    setCart(cartFromLocal)
+                    // setCartProds(cartFromLocal)
                     var sum = 0
                     cartFromLocal.forEach((product) => {
                         let price = parseFloat(product.price)
@@ -95,10 +98,10 @@ function GetAndDisplayCart(props) {
     }, [token, trigger])
 
     useEffect(() => {
-        cartProds.map(cartprod => updateCartProduct(cartprod))
+        cart.map(cartprod => updateCartProduct(cartprod))
     }, [trigger])
     
-    if (cartProds.length===0) {
+        if (cart.length===0) {
         return (
             <div className='main-cart-container'>
                 <h1 className= 'empty-cart-message' >
@@ -121,7 +124,8 @@ function GetAndDisplayCart(props) {
             
             <Row>
                 <Col>
-                {cartProds.map((product) => {
+                {/* {cartProds.map((product) => { */}
+                {cart.map((product) => {
                     return (
                     <Card key={product.id} className="product-details" style={{marginBottom: '10px', paddingTop: '15px', width: '800px'}}>
                         <Row>
