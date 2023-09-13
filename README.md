@@ -1,34 +1,10 @@
-# Let's Build a Full Stack Application
-
 This full stack app boilerplate consists of:
 
 - an Express web server,
 - a PostgreSQL database instance,
 - and a React front-end
 
-You'll also find a bunch of convenient commands and workflows that will allow you to develop your app locally and deploy it to heroku. Let's dive in!
-
-# Local Development
-
-## Getting Started
-
-1. Fork and clone this repo to your local machine, then run the following commands to reinitialize your git history from scratch:
-
-```bash
-# these commands reset your git history
-$ rm -rf .git
-$ git init
-```
-
-2. Create a bare GitHub repo (no `.gitignore`, `README.md`, `CHANGELOG.md`, or license) and copy the ssh address to assign to your local clone with `git remote add origin <paste-your-ssh-address-here>`
-
-3. `npm install` to add project dependencies to your local machine.
-
-4. Choose a name for your local database instance and edit `db/index.js` to assign the name to `DB_NAME`. Next, run `createdb <your-db-name-goes-here>` from your command line to spin up your database.
-
-5. `npm run start:dev` will build your React app and start your express server in concurrent mode (meaning that both processes run in the same terminal window). Once this command is running, you can start developing! `nodemon` and `react-scripts` will listen to file changes and update continuously (hot-module-reloading).
-
-<em>NB: If you see a `proxy error` message in the terminal, just hard refresh your browser window and you'll be all set.</em>
+You'll also find a bunch of convenient commands and workflows that will allow you to develop your app locally.
 
 ## Project Structure
 
@@ -85,43 +61,6 @@ In addition to `start:dev`, `client:build`, `client:dev` and `server:dev`, you h
 
 # Deployment
 
-## Setting up Heroku
-
-Setup your heroku project by choosing a site name and provisioning a postgres database. These commands create a heroku project backed by a postgres db instance which will live at https://project-name-goes-here.herokuapp.com. You'll want to replace `project-name-goes-here` with your selected project name.
-
-You'll only need to do this step once, at the outset of your project:
-
-```bash
-# create your project
-$ heroku create project-name-goes-here
-# create your database instance
-$ heroku addons:create heroku-postgresql:hobby-dev
-```
-
-Next we'll configure your database instance to ignore the `ssl` configuration object our `pg` client instance expects:
-
-```bash
-# set ssl mode to no-verify
-$ heroku config:set PGSSLMODE=no-verify
-# confirm your environment variable has been set
-$ heroku config
-```
-
-## Configuring GitHub Actions Secrets for CI/CD
-
-We're going to leverage continuous integration and continuous development methodologies, or CI/CD, to deploy your app. To enable CI/CD you'll need to add a few environment variables to your project repo.
-
-Under Settings, choose the Secrets option under Security. You'll see the following dialog, and you'll be able to add a secret by selecting the `New repository secret` button. Once you create a GitHub secret you can never see it again, but you can modify it! We're going to add 3 secrets to our repo:
-
-- `HEROKU_API_KEY`: you'll find this listed in your heroku account settings
-- `HEROKU_APP_NAME`: this is the project name you chose above
-- `HEROKU_EMAIL`: this is the email address associated with your heroku account
-
-![](/assets/github-actions-secrets.png)
-
-Each project group will elect one person to be the "owner" of the heroku account, and that person's api key and email address will be used to register the secrets above.
-
-**After the bootcamp ends**, you might want to redeploy and make changes to your team's application. Once you've forked this repo to your personal GitHub Account, you can add your own secrets and redeploy under a different heroku app name!
 
 ## Deployment
 
