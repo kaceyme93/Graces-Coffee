@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from "react-router-dom";
 import { tokenRegister } from '../axios-services/index';
+import '../style/Register.css';
 
 export default function Register(props) {
   const { setToken } = props;
@@ -46,22 +47,16 @@ export default function Register(props) {
                             lastName,
                             setToken
                           );
-                          setPassword('');
-                          setUsername('');
-                          setConfirmPassword('');
-                          setEmail('');
-                          setFirstName('');
-                          setLastName('');
-                          productsPage();
+                          setTimeout(()=> {
+                            if(localStorage.getItem('jwt')){
+                              console.log("JWT from registyer")
+                              productsPage()
+                            }
+                          })
+                          // productsPage();
                           return;
                         }
-                        alert('Passwords must match one another');
-                        setPassword('');
-                        setUsername('');
-                        setConfirmPassword('');
-                        setEmail('');
-                        setFirstName('');
-                        setLastName('');
+                        alert('Passwords must match');
                       }}
                     >
                       <div className='d-flex align-items-center mb-3 pb-1'>
@@ -159,6 +154,7 @@ export default function Register(props) {
                           Password
                         </label>
                       </div>
+                      <p id="password-length-error"></p>
 
                       <div className='form-outline mb-4'>
                         <input

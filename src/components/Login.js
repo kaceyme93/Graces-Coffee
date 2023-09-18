@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import { tokenLogin } from '../axios-services/index';
+import '../style/Login.css';
 
 export default function Login(props) {
     const {setToken} = props;
@@ -31,9 +32,14 @@ export default function Login(props) {
                 onSubmit={(e)=>{
                     e.preventDefault();
                     tokenLogin(username, password, setToken);
-                    setPassword("");
-                    setUsername("");
-                    productsPage();
+                    setTimeout(()=> {
+                      if(localStorage.getItem('jwt')) {
+                        productsPage()
+                      } else {
+                        const credentialsError = document.getElementById('incorrect-credentials')
+                        credentialsError.innerText = "Incorrect Login Credentials"
+                      }
+                    }, 100)
                 }}>
 
                   <div className="d-flex align-items-center mb-3 pb-1">
@@ -51,6 +57,7 @@ export default function Login(props) {
                     <input type="password" id="password" className="form-control form-control-lg" minLength="7" value={password} onChange={(e)=>{setPassword(e.target.value)}} required/>
                     <label className="form-label" htmlFor="password">Password</label>
                   </div>
+                  <div id="incorrect-credentials"></div>
 
                   <div className="pt-1 mb-4">
                     <button className="btn btn-dark btn-lg btn-block" type="submit">Login</button>

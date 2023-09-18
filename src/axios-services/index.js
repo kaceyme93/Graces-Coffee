@@ -92,7 +92,7 @@ export async function tokenLogin(inputUsername, inputPassword, setToken) {
     });
     setToken(login.token);
     localStorage.setItem('jwt', login.token);
-    alert(login.message);
+    // alert(login.message);
   } catch (err) {
     console.error(err);
   }

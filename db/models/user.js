@@ -11,6 +11,7 @@ async function createUser({
   password
 }) {
   try {
+
     const SALT = 10;
     const hash = await bcrypt.hash(password, SALT);
     const { rows: [user] } = await client.query(`

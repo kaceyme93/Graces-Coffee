@@ -59,7 +59,10 @@ usersRouter.post('/register', async (req, res, next) => {
       token: token,
       user: user,
       message: `Thank you for registering ${username}`,
-    });
+    })
+    // res.redirect([
+    //   200
+    // ], '/');
   } catch ({ name, message }) {
     next({ name, message });
   }
@@ -119,7 +122,7 @@ usersRouter.post('/login', async (req, res, next) => {
       
         res.send({
           user: user,
-          message: 'Login Successful!',
+          // message: 'Login Successful!',
           token: token,
         });
       }
