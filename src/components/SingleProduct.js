@@ -44,6 +44,11 @@ function SingleProduct(props) {
     const newCart = JSON.stringify([...cartCopy]);
     localStorage.setItem('cart', newCart);
     let cartTest = JSON.parse(localStorage.getItem('cart'));
+
+    if(newCart.length > 0) {
+      const cartQuantity = document.getElementById("cart-quantity-id")
+      cartQuantity.className += " display"
+    }
   };
 
   return (

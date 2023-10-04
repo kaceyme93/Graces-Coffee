@@ -26,3 +26,29 @@
 
 
 /* CART WITH ITEMS */
+
+h2 {
+    text-align: center;
+}
+
+.product-details {
+    margin-bottom: 10px;
+    padding-top: 15px;
+    width: 50vw;
+}
+
+.cart-product-image {
+    width: 7rem;
+}
+
+.summary-header {
+    text-align: center;
+}
+
+.subtotal {
+    justify-content: space-around;
+}
+
+.summary-item {
+    text-align: center;
+}

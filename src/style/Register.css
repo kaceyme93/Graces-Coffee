@@ -1,0 +1,25 @@
+.register-header{
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.register-form {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px
+}
+
+.register-form-input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 10px;
+}
+
+span {
+    color: red;
+    font-size: small;
+}

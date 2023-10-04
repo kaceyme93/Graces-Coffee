@@ -1,22 +1,36 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form'
 import { tokenRegister } from '../axios-services/index';
 import '../style/Register.css';
 
 export default function Register(props) {
   const { setToken } = props;
-
-  const [userName, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const history = useHistory();
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors},
+  } = useForm();
+  
   const productsPage = () => {
     history.push('/products');
   };
+
+  const onSubmit = async (data) => {
+    if(data.password===data.confirmPassword){
+      await tokenRegister(data.username, data.password, data.email, data.firstName, data.lastName, setToken)
+      if(localStorage.getItem('jwt') && localStorage.getItem('jwt')!=undefined) {
+        const jwt = localStorage.getItem('jwt')
+        console.log(jwt)
+        productsPage()
+      } 
+      return
+    }
+    alert("Passwords do not match")
+  }
 
   return (
     <section className='vh-50' style={{ backgroundColor: '' }}>
@@ -35,168 +49,31 @@ export default function Register(props) {
                 </div>
                 <div className='col-md-6 col-lg-7 d-flex align-items-center'>
                   <div className='card-body p-4 p-lg-3 text-black'>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (password === confirmPassword) {
-                          tokenRegister(
-                            userName,
-                            password,
-                            email,
-                            firstName,
-                            lastName,
-                            setToken
-                          );
-                          setTimeout(()=> {
-                            if(localStorage.getItem('jwt')){
-                              console.log("JWT from registyer")
-                              productsPage()
-                            }
-                          })
-                          // productsPage();
-                          return;
-                        }
-                        alert('Passwords must match');
-                      }}
-                    >
-                      <div className='d-flex align-items-center mb-3 pb-1'>
-                        <i
-                          className='fas fa-cubes fa-2x me-3'
-                          style={{ color: '#ff6219' }}
-                        ></i>
-                      </div>
-
-                      <h5
-                        className='fw-normal mb-3 pb-3'
-                        style={{ letterSpacing: '1px' }}
-                      >
-                        Register a new account
-                      </h5>
-
-                      <div className='form-outline mb-4'>
-                        <input
-                          type='text'
-                          id='username'
-                          className='form-control form-control-md'
-                          value={userName}
-                          onChange={(e) => {
-                            setUsername(e.target.value);
-                          }}
-                          required
-                        />
-                        <label className='form-label' htmlFor='username'>
-                          Username
-                        </label>
-                      </div>
-                      <div className='form-outline mb-4 row d-flex justify-content-between'>
-                        <div className='col-5'>
-                          <input
-                            type='text'
-                            id='firstName'
-                            className='form-control form-control-md col-5'
-                            value={firstName}
-                            onChange={(e) => {
-                              setFirstName(e.target.value);
-                            }}
-                            required
-                          />
-                          <label className='form-label' htmlFor='firstName'>
-                            First Name
-                          </label>
-                        </div>
-
-                        <div className='col-5'>
-                          <input
-                            type='text'
-                            id='lastName'
-                            className='form-control form-control-md col-5'
-                            value={lastName}
-                            onChange={(e) => {
-                              setLastName(e.target.value);
-                            }}
-                            required
-                          />
-                          <label className='form-label' htmlFor='lastName'>
-                            Last Name
-                          </label>
-                        </div>
-                      </div>
-
-                      <div className='form-outline mb-4'>
-                        <input
-                          type='email'
-                          id='email'
-                          className='form-control form-control-md'
-                          value={email}
-                          onChange={(e) => {
-                            setEmail(e.target.value);
-                          }}
-                          required
-                        />
-                        <label className='form-label' htmlFor='email'>
-                          Email Address
-                        </label>
-                      </div>
-
-                      <div className='form-outline mb-4'>
-                        <input
-                          type='password'
-                          id='password'
-                          className='form-control form-control-md'
-                          minLength='7'
-                          value={password}
-                          onChange={(e) => {
-                            setPassword(e.target.value);
-                          }}
-                          required
-                        />
-                        <label className='form-label' htmlFor='password'>
-                          Password
-                        </label>
-                      </div>
-                      <p id="password-length-error"></p>
-
-                      <div className='form-outline mb-4'>
-                        <input
-                          type='password'
-                          id='confirmPassword'
-                          className='form-control form-control-md'
-                          minLength='7'
-                          value={confirmPassword}
-                          onChange={(e) => {
-                            setConfirmPassword(e.target.value);
-                          }}
-                          required
-                        />
-                        <label className='form-label' htmlFor='confirmPassword'>
-                          Confirm password
-                        </label>
-                      </div>
-
-                      <div className='row d-flex align-items-center'>
-                        <div className='pt-1 mb-4 col-4'>
-                          <button
-                            className='btn btn-dark btn-md btn-block'
-                            type='submit'
-                          >
-                            Register
-                          </button>
-                        </div>
-                        <p className='col col-8'>
-                          Already have an account?{' '}
-                          <a href='#!' className='link-info'>
-                            <Link to='/login'>Login here</Link>
-                          </a>
-                        </p>
-                      </div>
+                    <h1 className='fw-normal mb-3 pb-3 register-header'
+                    >Register a new account</h1>
+                    <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
+                      <input className="register-form-input"  placeholder='First Name'{...register("firstName", {required: true})}/>
+                      {errors.firstName && <span>This field is required</span>}
+                      <input className="register-form-input"  placeholder="Last Name" {...register("lastName", {required: true})}/>
+                      {errors.lastName && <span>This field is required</span>}
+                      <input className="register-form-input" placeholder="Email" {...register("email", {required: true})}/>
+                      {errors.email && <span>This field is required</span>}
+                      <input className="register-form-input" placeholder="Username" {...register("username", {required: true})}/>
+                      {errors.username && <span>This field is required</span>}
+                      <input className="register-form-input" placeholder="Password" type='password' {...register("password", {required: true})}/>
+                      {errors.password && <span>This field is required</span>}
+                      <input className="register-form-input" placeholder="Confirm Password" type="password" {...register("confirmPassword", {required: true})}/>
+                      {errors.confirmPassword && <span>This field is required</span>}
+                      <button className='btn btn-dark btn-md btn-block'
+                        type='submit' >Register</button>
                     </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </section>
+  )
 }

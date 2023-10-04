@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom"
-import { getUserCart, updateCartProduct } from '../axios-services';
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
@@ -10,7 +9,6 @@ import emptyCartScreen from '../images/emptyCartScreenImage.jpg'
 import '../style/Cart.css'
 
 function GetAndDisplayCart(props) {
-    // const [cartProds, setCartProds] = useState([])
     const [trigger, setTrigger] = useState(false)
     const {token, subTotal, setSubTotal, cart, setCart} = props
     const salesTax = parseFloat((subTotal*.0625).toFixed(2))
@@ -29,6 +27,7 @@ function GetAndDisplayCart(props) {
                 quantity: prod.quantity + amount,
             }): prod))
         }
+
         setTrigger(!trigger)
     }
 
@@ -42,7 +41,7 @@ function GetAndDisplayCart(props) {
             setCart(cartFromLocal)
             const newCart = JSON.stringify([...cartFromLocal])
                 localStorage.setItem('cart', newCart)
-        })
+            })
         }
     }
 
@@ -54,34 +53,21 @@ function GetAndDisplayCart(props) {
         history.push("/products")
     }
     const deleteProductFromCart = (product) => {
-            const productsInCart = JSON.parse(localStorage.getItem('cart'))
-            const notDeletedProducts = productsInCart.filter(productInCart => productInCart.id!==product.id)
-            const newCart = JSON.stringify([...notDeletedProducts])
-            localStorage.setItem('cart', newCart)
+        const productsInCart = JSON.parse(localStorage.getItem('cart'))
+        const notDeletedProducts = productsInCart.filter(productInCart => productInCart.id!==product.id)
+        const newCart = JSON.stringify([...notDeletedProducts])
+        localStorage.setItem('cart', newCart)
+        
     }
     
     useEffect(() => {
         let isMounted = true
-        const fetchCart = async () => {
-            // const result = await getUserCart(token)
-            const cartFromLocal =JSON.parse(localStorage.getItem('cart'))
 
-            // if (result) {
-            //     if(isMounted) {
-            //         setCart(result)
-            //         // setCartProds(result.products)
-            //         var sum = 0
-            //         result.products.forEach((product) => {
-            //             let price = parseFloat(product.price).toFixed(2)
-            //             sum += price * product.quantity
-            //         })
-            //         setSubTotal(sum)
-            //     }
-            // } else if (cartFromLocal){
+        const fetchCart = async () => {
+            const cartFromLocal =JSON.parse(localStorage.getItem('cart'))
             if (cartFromLocal) {
                 if(isMounted) {
                     setCart(cartFromLocal)
-                    // setCartProds(cartFromLocal)
                     var sum = 0
                     cartFromLocal.forEach((product) => {
                         let price = parseFloat(product.price)
@@ -89,19 +75,19 @@ function GetAndDisplayCart(props) {
                     })
                     setSubTotal(sum)
                 }
-            } 
+            }
+            if(cartFromLocal.length === 0) {
+                const cartQuantity = document.getElementById("cart-quantity-id")
+                cartQuantity.className = "cart-quantity"
+            }
         };
         fetchCart()
         return() => {
             isMounted= false
         }
     }, [token, trigger])
-
-    useEffect(() => {
-        cart.map(cartprod => updateCartProduct(cartprod))
-    }, [trigger])
     
-        if (cart.length===0) {
+    if (cart.length===0) {
         return (
             <div className='main-cart-container'>
                 <h1 className= 'empty-cart-message' >
@@ -117,7 +103,7 @@ function GetAndDisplayCart(props) {
                 </div>
             </div>
         )
-    } else {
+    }
     return (
         <Container>
             <h2> My Cart</h2>
@@ -127,7 +113,7 @@ function GetAndDisplayCart(props) {
                 {/* {cartProds.map((product) => { */}
                 {cart.map((product) => {
                     return (
-                    <Card key={product.id} className="product-details" style={{marginBottom: '10px', paddingTop: '15px', width: '800px'}}>
+                    <Card key={product.id} className="product-details">
                         <Row>
                             <Col md="auto">
                                 <Card.Img className= 'd-inline-flex p-2' src={product.imageURL} style={{width: '7rem'}} />
@@ -137,10 +123,10 @@ function GetAndDisplayCart(props) {
                                 <Card.Title>{product.name}</Card.Title>
                                 <Row>
                                     <Col>
-                                        <Card.Text>Size: {product.size} |</Card.Text>
+                                        <Card.Text>Size: {product.size}</Card.Text>
                                     </Col>
                                     <Col>
-                                        <Card.Text>Price: ${(product.price)} |</Card.Text>
+                                        <Card.Text>Price: ${(product.price)}</Card.Text>
                                     </Col>
                                     <Col>
                                         <Button size='sm' onClick={(e) => {e.preventDefault(); setQuantity(product, -1); updateLocalStorage(product, -1)}} variant='outline-dark'>-</Button>
@@ -157,30 +143,30 @@ function GetAndDisplayCart(props) {
             </Col>
                 <Col>
                     <Card>
-                        <Card.Title style={{textAlign: 'center'}}> Summary of Charges</Card.Title>
-                        <Row className="justify-content-md-center">
+                        <Card.Title  className="summary-header"> Summary of Charges</Card.Title>
+                        <Row>
                             <Col>
-                                <Card.Text style= {{marginLeft: '50px'}}> Subtotal</Card.Text>
+                                <Card.Text className="summary-item"> Subtotal</Card.Text>
                             </Col>
                             <Col>
-                                <Card.Text style={{marginLeft: '150px'}}> ${(subTotal).toFixed(2)}</Card.Text>
+                                <Card.Text className="summary-item"> ${(subTotal).toFixed(2)}</Card.Text>
                             </Col>
                         </Row>
                         <Row>
                             <Col>
-                                <Card.Text style={{marginLeft: '50px'}}>Shipping</Card.Text>
+                                <Card.Text className="summary-item">Shipping</Card.Text>
                             </Col>
                             <Col>
-                                <Card.Text style={{marginLeft: '150px'}}>FREE</Card.Text>
+                                <Card.Text className="summary-item">FREE</Card.Text>
                             </Col>
                         </Row>
                         <Row>
                             <Col>
-                                <Card.Text style={{marginLeft: '50px'}}>Est. Tax</Card.Text>
+                                <Card.Text className="summary-item">Est. Tax</Card.Text>
                             </Col>
                             <Col>
                                 {/* Sales Tax of Il */}
-                                <Card.Text style={{marginLeft: '150px'}}>${salesTax}</Card.Text>
+                                <Card.Text className="summary-item">${salesTax}</Card.Text>
                             </Col>
                         </Row>
                         <Row>
@@ -188,10 +174,10 @@ function GetAndDisplayCart(props) {
                         </Row>
                         <Row>
                             <Col>
-                                <Card.Text style={{marginLeft: '50px'}}> TOTAL</Card.Text>
+                                <Card.Text className="summary-item"> TOTAL</Card.Text>
                             </Col>
                             <Col>
-                                <Card.Text style={{marginLeft: '150px'}}>${(subTotal + salesTax)}</Card.Text>
+                                <Card.Text className="summary-item">${(subTotal + salesTax)}</Card.Text>
                             </Col>
                         </Row>
                         <Row style={{justifyContent: 'center'}}>
@@ -207,7 +193,7 @@ function GetAndDisplayCart(props) {
             </Row>
         </Container>
     )
-    } 
-}   
+} 
+   
 
 export default GetAndDisplayCart;

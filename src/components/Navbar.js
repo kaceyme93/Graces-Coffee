@@ -5,9 +5,22 @@ import Button from 'react-bootstrap/Button';
 import '../style/Navbar.css';
 import '../style/BootstrapButtons.css';
 import logo from '../images/logo2.png'
+import smallMenu from '../images/hamburger-menu.svg'
 
 function Navbar({ token, setToken, userInfo, setUserInfo, cart }) {
   const history = useHistory();
+
+  function menuDisplay() {
+    // console.log("CLICKED")
+    // const nav = document.getElementById("navbar-link-list-id");
+    // const menuIcon = document.getElementById("menu-icon")
+    // if(nav.className==="navbar-link-list") {
+    //   nav.className += " responsive"
+    //   menuIcon.className += " responsive"
+    // } else {
+    //   nav.className = "navbar-link-list"
+    // }
+  }
 
 
   return (
@@ -16,38 +29,21 @@ function Navbar({ token, setToken, userInfo, setUserInfo, cart }) {
       style={{ backgroundColor: '#4f2b1f' }}
     >
       <div className='container'>
-        <div className='d-flex align-items-center justify-content-between justify-content-lg-start'>
-          <span
-            className='navbar-text text-white'
-            style={{ marginRight: '16px', fontSize: '30px' }}
-          >
+        <div className='navbar'>
+          <span>
             <div className='site-icon'>
               <Link to='/'>
                 <img className='main-logo' src={logo}/>
-              </Link>{' '}
+              </Link>
             </div>
           </span>
-
-          <ul
-            className='nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0'
-            style={{ fontSize: '24px' }}
-          >
+          <ul className='navbar-link-list' id="navbar-link-list-id">
             <li>
               <Link className='nav-link px-2 text-white nav-links' to='/products'>
                 Shop
               </Link>
             </li>
-          </ul>
-
-          {token && (
-            <span
-              className='navbar-text text-white'
-              style={{ marginRight: '32px', fontSize: '24px' }}
-            >
-              Welcome {userInfo?.firstName}
-            </span>
-          )}
-          <div className='navbar-menu'>
+            <li>
             {token && (
               <Link
                 className='nav-link px-2 text-white nav-links'
@@ -57,7 +53,8 @@ function Navbar({ token, setToken, userInfo, setUserInfo, cart }) {
                 My Account
               </Link>
             )}
-
+            </li>
+            <li>
             {!token && (
               <div className='text-end'>
                 <Link to='/login' className='navbar-links'>
@@ -68,23 +65,24 @@ function Navbar({ token, setToken, userInfo, setUserInfo, cart }) {
                 </Link>
               </div>
             )}
-
-            {cart.length > 0 && (
+            </li>
+            <li>            
               <Link to='/orders/cart' className='navbar-links cart-icon-with-quantity'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='35'
-                height='35'
-                fill='currentColor'
-                className='bi bi-cart'
-                viewBox='0 0 16 16'
-              >
-                <path d='M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z' />
-              </svg>
-              <span className='cart-quantity'>{cart.length}</span>
-            </Link>
-            )}
-
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  w
+                  idth='35'
+                  height='35'
+                  fill='currentColor'
+                  className='bi bi-cart'
+                  viewBox='0 0 16 16'
+                >
+                  <path d='M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z' />
+                </svg>
+                <span className='cart-quantity' id="cart-quantity-id">{cart.length}</span>
+              </Link>           
+            </li>
+            {/* </li>
             {cart.length===0 && (
               <Link to='/orders/cart' className='navbar-links'>
               <svg
@@ -99,7 +97,8 @@ function Navbar({ token, setToken, userInfo, setUserInfo, cart }) {
               </svg>
             </Link>
             )}
-
+            <li> */}
+            <li>
             {token && (
               <div className='text-end'>
                 <Button
@@ -117,7 +116,13 @@ function Navbar({ token, setToken, userInfo, setUserInfo, cart }) {
                 </Button>
               </div>
             )}
-          </div>
+            </li>
+            <li>
+              <a id="menu-icon" className="small-screen-menu" onClick={menuDisplay}>
+              <img className="small-screen-menu-icon" src={smallMenu}></img>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
