@@ -60,9 +60,6 @@ usersRouter.post('/register', async (req, res, next) => {
       user: user,
       message: `Thank you for registering ${username}`,
     })
-    // res.redirect([
-    //   200
-    // ], '/');
   } catch ({ name, message }) {
     next({ name, message });
   }

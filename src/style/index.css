@@ -1,5 +1,6 @@
 /* import fonts here */
-@import url('https://fonts.googleapis.com/css2?family=Mukta&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Mukta&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -7,13 +8,16 @@
 
 :root {
   /* define variables here */
-  --green: green;
-  --red: red;
-  --blue: blue;
+  --mono: "Space Mono", monospace;
 }
 
 html {
   touch-action: manipulation;
+}
+
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body {
@@ -21,5 +25,5 @@ body {
   padding: 0;
   height: 100vh;
   width: 100vw;
-  font-family: 'Mukta', sans-serif;
+  font-family: "Mukta", sans-serif;
 }

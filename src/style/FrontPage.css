@@ -3,14 +3,14 @@
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-
-  background-image: url('../images/front-page.png');
+  background-image: url("../images/diego-catto-9LqctKiRP5c-unsplash\ \(1\).jpg");
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top right;
   background-size: cover;
-  height: 90vh;
+  height: 100vh;
   animation: fadeIn 1s;
   opacity: 1;
+  z-index: 0;
 }
 
 .front-page-button {
